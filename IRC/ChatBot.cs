@@ -60,12 +60,6 @@ namespace SSC.Chat
 					throw new Exception($"Failed to validate bot token. Validation status was {validationResult}");
 			}
 
-			Task.Factory.StartNew(async () =>
-			{
-				await HelixAPI_User.SearchCategory("Deus ex");
-				Debug.Write("");
-			});
-
 			m_Parent = MainForm.Instance;
 			this.StatusUpdateTimer = new System.Timers.Timer(5 * 1000 * 60) { AutoReset = true };
 			this.StatusUpdateTimer.Elapsed += StatusUpdateTimer_Elapsed;
@@ -143,7 +137,7 @@ namespace SSC.Chat
 				Response_SubscribeTo.Subscription_Response_Data result = await HelixAPI_User.SubscribeToChatMessageUsingID(HelixAPI_User.User_Id, TwitchSocket.SessionID);
 				await Task.Delay(2000);
 
-				Response_SubscribeTo currentSubscriptionChecks = await HelixAPI_User.GetCurrentSubscriptions();
+				Response_SubscribeTo currentSubscriptionChecks = await HelixAPI_User.GetCurrentEventSubscriptions();
 				foreach (var subscription in currentSubscriptionChecks.data)
 				{
 					if (subscription.status != "enabled" || subscription.transport.session_id != TwitchSocket.SessionID)
