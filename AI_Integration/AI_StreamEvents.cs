@@ -70,9 +70,9 @@ namespace SSC.AI_Integration
 				from_broadcaster_user_id = "89089368",
 				from_broadcaster_user_login = "hibike7",
 				from_broadcaster_user_name = "HiBike7",
-				to_broadcaster_user_id = helixUser.BotUserId,
-				to_broadcaster_user_login = helixUser.BotLoginName,
-				to_broadcaster_user_name = helixUser.BotLoginName,
+				to_broadcaster_user_id = helixUser.User_Id,
+				to_broadcaster_user_login = helixUser.User_LoginName,
+				to_broadcaster_user_name = helixUser.User_LoginName,
 				viewers = 9
 			});
 		}

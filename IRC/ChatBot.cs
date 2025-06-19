@@ -60,6 +60,12 @@ namespace SSC.Chat
 					throw new Exception($"Failed to validate bot token. Validation status was {validationResult}");
 			}
 
+			Task.Factory.StartNew(async () =>
+			{
+				await HelixAPI_User.SearchCategory("Deus ex");
+				Debug.Write("");
+			});
+
 			m_Parent = MainForm.Instance;
 			this.StatusUpdateTimer = new System.Timers.Timer(5 * 1000 * 60) { AutoReset = true };
 			this.StatusUpdateTimer.Elapsed += StatusUpdateTimer_Elapsed;
@@ -112,29 +118,29 @@ namespace SSC.Chat
 		public void TwitchSocket_Connected()
 		{
 			Logger.AddLine("Connected!");
-/*#if DEBUG
-			MainForm.Instance.AI.PointsRedeem(new ES_ChannelPointRedeemRequest()
-			{
-				reward = new ES_ChannelPointRedeemRequest.Reward()
-				{
-					id = AIConfig.GetInstance().TwitchAwardID,
+			/*#if DEBUG
+						MainForm.Instance.AI.PointsRedeem(new ES_ChannelPointRedeemRequest()
+						{
+							reward = new ES_ChannelPointRedeemRequest.Reward()
+							{
+								id = AIConfig.GetInstance().TwitchAwardID,
 
-				},
-				user_input = "What's streamer's personal best time for Deus Ex?",
-				id = Guid.NewGuid().ToString(),
-				broadcaster_user_id = HelixAPI_User.BotUserId,
-				broadcaster_user_login = HelixAPI_User.BotLoginName,
-				broadcaster_user_name = HelixAPI_User.BotLoginName,
-				user_id = HelixAPI_User.BotUserId,
-				user_login = HelixAPI_User.BotLoginName,
-				user_name = HelixAPI_User.BotLoginName,
-				state = RedemptionStates.UNFULFILLED,
-				redeemed_at = DateTime.UtcNow,
-			});
-#endif*/
+							},
+							user_input = "What's streamer's personal best time for Deus Ex?",
+							id = Guid.NewGuid().ToString(),
+							broadcaster_user_id = HelixAPI_User.BotUserId,
+							broadcaster_user_login = HelixAPI_User.BotLoginName,
+							broadcaster_user_name = HelixAPI_User.BotLoginName,
+							user_id = HelixAPI_User.BotUserId,
+							user_login = HelixAPI_User.BotLoginName,
+							user_name = HelixAPI_User.BotLoginName,
+							state = RedemptionStates.UNFULFILLED,
+							redeemed_at = DateTime.UtcNow,
+						});
+			#endif*/
 			Task.Factory.StartNew(async () =>
 			{
-				Response_SubscribeTo.Subscription_Response_Data result = await HelixAPI_User.SubscribeToChatMessageUsingID(HelixAPI_User.BotUserId, TwitchSocket.SessionID);
+				Response_SubscribeTo.Subscription_Response_Data result = await HelixAPI_User.SubscribeToChatMessageUsingID(HelixAPI_User.User_Id, TwitchSocket.SessionID);
 				await Task.Delay(2000);
 
 				Response_SubscribeTo currentSubscriptionChecks = await HelixAPI_User.GetCurrentSubscriptions();
