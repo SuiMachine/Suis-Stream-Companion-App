@@ -22,11 +22,11 @@ namespace SSC.Structs.Gemini.FunctionTypes
 	[Serializable]
 	public class BanParameters : GeminiProperty
 	{
-		public Parameter_String response;
+		public Parameter_String text_response;
 
 		public BanParameters()
 		{
-			this.response = new Parameter_String();
+			this.text_response = new Parameter_String();
 		}
 
 		public override List<string> GetRequiredFieldsNames() => new List<string>() { };
