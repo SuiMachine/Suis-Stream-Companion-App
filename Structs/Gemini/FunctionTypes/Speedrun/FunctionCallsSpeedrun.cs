@@ -12,15 +12,8 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 	[Serializable]
 	public class WorldRecordRequest : GeminiProperty
 	{
-		public Parameter_String game_name;
-		public Parameter_String category;
-
-
-		public WorldRecordRequest()
-		{
-			this.game_name = new Parameter_String();
-			this.category = new Parameter_String();
-		}
+		public Parameter_String game_name = new Parameter_String();
+		public Parameter_String category = new Parameter_String();
 
 		public override List<string> GetRequiredFieldsNames() => new List<string>() { nameof(game_name) };
 	}
@@ -28,17 +21,9 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 	[Serializable]
 	public class PersonalBestRequest : GeminiProperty
 	{
-		public Parameter_String username;
-		public Parameter_String game_name;
-		public Parameter_String category;
-
-
-		public PersonalBestRequest()
-		{
-			username = new Parameter_String();
-			this.game_name = new Parameter_String();
-			this.category = new Parameter_String();
-		}
+		public Parameter_String username = new Parameter_String();
+		public Parameter_String game_name = new Parameter_String();
+		public Parameter_String category = new Parameter_String();
 
 		public override List<string> GetRequiredFieldsNames() => new List<string>() { nameof(username), nameof(game_name) };
 	}

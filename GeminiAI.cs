@@ -127,6 +127,7 @@ namespace SSC
 							{
 								GeminiFunctionCall.CreateWRFunction(),
 								GeminiFunctionCall.CreatePBFunction(),
+								GeminiFunctionCall.CreateWeatherFunction()
 							}
 						}
 					};
@@ -181,6 +182,7 @@ namespace SSC
 								GeminiFunctionCall.CreateBanFunction(),
 								GeminiFunctionCall.CreateWRFunction(),
 								GeminiFunctionCall.CreatePBFunction(),
+								GeminiFunctionCall.CreateWeatherFunction()
 							}
 						}
 					};
@@ -322,6 +324,8 @@ namespace SSC
 				func.args.ToObject<Structs.Gemini.FunctionTypes.Speedrun.SpeedrunWR>().Perform(channelInstance, message, content);
 			else if (func.name == "personal_best")
 				func.args.ToObject<Structs.Gemini.FunctionTypes.Speedrun.SpeedrunPB>().Perform(channelInstance, message, content);
+			else if (func.name == "weather")
+				func.args.ToObject<Structs.Gemini.FunctionTypes.Other.OpenWeather>().Perform(channelInstance, message, content);
 		}
 
 		private void GetResponseAdBreakStarted(ES_AdBreakBeginNotification adInfo)

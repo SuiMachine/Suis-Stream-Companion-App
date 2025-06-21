@@ -181,6 +181,12 @@
     <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.Designer.cs">
       <DependentUpon>UserOverrideSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AI_Integration\AI_Weather_Setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AI_Integration\AI_Weather_Setting.Designer.cs">
+      <DependentUpon>AI_Weather_Setting.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingsForms\ColorSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,6 +240,7 @@
     <Compile Include="SoundDatabaseEditor\SupportedFileFormats.cs" />
     <Compile Include="SoundEntry.cs" />
     <Compile Include="Structs\Gemini\FunctionTypes\FunctionCalls.cs" />
+    <Compile Include="Structs\Gemini\FunctionTypes\Other\OpenWeather.cs" />
     <Compile Include="Structs\Gemini\FunctionTypes\Parameters.cs" />
     <Compile Include="Structs\Gemini\FunctionTypes\Speedrun\FunctionCallsSpeedrun.cs" />
     <Compile Include="Structs\Gemini\GeminiCharacterOverride.cs" />
@@ -272,6 +279,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.resx">
       <DependentUpon>UserOverrideSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AI_Integration\AI_Weather_Setting.resx">
+      <DependentUpon>AI_Weather_Setting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsForms\ColorSettingsForm.resx">
       <DependentUpon>ColorSettingsForm.cs</DependentUpon>

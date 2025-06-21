@@ -300,6 +300,8 @@ namespace SSC
 
 		public string TwitchUsername { get; set; } = "";
 		public EncryptedString ApiKey { get; set; } = "";
+		public EncryptedString WeatherAPIKey { get; set; } = "";
+
 		public string Instruction_Character { get; set; } = "Describe your character here";
 		public string Instruction_Streamer { get; set; } = "The responses are always 200-550 characters long.";
 		public int TokenLimit_Streamer { get; set; } = 1_048_576 - 8096 - 512;

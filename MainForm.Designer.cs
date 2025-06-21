@@ -43,15 +43,16 @@
 			this.soundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.soundSettings = new System.Windows.Forms.ToolStripMenuItem();
 			this.voiceModSettings = new System.Windows.Forms.ToolStripMenuItem();
+			this.aIIntegrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.askAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.streamEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.showProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aIIntegrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.askAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.streamEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.weatherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_Volume)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -175,6 +176,30 @@
 			this.voiceModSettings.Text = "VoiceMod";
 			this.voiceModSettings.Click += new System.EventHandler(this.VoiceModSettings_Click);
 			// 
+			// aIIntegrationToolStripMenuItem
+			// 
+			this.aIIntegrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.askAIToolStripMenuItem,
+            this.streamEventsToolStripMenuItem,
+            this.weatherToolStripMenuItem});
+			this.aIIntegrationToolStripMenuItem.Name = "aIIntegrationToolStripMenuItem";
+			this.aIIntegrationToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+			this.aIIntegrationToolStripMenuItem.Text = "AI integration";
+			// 
+			// askAIToolStripMenuItem
+			// 
+			this.askAIToolStripMenuItem.Name = "askAIToolStripMenuItem";
+			this.askAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.askAIToolStripMenuItem.Text = "Ask AI";
+			this.askAIToolStripMenuItem.Click += new System.EventHandler(this.ai_askToolStripMenuItem_Click);
+			// 
+			// streamEventsToolStripMenuItem
+			// 
+			this.streamEventsToolStripMenuItem.Name = "streamEventsToolStripMenuItem";
+			this.streamEventsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.streamEventsToolStripMenuItem.Text = "Stream Events";
+			this.streamEventsToolStripMenuItem.Click += new System.EventHandler(this.ai_streamEventsToolStripMenuItem_Click);
+			// 
 			// tableLayoutPanel1
 			// 
 			this.tableLayoutPanel1.ColumnCount = 1;
@@ -204,7 +229,7 @@
 			// 
 			this.trayIcon.ContextMenuStrip = this.trayMenu;
 			this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
-			this.trayIcon.Text = "Sui's Stream Companion App";
+			this.trayIcon.Text = "Sui\'s Stream Companion App";
 			this.trayIcon.Visible = true;
 			this.trayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TrayIcon_MouseDoubleClick);
 			// 
@@ -230,28 +255,12 @@
 			this.closeToolStripMenuItem.Text = "Close";
 			this.closeToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
 			// 
-			// aIIntegrationToolStripMenuItem
+			// weatherToolStripMenuItem
 			// 
-			this.aIIntegrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.askAIToolStripMenuItem,
-            this.streamEventsToolStripMenuItem});
-			this.aIIntegrationToolStripMenuItem.Name = "aIIntegrationToolStripMenuItem";
-			this.aIIntegrationToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
-			this.aIIntegrationToolStripMenuItem.Text = "AI integration";
-			// 
-			// askAIToolStripMenuItem
-			// 
-			this.askAIToolStripMenuItem.Name = "askAIToolStripMenuItem";
-			this.askAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.askAIToolStripMenuItem.Text = "Ask AI";
-			this.askAIToolStripMenuItem.Click += new System.EventHandler(this.ai_askToolStripMenuItem_Click);
-			// 
-			// streamEventsToolStripMenuItem
-			// 
-			this.streamEventsToolStripMenuItem.Name = "streamEventsToolStripMenuItem";
-			this.streamEventsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.streamEventsToolStripMenuItem.Text = "Stream Events";
-			this.streamEventsToolStripMenuItem.Click += new System.EventHandler(this.ai_streamEventsToolStripMenuItem_Click);
+			this.weatherToolStripMenuItem.Name = "weatherToolStripMenuItem";
+			this.weatherToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.weatherToolStripMenuItem.Text = "Weather";
+			this.weatherToolStripMenuItem.Click += new System.EventHandler(this.weatherToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -303,6 +312,7 @@
 		private System.Windows.Forms.ToolStripMenuItem aIIntegrationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem askAIToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem streamEventsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem weatherToolStripMenuItem;
 	}
 }
 

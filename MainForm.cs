@@ -370,11 +370,6 @@ namespace SSC
 			}
 		}
 
-		private void GeminiAIToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void ai_askToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			AI_Integration.AskAI_Configuration_Form ai_form = new AI_Integration.AskAI_Configuration_Form();
@@ -391,6 +386,16 @@ namespace SSC
 			if (result == DialogResult.OK)
 			{
 
+			}
+		}
+
+		private void weatherToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AI_Integration.AI_Weather_Setting weather = new AI_Integration.AI_Weather_Setting();
+			var result = weather.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				//Nothing?
 			}
 		}
 	}
