@@ -46,6 +46,6 @@ namespace SSC.Structs.Gemini.FunctionTypes
 		public static GeminiFunction CreateTimeoutFunction() => new GeminiFunction("timeout", "time outs a user in the chat", new TimeOutParameters());
 		public static GeminiFunction CreateWRFunction() => new GeminiFunction("world_record", "Gets best time (world record) speedrunning leaderboard if it exists", new Speedrun.WorldRecordRequest());
 		public static GeminiFunction CreatePBFunction() => new GeminiFunction("personal_best", "Gets streamer's personal best from speedrunning leaderboard if it exists", new Speedrun.PersonalBestRequest());
-		public static GeminiFunction CreateWeatherFunction() => !string.IsNullOrEmpty(AIConfig.GetInstance().WeatherAPIKey) ? new GeminiFunction("weather", "Gets current weather for given longitude and latitude. Units property can be either metric or imperial.", new OpenWeatherCallProperty()) : null;
+		public static GeminiFunction CreateWeatherFunction() => !string.IsNullOrEmpty(AIConfig.GetInstance().WeatherAPIKey) ? new GeminiFunction("weather", "Gets current weather for given city. Can request a weather forecast data by setting is_weather_forecast to 1, otherwise it's 0. Units property can be either metric or imperial.", new OpenWeatherCallProperty()) : null;
 	}
 }

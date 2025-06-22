@@ -6,7 +6,7 @@ namespace SSC.Extensions
 	{
 		public static DateTime ToDateTimeSafe(this string Text)
 		{
-			if (Text == null || Text == String.Empty)
+			if (string.IsNullOrEmpty(Text))
 			{
 				return DateTime.UtcNow;
 			}
@@ -20,8 +20,22 @@ namespace SSC.Extensions
 				{
 					return DateTime.MinValue;
 				}
-
 			}
+		}
+
+		public static long ToUnixTime(this DateTime dateTime)
+		{
+			//This is a bit idiotic... ugh
+			var result = ((DateTimeOffset)dateTime.ToLocalTime()).ToUnixTimeSeconds();
+			return result;
+		}
+
+		public static DateTime FromUnixTime(this long dateTime)
+		{
+			//This is a bit idiotic... ugh
+			var dtOffset = DateTimeOffset.FromUnixTimeSeconds(dateTime);
+			var result = dtOffset.UtcDateTime;
+			return result;
 		}
 	}
 }
