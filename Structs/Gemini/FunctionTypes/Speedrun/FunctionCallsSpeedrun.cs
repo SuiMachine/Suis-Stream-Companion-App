@@ -1,6 +1,7 @@
 ﻿using SpeedrunComSharp;
 using SSC.Chat;
 using SuiBot_TwitchSocket.API.EventSub;
+using SuiBotAI.Components.Other.Gemini;
 using SuiBotAI.Components.Other.Gemini.FunctionTypes;
 using System;
 using System.Collections.Generic;
@@ -10,30 +11,16 @@ using System.Text;
 namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 {
 	[Serializable]
-	public class WorldRecordRequest : GeminiProperty
+	public class SpeedrunWRCall : FunctionCallSSC
 	{
-		public Parameter_String game_name = new Parameter_String();
-		public Parameter_String category = new Parameter_String();
-
-		public override List<string> GetRequiredFieldsNames() => new List<string>() { nameof(game_name) };
-	}
-
-	[Serializable]
-	public class PersonalBestRequest : GeminiProperty
-	{
-		public Parameter_String username = new Parameter_String();
-		public Parameter_String game_name = new Parameter_String();
-		public Parameter_String category = new Parameter_String();
-
-		public override List<string> GetRequiredFieldsNames() => new List<string>() { nameof(username), nameof(game_name) };
-	}
-
-
-	[Serializable]
-	public class SpeedrunWR : FunctionCall
-	{
+		[FunctionCallParameter(true)]
 		public string game_name = null;
+		[FunctionCallParameter(false)]
 		public string category = null;
+
+		public override string FunctionName() => "speedrun_world_record";
+
+		public override string FunctionDescription() => "Gets best time (world record) speedrunning leaderboard if it exists";
 
 		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
 		{
@@ -82,11 +69,19 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 	}
 
 	[Serializable]
-	public class SpeedrunPB : FunctionCall
+	public class SpeedrunPBCall : FunctionCallSSC
 	{
+		[FunctionCallParameter(true)]
 		public string username = null;
+		[FunctionCallParameter(true)]
 		public string game_name = null;
+		[FunctionCallParameter(false)]
 		public string category = null;
+
+		public override string FunctionDescription() => "Gets streamer's personal best from speedrunning leaderboard if it exists";
+
+		public override string FunctionName() => "speedrun_personal_best";
+
 		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
 		{
 			if (game_name == null)

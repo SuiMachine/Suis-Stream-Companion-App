@@ -1,21 +1,26 @@
 ﻿using SSC.Chat;
-using SSC.Structs.Gemini.FunctionTypes.Other;
 using SuiBot_TwitchSocket.API.EventSub;
+using SuiBotAI.Components.Other.Gemini;
 using System;
 using static SuiBotAI.Components.Other.Gemini.GeminiTools;
 
 namespace SSC.Structs.Gemini.FunctionTypes
 {
-	public abstract class FunctionCall
+	public abstract class FunctionCallSSC : FunctionCall
 	{
 		public virtual void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content) { }
 	}
 
 	[Serializable]
-	public class TimeOutUser : FunctionCall
+	public class TimeOutUserCall : FunctionCallSSC
 	{
+		[FunctionCallParameter(true)]
 		public double duration_in_seconds = 1;
+		[FunctionCallParameter(false)]
 		public string text_response = null;
+
+		public override string FunctionName() => "Timeout_User";
+		public override string FunctionDescription() => "Time outs a user in the chat. text_response can not be longer than 350 characters.";
 
 		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
 		{
@@ -27,9 +32,13 @@ namespace SSC.Structs.Gemini.FunctionTypes
 	}
 
 	[Serializable]
-	public class BanUser : FunctionCall
+	public class BanUserCall : FunctionCallSSC
 	{
+		[FunctionCallParameter(false)]
 		public string text_response = null;
+
+		public override string FunctionName() => "Ban_User";
+		public override string FunctionDescription() => "Bans a user. text_response can not be longer than 350 characters.";
 
 		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
 		{
@@ -38,14 +47,5 @@ namespace SSC.Structs.Gemini.FunctionTypes
 				channelInstance.UserBan(message, text_response);
 			}
 		}
-	}
-
-	public static class GeminiFunctionCall
-	{
-		public static GeminiFunction CreateBanFunction() => new GeminiFunction("ban", "bans a user", new BanParameters());
-		public static GeminiFunction CreateTimeoutFunction() => new GeminiFunction("timeout", "time outs a user in the chat", new TimeOutParameters());
-		public static GeminiFunction CreateWRFunction() => new GeminiFunction("world_record", "Gets best time (world record) speedrunning leaderboard if it exists", new Speedrun.WorldRecordRequest());
-		public static GeminiFunction CreatePBFunction() => new GeminiFunction("personal_best", "Gets streamer's personal best from speedrunning leaderboard if it exists", new Speedrun.PersonalBestRequest());
-		public static GeminiFunction CreateWeatherFunction() => !string.IsNullOrEmpty(AIConfig.GetInstance().WeatherAPIKey) ? new GeminiFunction("weather", "Gets current weather for given city. Can request a weather forecast data by setting is_weather_forecast to 1, otherwise it's 0. Units property can be either metric or imperial.", new OpenWeatherCallProperty()) : null;
 	}
 }

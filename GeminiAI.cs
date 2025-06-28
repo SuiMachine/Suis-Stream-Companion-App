@@ -1,6 +1,8 @@
 ﻿using SSC.Chat;
 using SSC.Structs.Gemini;
 using SSC.Structs.Gemini.FunctionTypes;
+using SSC.Structs.Gemini.FunctionTypes.Other;
+using SSC.Structs.Gemini.FunctionTypes.Speedrun;
 using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI;
 using SuiBotAI.Components;
@@ -122,15 +124,9 @@ namespace SSC
 					content.generationConfig.temperature = aiConfig.Temperature_Streamer;
 					content.tools = new List<GeminiTools>()
 					{
-						new GeminiTools()
-						{
-							functionDeclarations = new List<GeminiTools.GeminiFunction>()
-							{
-								GeminiFunctionCall.CreateWRFunction(),
-								GeminiFunctionCall.CreatePBFunction(),
-								GeminiFunctionCall.CreateWeatherFunction()
-							}
-						}
+						new GeminiTools(new SpeedrunWRCall(),
+						new SpeedrunPBCall(),
+						new OpenWeatherCall())
 					};
 				}
 				else
@@ -175,17 +171,11 @@ namespace SSC
 					content.generationConfig.temperature = aiConfig.Temperature_User;
 					content.tools = new List<GeminiTools>()
 					{
-						new GeminiTools()
-						{
-							functionDeclarations = new List<GeminiTools.GeminiFunction>()
-							{
-								GeminiFunctionCall.CreateTimeoutFunction(),
-								GeminiFunctionCall.CreateBanFunction(),
-								GeminiFunctionCall.CreateWRFunction(),
-								GeminiFunctionCall.CreatePBFunction(),
-								GeminiFunctionCall.CreateWeatherFunction()
-							}
-						}
+						new GeminiTools(new TimeOutUserCall(),
+						new BanUserCall(),
+						new SpeedrunWRCall(),
+						new SpeedrunPBCall(),
+						!string.IsNullOrEmpty(AIConfig.GetInstance().WeatherAPIKey) ? new OpenWeatherCall() : null)
 					};
 				}
 
@@ -243,7 +233,15 @@ namespace SSC
 					var func = lastResponse.parts.Last().functionCall;
 					if (func != null)
 					{
-						HandleChatFunctionCall(channelInstance, (ES_ChatMessage)request, func, content);
+						var type = content.tools[0].Calls[func.name];
+						if (type == null)
+							return;
+						var converted = func.args.ToObject(type);
+						if(converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
+						{
+							var callableCast = (FunctionCallSSC)converted;
+							callableCast.Perform(channelInstance, (ES_ChatMessage)request, content);
+						}
 					}
 				}
 			}
@@ -296,7 +294,15 @@ namespace SSC
 								var func = part.functionCall;
 								if (func != null)
 								{
-									HandleChatFunctionCall(channelInstance, message, func, content);
+									var type = content.tools[0].Calls[func.name];
+									if (type == null)
+										return;
+									var converted = func.args.ToObject(type);
+									if (converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
+									{
+										var callableCast = (FunctionCallSSC)converted;
+										callableCast.Perform(channelInstance, message, content);
+									}
 								}
 							}
 
@@ -314,20 +320,6 @@ namespace SSC
 					MainForm.Instance.ThreadSafeAddPreviewText($"There was an error trying to do AI: {ex}", LineType.GeminiAI);
 				}
 			});
-		}
-
-		private void HandleChatFunctionCall(ChannelInstance channelInstance, ES_ChatMessage message, GeminiResponseFunctionCall func, GeminiContent content)
-		{
-			if (func.name == "timeout")
-				func.args.ToObject<TimeOutUser>().Perform(channelInstance, message, content);
-			else if (func.name == "ban")
-				func.args.ToObject<BanUser>().Perform(channelInstance, message, content);
-			else if (func.name == "world_record")
-				func.args.ToObject<Structs.Gemini.FunctionTypes.Speedrun.SpeedrunWR>().Perform(channelInstance, message, content);
-			else if (func.name == "personal_best")
-				func.args.ToObject<Structs.Gemini.FunctionTypes.Speedrun.SpeedrunPB>().Perform(channelInstance, message, content);
-			else if (func.name == "weather")
-				func.args.ToObject<Structs.Gemini.FunctionTypes.Other.OpenWeather>().Perform(channelInstance, message, content);
 		}
 
 		private void GetResponseAdBreakStarted(ES_AdBreakBeginNotification adInfo)

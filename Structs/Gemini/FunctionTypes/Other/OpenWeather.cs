@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SSC.Chat;
 using SSC.Extensions;
 using SuiBot_TwitchSocket;
 using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI.Components.Other.Gemini;
-using SuiBotAI.Components.Other.Gemini.FunctionTypes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,22 +13,7 @@ using System.Threading.Tasks;
 
 namespace SSC.Structs.Gemini.FunctionTypes.Other
 {
-	[Serializable]
-	public class OpenWeatherCallProperty : GeminiProperty
-	{
-		public Parameter_String city = new Parameter_String();
-		public Parameter_String country_code = new Parameter_String();
-		public Parameter_String units = new Parameter_String();
-		public Parameter_Number is_weather_forecast = new Parameter_Number();
-
-		public override List<string> GetRequiredFieldsNames() => new List<string>()
-		{
-			nameof(city),
-			nameof(is_weather_forecast)
-		};
-	}
-
-	public class OpenWeather : FunctionCall
+	public class OpenWeatherCall : FunctionCallSSC
 	{
 		internal class Geocoding
 		{
@@ -139,9 +122,13 @@ namespace SSC.Structs.Gemini.FunctionTypes.Other
 		}
 
 		const string BASE_URI = "http://api.openweathermap.org/";
+		[FunctionCallParameter(true)]
 		public string city;
+		[FunctionCallParameter(true)]
 		public string country_code;
+		[FunctionCallParameter(true)]
 		public string units = "metric";
+		[FunctionCallParameter(true)]
 		public bool is_weather_forecast = false;
 
 		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
@@ -206,7 +193,10 @@ namespace SSC.Structs.Gemini.FunctionTypes.Other
 					MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, data.GetDescription(useMetric, data.timezone.HasValue ? data.timezone.Value : 0), Role.tool);
 				}
 			});
-
 		}
+
+		public override string FunctionName() => "weather";
+
+		public override string FunctionDescription() => "Gets current weather for given city. Can request a weather forecast data by setting is_weather_forecast to 1, otherwise it's 0. Units property can be either metric or imperial.";
 	}
 }

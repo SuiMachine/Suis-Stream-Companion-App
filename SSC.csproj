@@ -241,7 +241,6 @@
     <Compile Include="SoundEntry.cs" />
     <Compile Include="Structs\Gemini\FunctionTypes\FunctionCalls.cs" />
     <Compile Include="Structs\Gemini\FunctionTypes\Other\OpenWeather.cs" />
-    <Compile Include="Structs\Gemini\FunctionTypes\Parameters.cs" />
     <Compile Include="Structs\Gemini\FunctionTypes\Speedrun\FunctionCallsSpeedrun.cs" />
     <Compile Include="Structs\Gemini\GeminiCharacterOverride.cs" />
     <Compile Include="VoiceModHandling.cs" />
