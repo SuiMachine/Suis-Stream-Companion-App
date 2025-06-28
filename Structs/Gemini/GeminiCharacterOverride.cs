@@ -61,7 +61,7 @@ namespace SSC.Structs.Gemini
 			sb.Append(aiConfig.Instruction_Character);
 			sb.AppendLine();
 			sb.AppendLine(SystemInstruction);
-			sb.AppendStreamInstructionPostfix(true, true);
+			sb.AppendStreamInstructionPostfix(true);
 			return new GeminiMessage()
 			{
 				parts = new GeminiResponseMessagePart[]

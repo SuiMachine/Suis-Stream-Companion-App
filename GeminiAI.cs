@@ -2,6 +2,7 @@
 using SSC.Structs.Gemini;
 using SSC.Structs.Gemini.FunctionTypes;
 using SuiBot_TwitchSocket.API.EventSub;
+using SuiBotAI;
 using SuiBotAI.Components;
 using SuiBotAI.Components.Other.Gemini;
 using System;
@@ -195,7 +196,8 @@ namespace SSC
 					return;
 				}
 				content.StorePath = path;
-				var result = await m_Processor.GetAIResponse(content, instructions, request.user_input);
+				var full_input = AIMessageUtils.AppendDateTimePrefix(request.user_input);
+				var result = await m_Processor.GetAIResponse(content, instructions, full_input);
 
 				if (result == null)
 				{

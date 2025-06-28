@@ -56,7 +56,7 @@ namespace SSC.SettingsForms.AI_Overrides_Forms
 					return;
 				}
 
-				var text = AIConfig.GetInstance().GetInstruction(strippedNickname, false, false, false);
+				var text = AIConfig.GetInstance().GetInstruction(strippedNickname, false, false);
 				var overrideContent = new GeminiCharacterOverride
 				{
 					SystemInstruction = text.parts.FirstOrDefault().text,

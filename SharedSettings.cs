@@ -356,7 +356,7 @@ namespace SSC
 			};
 		}
 
-		public GeminiMessage GetInstruction(string username, bool isStreamer, bool attachIsLive, bool attachTimeDate = true)
+		public GeminiMessage GetInstruction(string username, bool isStreamer, bool attachIsLive)
 		{
 			var sb = new StringBuilder();
 
@@ -366,7 +366,8 @@ namespace SSC
 			if (!isStreamer)
 				sb.AppendLine("The user is " + username + ".");
 
-			sb.AppendStreamInstructionPostfix(attachTimeDate, attachIsLive);
+
+			sb.AppendStreamInstructionPostfix(attachIsLive);
 
 			return new GeminiMessage()
 			{

@@ -6,17 +6,9 @@ namespace SSC.Extensions
 {
 	public static class GeminiExtensions
 	{
-		public static void AppendStreamInstructionPostfix(this StringBuilder sb, bool attachTimeDate, bool attachIsLive)
+		public static void AppendStreamInstructionPostfix(this StringBuilder sb, bool attachIsLive)
 		{
 			sb.AppendLine("");
-
-			if (attachTimeDate)
-			{
-				System.Globalization.CultureInfo globalizationOverride = new System.Globalization.CultureInfo("en-US");
-
-				sb.AppendLine($"The current local time is {DateTime.Now:H:mm}. The local date is {DateTime.Now.ToString("MMMM dd, yyy", globalizationOverride)}.");
-				sb.AppendLine($"The current UTC time {DateTime.UtcNow:H:mm}. The UTC date is {DateTime.Now.ToString("MMMM dd, yyy", globalizationOverride)}.");
-			}
 
 			if (attachIsLive)
 			{
