@@ -126,7 +126,8 @@ namespace SSC
 					{
 						new GeminiTools(new SpeedrunWRCall(),
 						new SpeedrunPBCall(),
-						new OpenWeatherCall())
+						new OpenWeatherCall(),
+						new CurrentDateTimeCall())
 					};
 				}
 				else
@@ -175,6 +176,7 @@ namespace SSC
 						new BanUserCall(),
 						new SpeedrunWRCall(),
 						new SpeedrunPBCall(),
+						new CurrentDateTimeCall(),
 						!string.IsNullOrEmpty(AIConfig.GetInstance().WeatherAPIKey) ? new OpenWeatherCall() : null)
 					};
 				}

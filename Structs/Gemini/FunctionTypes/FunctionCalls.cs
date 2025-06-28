@@ -2,6 +2,7 @@
 using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI.Components.Other.Gemini;
 using System;
+using System.Text;
 using static SuiBotAI.Components.Other.Gemini.GeminiTools;
 
 namespace SSC.Structs.Gemini.FunctionTypes
@@ -46,6 +47,24 @@ namespace SSC.Structs.Gemini.FunctionTypes
 			{
 				channelInstance.UserBan(message, text_response);
 			}
+		}
+	}
+
+	[Serializable]
+	public class CurrentDateTimeCall : FunctionCallSSC
+	{
+		public override string FunctionName() => "Current_DateTime";
+		public override string FunctionDescription() => "Obtains current date time (both local and UTC).";
+
+		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
+		{
+			System.Globalization.CultureInfo globalizationOverride = new System.Globalization.CultureInfo("en-US");
+
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine($"Current local date is {DateTime.Now.ToString("MMMM d, yyy", globalizationOverride)} and time is {DateTime.Now.ToString("hh:mm:ss tt", globalizationOverride)}");
+			sb.AppendLine($"Current UTC date is {DateTime.UtcNow.ToString("MMMM d, yyy", globalizationOverride)} and UTC time is {DateTime.UtcNow.ToString("hh:mm:ss tt", globalizationOverride)}");
+
+			MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, sb.ToString());
 		}
 	}
 }
