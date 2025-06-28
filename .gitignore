@@ -51,6 +51,9 @@ Temporary Items
 Debug
 obj
 
+#Rider garbage
+.idea
+
 #nu-get packages
 packages
 
@@ -60,4 +63,5 @@ Release/Release_dir/*
 Release/Tags.txt
 Release/Log.txt
 Release/SuiBot-TwitchSocket.log
+Release/ignored_users.txt
 *.7z
