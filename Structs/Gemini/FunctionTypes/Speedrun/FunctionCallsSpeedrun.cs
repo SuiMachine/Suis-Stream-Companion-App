@@ -78,7 +78,7 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 		[FunctionCallParameter(false)]
 		public string category = null;
 
-		public override string FunctionDescription() => "Gets streamer's personal best from speedrunning leaderboard if it exists";
+		public override string FunctionDescription() => "Gets user's personal best from speedrunning leaderboard if it exists";
 
 		public override string FunctionName() => "speedrun_personal_best";
 
@@ -135,7 +135,6 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 
 						MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, response, SuiBotAI.Components.Other.Gemini.Role.tool);
 					}
-
 				}
 			}
 		}

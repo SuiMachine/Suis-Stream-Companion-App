@@ -34,7 +34,7 @@ namespace SSC.Chat
 		public System.Timers.Timer StatusUpdateTimer;
 		private System.Timers.Timer m_PreRolsActiveNotificationTimer;
 
-		private SoundDB SndDB { get; set; }
+		public SoundDB SndDB { get; private set; }
 
 		public ChatBot(SoundDB soundDb, char PrefixChar)
 		{

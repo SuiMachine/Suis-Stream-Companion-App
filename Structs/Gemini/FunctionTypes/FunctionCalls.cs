@@ -64,7 +64,7 @@ namespace SSC.Structs.Gemini.FunctionTypes
 			sb.AppendLine($"Current local date is {DateTime.Now.ToString("MMMM d, yyy", globalizationOverride)} and time is {DateTime.Now.ToString("hh:mm:ss tt", globalizationOverride)}");
 			sb.AppendLine($"Current UTC date is {DateTime.UtcNow.ToString("MMMM d, yyy", globalizationOverride)} and UTC time is {DateTime.UtcNow.ToString("hh:mm:ss tt", globalizationOverride)}");
 
-			MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, sb.ToString());
+			MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, sb.ToString(), Role.tool);
 		}
 	}
 }

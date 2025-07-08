@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
 
 namespace SSC
@@ -19,14 +20,14 @@ namespace SSC
 		public Dictionary<string, SoundEntry> RewardsToSound = new Dictionary<string, SoundEntry>();
 		public Dictionary<string, SoundEntry> UniversalRewards = new Dictionary<string, SoundEntry>();
 		private List<NSoundPlayer> m_SoundPlayerStack;
-		private Dictionary<string, DateTime> m_UserDB;
+		private Dictionary<string, DateTime> UserDB;
 		private int m_Delay;
 		private readonly string m_SoundBaseFile;
 
 		#region ConstructorRelated
 		public SoundDB()
 		{
-			m_UserDB = new Dictionary<string, DateTime>();
+			UserDB = new Dictionary<string, DateTime>();
 			m_SoundPlayerStack = new List<NSoundPlayer>();
 			m_RNG = new Random();
 			this.m_Delay = PrivateSettings.GetInstance().Delay;
@@ -127,14 +128,14 @@ namespace SSC
 			}
 
 			//Check if our db has a user and if not add him
-			if (!m_UserDB.ContainsKey(redeem.user_id))
+			if (!UserDB.ContainsKey(redeem.user_id))
 			{
-				m_UserDB.Add(redeem.user_id, DateTime.MinValue);
+				UserDB.Add(redeem.user_id, DateTime.MinValue);
 			}
 
 			if (!string.IsNullOrEmpty(PrivateSettings.GetInstance().UniversalRewardID) && redeem.reward.id == PrivateSettings.GetInstance().UniversalRewardID)
 			{
-				if (m_UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
+				if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
 				{
 					if (UniversalRewards.TryGetValue(redeem.user_input.SanitizeTags().ToLower(), out SoundEntry universal_sound))
 					{
@@ -147,7 +148,7 @@ namespace SSC
 						if (additionalDelay < 0)
 							additionalDelay = 0;
 
-						m_UserDB[redeem.user_id] = DateTime.Now + length + TimeSpan.FromSeconds(additionalDelay);
+						UserDB[redeem.user_id] = DateTime.Now + length + TimeSpan.FromSeconds(additionalDelay);
 						MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.FULFILLED);
 					}
 					else
@@ -159,14 +160,14 @@ namespace SSC
 			else if (RewardsToSound.TryGetValue(redeem.reward.id, out SoundEntry sound))
 			{
 				//check user cooldown
-				if (m_UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
+				if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
 				{
 					//Sound is found, is not played allocate a new player, start playing it, write down when user started playing a sound so he's under cooldown
 					PrivateSettings programSettings = PrivateSettings.GetInstance();
 					NSoundPlayer player = new NSoundPlayer(programSettings.OutputDevice, sound.GetFile(m_RNG), programSettings.Volume * sound.Volume);
 					TimeSpan length = player.GetTimeLength() + TimeSpan.FromSeconds(1);
 					m_SoundPlayerStack.Add(player);
-					m_UserDB[redeem.user_id] = DateTime.Now + length;
+					UserDB[redeem.user_id] = DateTime.Now + length;
 
 					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.FULFILLED);
 				}
@@ -191,6 +192,34 @@ namespace SSC
 		{
 			SoundStorageXML.SaveSoundBase(m_SoundBaseFile, SoundList);
 			RebuildDictionary();
+		}
+
+		internal string GetList()
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine($"Sound name | Sound description:");
+
+			foreach (var sound in SoundList)
+			{
+				sb.AppendLine($"{sound.RewardName} | {sound.Description}");
+			}
+			return sb.ToString();
+		}
+
+		internal void PlaySound(string userid, SoundEntry sound)
+		{
+			//Check if our db has a user and if not add him
+			if (!UserDB.ContainsKey(userid))
+			{
+				UserDB.Add(userid, DateTime.MinValue);
+			}
+
+			//Sound is found, is not played allocate a new player, start playing it, write down when user started playing a sound so he's under cooldown
+			PrivateSettings programSettings = PrivateSettings.GetInstance();
+			NSoundPlayer player = new NSoundPlayer(programSettings.OutputDevice, sound.GetFile(m_RNG), programSettings.Volume * sound.Volume);
+			TimeSpan length = player.GetTimeLength() + TimeSpan.FromSeconds(1);
+			m_SoundPlayerStack.Add(player);
+			UserDB[userid] = DateTime.Now + length;
 		}
 	}
 

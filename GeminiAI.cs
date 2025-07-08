@@ -70,7 +70,7 @@ namespace SSC
 			MainForm.Instance.TwitchEvents.OnAdBreakStarted += GetResponseAdBreakStarted;
 			MainForm.Instance.TwitchEvents.OnAdBreakFinished += GetResponseAdBreakFinished;
 			MainForm.Instance.TwitchEvents.OnAdPrerollsActive += GetResponsePreRollsActivated;
-			MainForm.Instance.TwitchEvents.OnChannelRaid += GetGetResponseRaid;
+			MainForm.Instance.TwitchEvents.OnChannelRaid += GetResponseRaid;
 		}
 
 		public void Unregister()
@@ -111,9 +111,10 @@ namespace SSC
 
 				int tokenLimit = 1000;
 
+				bool isChannelOwner = request.user_login == channelInstance.Channel;
 				string path;
 				GeminiMessage instructions = null;
-				if (request.user_login == channelInstance.Channel)
+				if (isChannelOwner)
 				{
 					path = AIConfig.GetAIHistoryPath(aiConfig.TwitchUsername);
 					content = StreamerContent;
@@ -127,6 +128,7 @@ namespace SSC
 						new GeminiTools(new SpeedrunWRCall(),
 						new SpeedrunPBCall(),
 						new OpenWeatherCall(),
+						new PlaySoundCall(),
 						new CurrentDateTimeCall())
 					};
 				}
@@ -203,46 +205,54 @@ namespace SSC
 
 					var lastResponse = result.candidates.Last().content;
 					content.contents.Add(lastResponse);
-					var text = lastResponse.parts.Last().text;
-					bot?.HelixAPI_User.UpdateRedemptionStatus(request, RedemptionStates.FULFILLED);
 
-					if (text != null)
+					for (int i = 0; i < lastResponse.parts.Length; i++)
 					{
-						SuiBotAIProcessor.CleanupResponse(ref text);
-
-						channelInstance?.SendChatMessage($"{request.user_name}: {text}");
-
-						while (content.generationConfig.TokenCount > tokenLimit)
+						if (!isChannelOwner)
 						{
-							if (content.contents.Count > 2)
-							{
-								//This isn't weird - we want to make sure we start from user message
-								if (content.contents[0].role == Role.user)
-								{
-									content.contents.RemoveAt(0);
-								}
+							if (i != lastResponse.parts.Length - 1)
+								continue;
+						}
+						var response = lastResponse.parts[i];
+						bot?.HelixAPI_User.UpdateRedemptionStatus(request, RedemptionStates.FULFILLED);
 
-								if (content.contents[0].role == Role.model)
+						if (response.text != null)
+						{
+							SuiBotAIProcessor.CleanupResponse(ref response.text);
+
+							channelInstance?.SendChatMessage($"{request.user_name}: {response.text}");
+
+							while (content.generationConfig.TokenCount > tokenLimit)
+							{
+								if (content.contents.Count > 2)
 								{
-									content.contents.RemoveAt(0);
+									//This isn't weird - we want to make sure we start from user message
+									if (content.contents[0].role == Role.user)
+									{
+										content.contents.RemoveAt(0);
+									}
+
+									if (content.contents[0].role == Role.model)
+									{
+										content.contents.RemoveAt(0);
+									}
 								}
 							}
+
+							XML_Utils.Save(path, content);
 						}
 
-						XML_Utils.Save(path, content);
-					}
-
-					var func = lastResponse.parts.Last().functionCall;
-					if (func != null)
-					{
-						var type = content.tools[0].Calls[func.name];
-						if (type == null)
-							return;
-						var converted = func.args.ToObject(type);
-						if(converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
+						if (response.functionCall != null)
 						{
-							var callableCast = (FunctionCallSSC)converted;
-							callableCast.Perform(channelInstance, (ES_ChatMessage)request, content);
+							var type = content.tools[0].Calls[response.functionCall.name];
+							if (type == null)
+								return;
+							var converted = response.functionCall.args.ToObject(type);
+							if (converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
+							{
+								var callableCast = (FunctionCallSSC)converted;
+								callableCast.Perform(channelInstance, (ES_ChatMessage)request, content);
+							}
 						}
 					}
 				}
@@ -260,7 +270,7 @@ namespace SSC
 			}
 		}
 
-		internal void GetSecondaryAnswer(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content, string appendContent, Role role = Role.user)
+		internal void GetSecondaryAnswer(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content, string appendContent, Role role)
 		{
 			ChatBot bot = MainForm.Instance.TwitchBot;
 
@@ -456,7 +466,7 @@ namespace SSC
 			});
 		}
 
-		private void GetGetResponseRaid(ES_ChannelRaid raid)
+		private void GetResponseRaid(ES_ChannelRaid raid)
 		{
 			var aiConfig = AIConfig.GetInstance();
 

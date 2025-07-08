@@ -27,7 +27,7 @@ namespace SSC
 		public ChatBot TwitchBot { get; private set; }
 		public EventBridge TwitchEvents { get; private set; }
 		private char PrefixCharacter = '-';
-		SoundDB soundDb;
+		public SoundDB SoundDB { get; private set; }
 		public GeminiAI AI { get; private set; }
 		WebSocketsListener webSockets;
 		public MixItUp MixItUpWebhook { get; private set; }
@@ -50,7 +50,7 @@ namespace SSC
 			int valrr = Convert.ToInt32(100 * settings.Volume);
 			trackBar_Volume.Value = valrr;
 			L_Volume.Text = trackBar_Volume.Value.ToString() + "%";
-			soundDb = new SoundDB();
+			SoundDB = new SoundDB();
 
 			if (settings.Autostart)
 			{
@@ -63,7 +63,7 @@ namespace SSC
 
 		private void StartBot()
 		{
-			TwitchBot = new ChatBot(soundDb, PrefixCharacter);
+			TwitchBot = new ChatBot(SoundDB, PrefixCharacter);
 			TwitchBot.Connect();
 			if (AI.IsConfigured())
 			{
@@ -351,12 +351,12 @@ namespace SSC
 
 		private void DatabaseEditorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SoundDatabaseEditor.DB_Editor scf = new SoundDatabaseEditor.DB_Editor(soundDb.SoundList);
+			SoundDatabaseEditor.DB_Editor scf = new SoundDatabaseEditor.DB_Editor(SoundDB.SoundList);
 			DialogResult res = scf.ShowDialog();
 			if (res == DialogResult.OK)
 			{
-				soundDb.SoundList = scf.SoundsCopy;
-				soundDb.Save();
+				SoundDB.SoundList = scf.SoundsCopy;
+				SoundDB.Save();
 			}
 		}
 
