@@ -1,14 +1,12 @@
 ﻿using SSC.Chat;
 using System;
-using WebSocketSharp;
-using WebSocketSharp.Server;
 
 namespace SSC
 {
 	public class WebSocketsListener
 	{
 		#region End Points logic
-		public class AdjustVolume : WebSocketBehavior
+/*		public class AdjustVolume : WebSocketBehavior
 		{
 			protected override void OnMessage(MessageEventArgs e)
 			{
@@ -52,14 +50,14 @@ namespace SSC
 				else
 					MainForm.Instance.ThreadSafeAddPreviewText("Failed to parse", LineType.WebSocket);
 			}
-		}
+		}*/
 		#endregion
 
-		private WebSocketServer m_server;
+		//private WebSocketServer m_server;
 
 		public void Start()
 		{
-			if (m_server == null)
+/*			if (m_server == null)
 			{
 				try
 				{
@@ -77,17 +75,17 @@ namespace SSC
 					MainForm.Instance.ThreadSafeAddPreviewText($"Failed to open WebSocket server - {e.Message}", LineType.WebSocket);
 					return;
 				}
-			}
+			}*/
 		}
 
 		public void Stop()
 		{
-			if (m_server != null)
+/*			if (m_server != null)
 			{
 				m_server.Stop(CloseStatusCode.Normal, "Intentional shutdown");
 				System.Threading.Thread.Sleep(200);
 				m_server = null;
-			}
+			}*/
 		}
 	}
 }

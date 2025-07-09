@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -6,7 +7,7 @@ namespace SSC.DialogBoxes
 {
 	public partial class ProgressDisplay : Form
 	{
-		public static ProgressDisplay Instance { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public static ProgressDisplay Instance { get; private set; }
 		private Action TaskToPerform;
 
 		private ProgressDisplay()

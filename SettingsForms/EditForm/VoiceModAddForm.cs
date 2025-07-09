@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,12 +9,12 @@ namespace SSC.SettingsForms.EditForm
 	public partial class VoiceModAddForm : Form
 	{
 		private List<VoiceModHandling.VoiceInformation> Voices;
-		public VoiceModHandling.VoiceInformation SelectedVoice { get; private set; }
-		public string RewardName { get; set; }
-		public string Description { get; set; }
-		public int Price { get; set; } = 240;
-		public int Duration { get; set; } = 30;
-		public int Cooldown { get; set; } = 1;
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public VoiceModHandling.VoiceInformation SelectedVoice { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string RewardName { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string Description { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int Price { get; set; } = 240;
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int Duration { get; set; } = 30;
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int Cooldown { get; set; } = 1;
 
 		public VoiceModAddForm()
 		{

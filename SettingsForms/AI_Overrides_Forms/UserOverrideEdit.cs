@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using static SuiBotAI.Components.Other.Gemini.GeminiSafetySettingsCategory;
 
@@ -6,7 +7,7 @@ namespace SSC.SettingsForms.AI_Overrides_Forms
 {
 	public partial class UserOverrideEdit : Form
 	{
-		public Structs.Gemini.GeminiCharacterOverride UserData { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public Structs.Gemini.GeminiCharacterOverride UserData { get; private set; }
 
 		public UserOverrideEdit(Structs.Gemini.GeminiCharacterOverride userData)
 		{

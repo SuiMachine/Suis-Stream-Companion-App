@@ -11,8 +11,8 @@ namespace SSC.SettingsForms
 {
 	public partial class VoiceModIntegrationForm : Form
 	{
-		public string Address { get; set; }
-		public string API_KEY { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string Address { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string API_KEY { get; set; }
 		protected BindingList<IVoiceModeRewardBindingInterface> VoiceModRewardBinding { get; set; }
 
 

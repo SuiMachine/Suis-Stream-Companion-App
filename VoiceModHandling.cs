@@ -8,7 +8,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
-using WebSocketSharp;
+using Websocket.Client;
 using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
 
 namespace SSC
@@ -44,7 +44,7 @@ namespace SSC
 		public bool Disposed { get; private set; }
 		public bool SocketConnected { get; private set; }
 
-		private WebSocket VoiceModSocket;
+		private WebsocketClient VoiceModSocket;
 		string currentVoice = "";
 		public bool CurrentActiveStatus { get; private set; } = false;
 		public Dictionary<string, VoiceInformation> VoicesAvailable = new Dictionary<string, VoiceInformation>();
@@ -77,21 +77,34 @@ namespace SSC
 		{
 			if (ConnectedToVoiceMod || m_IsConnecting)
 				return;
-
 			try
 			{
 				var voiceModConfig = VoiceModConfig.GetInstance();
 
-				VoiceModSocket = new WebSocket(voiceModConfig.AdressPort);
-				VoiceModSocket.OnMessage += VoiceModSocket_OnMessage;
-				VoiceModSocket.OnOpen += VoiceModSocket_OnOpen;
-				VoiceModSocket.OnClose += VoiceModSocket_OnClose;
+				VoiceModSocket = new WebsocketClient(new Uri(voiceModConfig.AdressPort));
+				VoiceModSocket.IsReconnectionEnabled = false;
+				VoiceModSocket.MessageReceived.Subscribe(msg =>
+				{
+					VoiceModSocket_OnMessage(VoiceModSocket, msg);
+				});
+				VoiceModSocket.DisconnectionHappened.Subscribe(disconnectMsg =>
+				{
+					VoiceModSocket_OnClose(VoiceModSocket, disconnectMsg);
+				});
+
 				if (IsConfigured())
 				{
 					m_IsConnecting = true;
 					MainForm.Instance.ThreadSafeAddPreviewText("Connecting to voice mod!", LineType.VoiceMod);
-					VoiceModSocket.ConnectAsync();
-					MainForm.Instance.TwitchEvents.OnChannelPointsRedeem += OnChannelPointsRedeem;
+					Task.Run(async () =>
+					{
+						await VoiceModSocket.Start();
+						if(VoiceModSocket.IsRunning)
+						{
+							VoiceModSocket_OnOpen(VoiceModSocket);
+							MainForm.Instance.TwitchEvents.OnChannelPointsRedeem += OnChannelPointsRedeem;
+						}
+					});
 				}
 				else
 					MainForm.Instance.ThreadSafeAddPreviewText("VoiceMod is not configured - this is OK, unless you want to use it", LineType.VoiceMod);
@@ -105,12 +118,12 @@ namespace SSC
 			}
 		}
 
-		private void VoiceModSocket_OnMessage(object sender, MessageEventArgs e)
+		private void VoiceModSocket_OnMessage(WebsocketClient sender, ResponseMessage e)
 		{
 			//Should have probably used enums......................
 			//Oh well.
 
-			var json = JObject.Parse(e.Data);
+			var json = JObject.Parse(e.Text);
 			var msg = json["msg"];
 			if (msg != null)
 			{
@@ -414,7 +427,7 @@ namespace SSC
 			SetVoice(null, 0);
 		}
 
-		private void VoiceModSocket_OnOpen(object sender, EventArgs e)
+		private void VoiceModSocket_OnOpen(WebsocketClient sender)
 		{
 			MainForm.Instance.ThreadSafeAddPreviewText("Opened VoiceMod connection", LineType.TwitchSocketCommand);
 			ConnectedToVoiceMod = true;
@@ -435,7 +448,7 @@ namespace SSC
 			VoiceModSocket.Send(message.ToString());
 		}
 
-		private void VoiceModSocket_OnClose(object sender, CloseEventArgs e)
+		private void VoiceModSocket_OnClose(WebsocketClient sender, DisconnectionInfo e)
 		{
 			MainForm.Instance.ThreadSafeAddPreviewText("Closed VoiceMod connection", LineType.TwitchSocketCommand);
 			ConnectedToVoiceMod = false;
@@ -445,10 +458,8 @@ namespace SSC
 		{
 			if (!this.Disposed)
 			{
-				VoiceModSocket.Close();
-				VoiceModSocket.OnMessage -= VoiceModSocket_OnMessage;
-				VoiceModSocket.OnOpen -= VoiceModSocket_OnOpen;
-				VoiceModSocket.OnClose -= VoiceModSocket_OnClose;
+				VoiceModSocket.Stop(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "Intended closure");
+				VoiceModSocket.Dispose();
 
 				this.Disposed = true;
 			}
@@ -461,11 +472,8 @@ namespace SSC
 
 			if (VoiceModSocket != null)
 			{
-				VoiceModSocket.Close();
+				VoiceModSocket.Stop(System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "Disconnected requested from VoiceMod");
 			}
-
-/*			if (MainForm.TwitchSocket != null)
-				MainForm.TwitchSocket.OnChannelPointsRedeem -= OnChannelPointsRedeem;*/
 		}
 
 		public void OnChannelPointsRedeem(ES_ChannelPointRedeemRequest redeem)
