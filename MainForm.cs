@@ -3,6 +3,7 @@ using SSC.MixItUpBridge;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace SSC
 {
@@ -19,18 +20,18 @@ namespace SSC
 
 	public partial class MainForm : Form
 	{
-		public static MainForm Instance { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public static MainForm Instance { get; private set; }
 
 		public delegate void SetPreviewTextDelegate(string text, LineType type);       //used to safely handle the IRC output from bot class
 		public delegate void SetVolumeSlider(int value);       //used to safely change the slider position
 
-		public ChatBot TwitchBot { get; private set; }
-		public EventBridge TwitchEvents { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public ChatBot TwitchBot { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridge TwitchEvents { get; private set; }
 		private char PrefixCharacter = '-';
-		public SoundDB SoundDB { get; private set; }
-		public GeminiAI AI { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundDB SoundDB { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public GeminiAI AI { get; private set; }
 		WebSocketsListener webSockets;
-		public MixItUp MixItUpWebhook { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public MixItUp MixItUpWebhook { get; private set; }
 
 		public MainForm()
 		{
@@ -248,31 +249,6 @@ namespace SSC
 
 			if (AI != null)
 				AI.Unregister();
-		}
-
-		private void ColorSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			SettingsForms.ColorSettingsForm csf = new SettingsForms.ColorSettingsForm();
-			DialogResult res = csf.ShowDialog();
-			if (res == DialogResult.OK)
-			{
-				var settings = PrivateSettings.GetInstance();
-				settings.Colors.FormBackground = csf.FormBackground;
-				settings.Colors.FormTextColor = csf.FormTextColor;
-				settings.Colors.MenuStripBarBackground = csf.MenuStripBarBackground;
-				settings.Colors.MenuStripBarText = csf.MenuStripBarText;
-				settings.Colors.MenuStripBackground = csf.MenuStripBackground;
-				settings.Colors.MenuStripText = csf.MenuStripText;
-				settings.Colors.MenuStripBackgroundSelected = csf.MenuStripBackgroundSelected;
-
-				settings.Colors.LineColorBackground = csf.LineColorBackground;
-				settings.Colors.LineColorGeneric = csf.LineColorGeneric;
-				settings.Colors.LineColorIrcCommand = csf.LineColorIrcCommand;
-				settings.Colors.LineColorModeration = csf.LineColorModeration;
-				settings.Colors.LineColorSoundPlayback = csf.LineColorSoundPlayback;
-				settings.SaveSettings();
-				UpdateColors();
-			}
 		}
 
 		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -3,6 +3,7 @@ using SuiBot_TwitchSocket.API;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace SSC.SettingsForms
 {
@@ -47,13 +48,12 @@ namespace SSC.SettingsForms
 		};
 
 		private MainForm _parent;
-		public string UserAuth { get; set; }
-		public string BotAuth { get; set; }
-
-		public bool DebugMode { get; set; }
-		public int WebsocketPort { get; set; }
-		public bool RunWebsocket { get; set; }
-		public string MixItUp_WebookURL { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string UserAuth { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string BotAuth { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool DebugMode { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int WebsocketPort { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool RunWebsocket { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string MixItUp_WebookURL { get; set; }
 
 
 		public ConnectionSettingsForm(MainForm _parent)

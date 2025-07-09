@@ -2,6 +2,7 @@
 using SSC.Extensions;
 using SSC.SoundStorage;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,8 +10,8 @@ namespace SSC.SoundDatabaseEditor.EditDialogues
 {
 	public partial class AddEditNewEntryDialog : Form
 	{
-		public SoundEntry ReturnSound { get; set; }
-		public static AddEditNewEntryDialog Instance { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundEntry ReturnSound { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public static AddEditNewEntryDialog Instance { get; private set; }
 
 		public AddEditNewEntryDialog()
 		{

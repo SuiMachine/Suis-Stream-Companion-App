@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace SSC.SoundDatabaseEditor.EditDialogues
 {
 	public partial class SoundPlaybackSettingsDialog : Form
 	{
-		public Guid SelectedDevice { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public Guid SelectedDevice { get; set; }
 
 		public SoundPlaybackSettingsDialog()
 		{

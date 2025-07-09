@@ -2,9 +2,7 @@
 using SSC.Chat;
 using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI.Components.Other.Gemini;
-using SuiBotAI.Components.Other.Gemini.FunctionTypes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 

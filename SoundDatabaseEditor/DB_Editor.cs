@@ -3,6 +3,7 @@ using SSC.Extensions;
 using SSC.SoundStorage;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -17,7 +18,7 @@ namespace SSC.SoundDatabaseEditor
 		public const string NodeNameVolume = "Volume";
 		public const string NodeNamePoints = "Points cost";
 
-		public static DB_Editor Instance { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public static DB_Editor Instance { get; private set; }
 		public List<SoundEntry> SoundsCopy;
 
 		public DB_Editor(List<SoundEntry> Sounds)

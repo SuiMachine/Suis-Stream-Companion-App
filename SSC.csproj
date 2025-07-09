@@ -1,356 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AB91E6D8-41B7-40F8-9A30-8C8C0AC02DDF}</ProjectGuid>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SSC</RootNamespace>
     <AssemblyName>SuisStreamCompanion</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup />
-  <PropertyGroup>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
     <ApplicationIcon>sound_player_icon_bundled.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NAudio, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.2.2.1\lib\net472\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Asio, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.Asio.2.2.1\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.Core.2.2.1\lib\netstandard2.0\NAudio.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Midi, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.Midi.2.2.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Vorbis, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.Vorbis.1.5.0\lib\netstandard2.0\NAudio.Vorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Wasapi, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.Wasapi.2.2.1\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinForms, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.WinForms.2.2.1\lib\net472\NAudio.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinMM, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>packages\NAudio.WinMM.2.2.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis, Version=0.10.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\NVorbis.0.10.5\lib\net45\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="SpeedrunComSharp">
-      <HintPath>Libraries\SpeedrunComSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
-      <HintPath>packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AI_Integration\AI_StreamEvents.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AI_Integration\AI_StreamEvents.Designer.cs">
-      <DependentUpon>AI_StreamEvents.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DialogBoxes\ProgressDisplay.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DialogBoxes\ProgressDisplay.Designer.cs">
-      <DependentUpon>ProgressDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EncryptedString.cs" />
-    <Compile Include="EventBridge.cs" />
-    <Compile Include="Extensions\ColorWrapper.cs" />
-    <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\DateTimeExtensions.cs" />
-    <Compile Include="Extensions\GeminiExtensions.cs" />
-    <Compile Include="Extensions\Numbers.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="GeminiAI.cs" />
-    <Compile Include="Interfaces\IVoiceModeRewardBindingInterface.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IRC\ChatBot.cs" />
-    <Compile Include="IRC\ChannelInstance.cs" />
-    <Compile Include="Mathf.cs" />
-    <Compile Include="MixItUpBridge\MixItUp.cs" />
-    <Compile Include="MixItUpBridge\MixItUpRequests.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AI_Integration\AskAI_Configuration_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AI_Integration\AskAI_Configuration_Form.Designer.cs">
-      <DependentUpon>AskAI_Configuration_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideAddForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideAddForm.Designer.cs">
-      <DependentUpon>UserOverrideAddForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideEdit.Designer.cs">
-      <DependentUpon>UserOverrideEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.Designer.cs">
-      <DependentUpon>UserOverrideSelectionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AI_Integration\AI_Weather_Setting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AI_Integration\AI_Weather_Setting.Designer.cs">
-      <DependentUpon>AI_Weather_Setting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\ColorSettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\ColorSettingsForm.Designer.cs">
-      <DependentUpon>ColorSettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\ConnectionSettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\ConnectionSettingsForm.Designer.cs">
-      <DependentUpon>ConnectionSettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\EditForm\VoiceModAddForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\EditForm\VoiceModAddForm.Designer.cs">
-      <DependentUpon>VoiceModAddForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\EditForm\VoiceModEditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\EditForm\VoiceModEditForm.Designer.cs">
-      <DependentUpon>VoiceModEditForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsForms\VoiceModIntegrationForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SettingsForms\VoiceModIntegrationForm.Designer.cs">
-      <DependentUpon>VoiceModIntegrationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SharedSettings.cs" />
-    <Compile Include="SoundBase.cs" />
-    <Compile Include="SoundDatabaseEditor\DB_Editor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SoundDatabaseEditor\DB_Editor.Designer.cs">
-      <DependentUpon>DB_Editor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SoundDatabaseEditor\EditDialogues\AddEditNewEntryDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SoundDatabaseEditor\EditDialogues\AddEditNewEntryDialog.Designer.cs">
-      <DependentUpon>AddEditNewEntryDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.Designer.cs">
-      <DependentUpon>SoundPlaybackSettingsDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SoundDatabaseEditor\SupportedFileFormats.cs" />
-    <Compile Include="SoundEntry.cs" />
-    <Compile Include="Structs\Gemini\FunctionTypes\FunctionCalls.cs" />
-    <Compile Include="Structs\Gemini\FunctionTypes\Other\OpenWeather.cs" />
-    <Compile Include="Structs\Gemini\FunctionTypes\Other\PlaySoundCall.cs" />
-    <Compile Include="Structs\Gemini\FunctionTypes\Speedrun\FunctionCallsSpeedrun.cs" />
-    <Compile Include="Structs\Gemini\GeminiCharacterOverride.cs" />
-    <Compile Include="VoiceModHandling.cs" />
-    <Compile Include="SoundStorageXML.cs" />
-    <Compile Include="Structs\TwitchRightsEnum.cs" />
-    <Compile Include="WebSocketsServer.cs" />
-    <Compile Include="XML_Utils.cs" />
-    <EmbeddedResource Include="AI_Integration\AI_StreamEvents.resx">
-      <DependentUpon>AI_StreamEvents.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DialogBoxes\ProgressDisplay.resx">
-      <DependentUpon>ProgressDisplay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="AI_Integration\AskAI_Configuration_Form.resx">
-      <DependentUpon>AskAI_Configuration_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\AI_Overrides_Forms\UserOverrideAddForm.resx">
-      <DependentUpon>UserOverrideAddForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\AI_Overrides_Forms\UserOverrideEdit.resx">
-      <DependentUpon>UserOverrideEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.resx">
-      <DependentUpon>UserOverrideSelectionForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AI_Integration\AI_Weather_Setting.resx">
-      <DependentUpon>AI_Weather_Setting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\ColorSettingsForm.resx">
-      <DependentUpon>ColorSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\ConnectionSettingsForm.resx">
-      <DependentUpon>ConnectionSettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\EditForm\VoiceModAddForm.resx">
-      <DependentUpon>VoiceModAddForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\EditForm\VoiceModEditForm.resx">
-      <DependentUpon>VoiceModEditForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForms\VoiceModIntegrationForm.resx">
-      <DependentUpon>VoiceModIntegrationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SoundDatabaseEditor\DB_Editor.resx">
-      <DependentUpon>DB_Editor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SoundDatabaseEditor\EditDialogues\AddEditNewEntryDialog.resx">
-      <DependentUpon>AddEditNewEntryDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.resx">
-      <DependentUpon>SoundPlaybackSettingsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="app.manifest" />
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="NAudio.Asio" Version="2.2.1" />
+    <PackageReference Include="NAudio.Core" Version="2.2.1" />
+    <PackageReference Include="NAudio.Midi" Version="2.2.1" />
+    <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+    <PackageReference Include="NAudio.WinForms" Version="2.2.1" />
+    <PackageReference Include="NAudio.WinMM" Version="2.2.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NVorbis" Version="0.10.5" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
+    <PackageReference Include="System.Security.AccessControl" Version="6.0.1" />
+    <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sound_player_icon_bundled.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuiBot-AI\SuiBot-AI.csproj">
-      <Project>{22F63E69-76D9-451E-8329-46A8B41C12CB}</Project>
-      <Name>SuiBot-AI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SuiBot-TwitchSocket\SuiBot-TwitchSocket.csproj">
-      <Project>{eefd4d67-fa06-4a2a-804f-31851cb06a3e}</Project>
-      <Name>SuiBot-TwitchSocket</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\SuiBot-AI\SuiBot-AI.csproj" />
+    <ProjectReference Include="..\SuiBot-TwitchSocket\SuiBot-TwitchSocket.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MixItUpBridge\Requests\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <Reference Include="SpeedrunComSharp">
+      <HintPath>..\__liberies\SpeedrunComSharp-master\artifacts\bin\SpeedrunComSharp\release\SpeedrunComSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

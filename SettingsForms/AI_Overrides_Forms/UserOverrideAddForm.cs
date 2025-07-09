@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace SSC.SettingsForms.AI_Overrides_Forms
 {
 	public partial class UserOverrideAddForm : Form
 	{
-		public string Nickname { get; set; } = "";
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string Nickname { get; set; } = "";
 
 		public UserOverrideAddForm()
 		{

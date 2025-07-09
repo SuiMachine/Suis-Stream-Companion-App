@@ -1,19 +1,19 @@
-﻿using System.Windows.Forms;
-using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace SSC.SettingsForms.EditForm
 {
 	public partial class VoiceModEditForm : Form
 	{
-		public string RewardName { get; set; }
-		public string VoiceName { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string RewardName { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string VoiceName { get; set; }
 
-		public string RewardID { get; set; }
-		public int RewardPrice { get; set; }
-		public int RewardCooldown { get; set; }
-		public int RewardDuration { get; set; }
-		public bool RewardEnabled { get; set; }
-		public string RewardText { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string RewardID { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int RewardPrice { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int RewardCooldown { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int RewardDuration { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool RewardEnabled { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string RewardText { get; set; }
 
 		public VoiceModEditForm(VoiceModConfig.VoiceModReward reward)
 		{

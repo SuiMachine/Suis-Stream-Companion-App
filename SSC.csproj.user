@@ -3,4 +3,51 @@
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="AI_Integration\AI_StreamEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AI_Integration\AI_Weather_Setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AI_Integration\AskAI_Configuration_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DialogBoxes\ProgressDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\ConnectionSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\EditForm\VoiceModAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\EditForm\VoiceModEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForms\VoiceModIntegrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SoundDatabaseEditor\DB_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SoundDatabaseEditor\EditDialogues\AddEditNewEntryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
