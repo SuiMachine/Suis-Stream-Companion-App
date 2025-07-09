@@ -165,7 +165,6 @@
         }
       },
       "System.ComponentModel.Annotations/5.0.0": {},
-      "System.Data.DataSetExtensions/4.5.0": {},
       "System.Memory/4.5.3": {},
       "System.Runtime.CompilerServices.Unsafe/6.1.2": {},
       "System.Security.AccessControl/6.0.1": {},
@@ -183,8 +182,7 @@
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Newtonsoft.Json": "13.0.3",
-          "SuiBot-TwitchSocket": "1.0.0",
-          "System.Data.DataSetExtensions": "4.5.0"
+          "SuiBot-TwitchSocket": "1.0.0"
         },
         "runtime": {
           "SuiBot-AI.dll": {
@@ -197,7 +195,6 @@
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "Newtonsoft.Json": "13.0.3",
-          "System.Data.DataSetExtensions": "4.5.0",
           "WebSocketSharp": "1.0.3-rc11"
         },
         "runtime": {
@@ -318,13 +315,6 @@
       "sha512": "sha512-dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
       "path": "system.componentmodel.annotations/5.0.0",
       "hashPath": "system.componentmodel.annotations.5.0.0.nupkg.sha512"
-    },
-    "System.Data.DataSetExtensions/4.5.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-221clPs1445HkTBZPL+K9sDBdJRB8UN8rgjO3ztB0CQ26z//fmJXtlsr6whGatscsKGBrhJl5bwJuKSA8mwFOw==",
-      "path": "system.data.datasetextensions/4.5.0",
-      "hashPath": "system.data.datasetextensions.4.5.0.nupkg.sha512"
     },
     "System.Memory/4.5.3": {
       "type": "package",
