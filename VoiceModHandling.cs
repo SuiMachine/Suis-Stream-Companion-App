@@ -82,9 +82,7 @@ namespace SSC
 				var voiceModConfig = VoiceModConfig.GetInstance();
 
 				VoiceModSocket = new WebsocketClient(new Uri(voiceModConfig.AdressPort));
-				VoiceModSocket.ReconnectTimeout = TimeSpan.FromSeconds(30);
-				VoiceModSocket.ErrorReconnectTimeout = TimeSpan.FromSeconds(120);
-				VoiceModSocket.IsStreamDisposedAutomatically = true;
+				VoiceModSocket.IsReconnectionEnabled = false;
 				VoiceModSocket.MessageReceived.Subscribe(msg =>
 				{
 					VoiceModSocket_OnMessage(VoiceModSocket, msg);
@@ -104,10 +102,9 @@ namespace SSC
 						if(VoiceModSocket.IsRunning)
 						{
 							VoiceModSocket_OnOpen(VoiceModSocket);
+							MainForm.Instance.TwitchEvents.OnChannelPointsRedeem += OnChannelPointsRedeem;
 						}
 					});
-
-					MainForm.Instance.TwitchEvents.OnChannelPointsRedeem += OnChannelPointsRedeem;
 				}
 				else
 					MainForm.Instance.ThreadSafeAddPreviewText("VoiceMod is not configured - this is OK, unless you want to use it", LineType.VoiceMod);
