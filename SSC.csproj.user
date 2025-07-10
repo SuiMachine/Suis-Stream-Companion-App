@@ -13,6 +13,12 @@
     <Compile Update="AI_Integration\AskAI_Configuration_Form.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="AI_Integration\AI_Casual_Chats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AI_Integration\CasualChatsElements\CasualChat_History.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="DialogBoxes\ProgressDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

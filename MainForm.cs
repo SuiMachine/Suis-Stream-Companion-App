@@ -374,5 +374,11 @@ namespace SSC
 				//Nothing?
 			}
 		}
+
+		private void openAIChatToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AI_Integration.AI_Casual_Chats chats = new AI_Integration.AI_Casual_Chats(AI);
+			chats.Show();
+		}
 	}
 }

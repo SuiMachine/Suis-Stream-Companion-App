@@ -52,6 +52,7 @@
 			trayMenu = new System.Windows.Forms.ContextMenuStrip(components);
 			showProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			openAIChatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)trackBar_Volume).BeginInit();
 			menuStrip1.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
@@ -106,7 +107,7 @@
 			// 
 			// fileToolStripMenuItem
 			// 
-			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { runBotToolStripMenuItem, connectOnStartupToolStripMenuItem, connectionSettingsToolStripMenuItem, exitToolStripMenuItem });
+			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { runBotToolStripMenuItem, openAIChatToolStripMenuItem, connectOnStartupToolStripMenuItem, connectionSettingsToolStripMenuItem, exitToolStripMenuItem });
 			fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			fileToolStripMenuItem.Text = "File";
@@ -151,14 +152,14 @@
 			// soundSettings
 			// 
 			soundSettings.Name = "soundSettings";
-			soundSettings.Size = new System.Drawing.Size(127, 22);
+			soundSettings.Size = new System.Drawing.Size(180, 22);
 			soundSettings.Text = "Sounds";
 			soundSettings.Click += DatabaseEditorToolStripMenuItem_Click;
 			// 
 			// voiceModSettings
 			// 
 			voiceModSettings.Name = "voiceModSettings";
-			voiceModSettings.Size = new System.Drawing.Size(127, 22);
+			voiceModSettings.Size = new System.Drawing.Size(180, 22);
 			voiceModSettings.Text = "VoiceMod";
 			voiceModSettings.Click += VoiceModSettings_Click;
 			// 
@@ -172,21 +173,21 @@
 			// askAIToolStripMenuItem
 			// 
 			askAIToolStripMenuItem.Name = "askAIToolStripMenuItem";
-			askAIToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			askAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			askAIToolStripMenuItem.Text = "Ask AI";
 			askAIToolStripMenuItem.Click += ai_askToolStripMenuItem_Click;
 			// 
 			// streamEventsToolStripMenuItem
 			// 
 			streamEventsToolStripMenuItem.Name = "streamEventsToolStripMenuItem";
-			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			streamEventsToolStripMenuItem.Text = "Stream Events";
 			streamEventsToolStripMenuItem.Click += ai_streamEventsToolStripMenuItem_Click;
 			// 
 			// weatherToolStripMenuItem
 			// 
 			weatherToolStripMenuItem.Name = "weatherToolStripMenuItem";
-			weatherToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+			weatherToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			weatherToolStripMenuItem.Text = "Weather";
 			weatherToolStripMenuItem.Click += weatherToolStripMenuItem_Click;
 			// 
@@ -245,6 +246,13 @@
 			closeToolStripMenuItem.Text = "Close";
 			closeToolStripMenuItem.Click += CloseToolStripMenuItem_Click;
 			// 
+			// openAIChatToolStripMenuItem
+			// 
+			openAIChatToolStripMenuItem.Name = "openAIChatToolStripMenuItem";
+			openAIChatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			openAIChatToolStripMenuItem.Text = "Open AI chat";
+			openAIChatToolStripMenuItem.Click += openAIChatToolStripMenuItem_Click;
+			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -296,6 +304,7 @@
 		private System.Windows.Forms.ToolStripMenuItem askAIToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem streamEventsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem weatherToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem openAIChatToolStripMenuItem;
 	}
 }
 

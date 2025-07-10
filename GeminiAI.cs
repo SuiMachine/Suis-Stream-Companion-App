@@ -28,6 +28,7 @@ namespace SSC
 		public Dictionary<string, DateTime> Cooldowns = new Dictionary<string, DateTime>();
 		private Tuple<ES_AdBreakBeginNotification, GeminiContent> m_TemporaryMemoryForAdNotification;
 		private List<string> AvailableEmotes;
+		internal Action OnStreamerContentUpdated;
 
 		internal bool IsConfigured()
 		{
