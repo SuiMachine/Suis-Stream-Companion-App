@@ -328,6 +328,8 @@ namespace SSC
 
 		public string Model { get; set; } = "models/gemini-2.5-flash-preview-05-20";
 		public string TwitchAwardID { get; set; } = "";
+		public bool CasualChat_PrivateConversation { get; set; } = false;
+		public bool CasualChat_StreamDefinition { get; set; } = false;
 		public EventSettings Events = new EventSettings();
 
 		public void SaveSettings() => XML_Utils.Save(GetConfigPath(), this);

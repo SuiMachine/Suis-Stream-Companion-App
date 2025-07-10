@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			CB_UseStreamDefinition = new System.Windows.Forms.CheckBox();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			B_Send = new System.Windows.Forms.Button();
@@ -37,37 +36,32 @@
 			RB_MessageToSend = new System.Windows.Forms.RichTextBox();
 			listView_Attachements = new System.Windows.Forms.ListView();
 			chatHistory = new System.Windows.Forms.TableLayoutPanel();
+			panel1 = new System.Windows.Forms.Panel();
+			B_ImportHistory = new System.Windows.Forms.Button();
+			CB_PrivateChat = new System.Windows.Forms.CheckBox();
+			CB_UseStreamDefinition = new System.Windows.Forms.CheckBox();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
+			panel1.SuspendLayout();
 			SuspendLayout();
 			// 
 			// tableLayoutPanel1
 			// 
 			tableLayoutPanel1.ColumnCount = 1;
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel1.Controls.Add(CB_UseStreamDefinition, 0, 0);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
 			tableLayoutPanel1.Controls.Add(chatHistory, 0, 1);
+			tableLayoutPanel1.Controls.Add(panel1, 0, 0);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
 			tableLayoutPanel1.RowCount = 3;
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 128F));
 			tableLayoutPanel1.Size = new System.Drawing.Size(646, 474);
 			tableLayoutPanel1.TabIndex = 0;
-			// 
-			// CB_UseStreamDefinition
-			// 
-			CB_UseStreamDefinition.AutoSize = true;
-			CB_UseStreamDefinition.Location = new System.Drawing.Point(3, 3);
-			CB_UseStreamDefinition.Name = "CB_UseStreamDefinition";
-			CB_UseStreamDefinition.Size = new System.Drawing.Size(138, 19);
-			CB_UseStreamDefinition.TabIndex = 0;
-			CB_UseStreamDefinition.Text = "Use stream definition";
-			CB_UseStreamDefinition.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel2
 			// 
@@ -145,13 +139,56 @@
 			chatHistory.ColumnCount = 1;
 			chatHistory.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			chatHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-			chatHistory.Location = new System.Drawing.Point(3, 29);
+			chatHistory.Location = new System.Drawing.Point(3, 36);
 			chatHistory.Name = "chatHistory";
 			chatHistory.RowCount = 1;
 			chatHistory.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			chatHistory.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			chatHistory.Size = new System.Drawing.Size(640, 314);
+			chatHistory.Size = new System.Drawing.Size(640, 307);
 			chatHistory.TabIndex = 2;
+			// 
+			// panel1
+			// 
+			panel1.Controls.Add(B_ImportHistory);
+			panel1.Controls.Add(CB_PrivateChat);
+			panel1.Controls.Add(CB_UseStreamDefinition);
+			panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			panel1.Location = new System.Drawing.Point(3, 3);
+			panel1.Name = "panel1";
+			panel1.Size = new System.Drawing.Size(640, 27);
+			panel1.TabIndex = 3;
+			// 
+			// B_ImportHistory
+			// 
+			B_ImportHistory.Location = new System.Drawing.Point(243, 3);
+			B_ImportHistory.Name = "B_ImportHistory";
+			B_ImportHistory.Size = new System.Drawing.Size(97, 23);
+			B_ImportHistory.TabIndex = 2;
+			B_ImportHistory.Text = "Import history";
+			B_ImportHistory.UseVisualStyleBackColor = true;
+			B_ImportHistory.Click += B_ImportHistory_Click;
+			// 
+			// CB_PrivateChat
+			// 
+			CB_PrivateChat.AutoSize = true;
+			CB_PrivateChat.Location = new System.Drawing.Point(147, 6);
+			CB_PrivateChat.Name = "CB_PrivateChat";
+			CB_PrivateChat.Size = new System.Drawing.Size(90, 19);
+			CB_PrivateChat.TabIndex = 1;
+			CB_PrivateChat.Text = "Private Chat";
+			CB_PrivateChat.UseVisualStyleBackColor = true;
+			CB_PrivateChat.CheckedChanged += CB_PrivateChat_CheckedChanged;
+			// 
+			// CB_UseStreamDefinition
+			// 
+			CB_UseStreamDefinition.AutoSize = true;
+			CB_UseStreamDefinition.Location = new System.Drawing.Point(3, 6);
+			CB_UseStreamDefinition.Name = "CB_UseStreamDefinition";
+			CB_UseStreamDefinition.Size = new System.Drawing.Size(138, 19);
+			CB_UseStreamDefinition.TabIndex = 0;
+			CB_UseStreamDefinition.Text = "Use stream definition";
+			CB_UseStreamDefinition.UseVisualStyleBackColor = true;
+			CB_UseStreamDefinition.CheckedChanged += CB_UseStreamDefinition_CheckedChanged;
 			// 
 			// AI_Casual_Chats
 			// 
@@ -165,10 +202,11 @@
 			FormClosing += AI_Casual_Chats_FormClosing;
 			Load += AI_Casual_Chats_Load;
 			tableLayoutPanel1.ResumeLayout(false);
-			tableLayoutPanel1.PerformLayout();
 			tableLayoutPanel2.ResumeLayout(false);
 			tableLayoutPanel3.ResumeLayout(false);
 			tableLayoutPanel3.PerformLayout();
+			panel1.ResumeLayout(false);
+			panel1.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -183,5 +221,8 @@
 		private System.Windows.Forms.RichTextBox RB_MessageToSend;
 		private System.Windows.Forms.ListView listView_Attachements;
 		private System.Windows.Forms.TableLayoutPanel chatHistory;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.CheckBox CB_PrivateChat;
+		private System.Windows.Forms.Button B_ImportHistory;
 	}
 }

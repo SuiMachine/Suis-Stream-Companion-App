@@ -55,5 +55,8 @@
     <Compile Update="SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="UniversalMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
