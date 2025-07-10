@@ -34,16 +34,12 @@
     <Content Include="sound_player_icon_bundled.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SpeedrunComSharp\src\SpeedrunComSharp\SpeedrunComSharp.csproj" />
     <ProjectReference Include="..\SuiBot-AI\SuiBot-AI.csproj" />
     <ProjectReference Include="..\SuiBot-TwitchSocket\SuiBot-TwitchSocket.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MixItUpBridge\Requests\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="SpeedrunComSharp">
-      <HintPath>..\__liberies\SpeedrunComSharp-master\artifacts\bin\SpeedrunComSharp\release\SpeedrunComSharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
