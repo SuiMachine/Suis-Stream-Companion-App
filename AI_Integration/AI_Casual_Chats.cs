@@ -45,10 +45,16 @@ namespace SSC.AI_Integration
 			}
 
 			messagesToDisplay.Reverse();
-
-			foreach(var messageToDisplay in messagesToDisplay)
+			chatHistory.RowCount = messagesToDisplay.Count;
+			chatHistory.AutoScroll = true;
+			foreach (var messageToDisplay in messagesToDisplay)
 			{
-				chatHistory.Controls.Add(new CasualChatsElements.CasualChat_History(messageToDisplay));
+				chatHistory.Controls.Add(new CasualChatsElements.CasualChat_History(messageToDisplay)
+				{
+					Dock = DockStyle.Fill,
+					AutoSize = true,
+					AutoSizeMode = AutoSizeMode.GrowOnly,
+				});
 			}
 		}
 

@@ -36,7 +36,7 @@
 			label1 = new System.Windows.Forms.Label();
 			RB_MessageToSend = new System.Windows.Forms.RichTextBox();
 			listView_Attachements = new System.Windows.Forms.ListView();
-			chatHistory = new System.Windows.Forms.FlowLayoutPanel();
+			chatHistory = new System.Windows.Forms.TableLayoutPanel();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
@@ -142,10 +142,14 @@
 			// 
 			// chatHistory
 			// 
-			chatHistory.AutoScroll = true;
+			chatHistory.ColumnCount = 1;
+			chatHistory.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			chatHistory.Dock = System.Windows.Forms.DockStyle.Fill;
 			chatHistory.Location = new System.Drawing.Point(3, 29);
 			chatHistory.Name = "chatHistory";
+			chatHistory.RowCount = 1;
+			chatHistory.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			chatHistory.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			chatHistory.Size = new System.Drawing.Size(640, 314);
 			chatHistory.TabIndex = 2;
 			// 
@@ -178,6 +182,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.RichTextBox RB_MessageToSend;
 		private System.Windows.Forms.ListView listView_Attachements;
-		private System.Windows.Forms.FlowLayoutPanel chatHistory;
+		private System.Windows.Forms.TableLayoutPanel chatHistory;
 	}
 }

@@ -192,7 +192,7 @@ namespace SSC
 				}
 				content.StorePath = path;
 				var full_input = AIMessageUtils.AppendDateTimePrefix(request.user_input);
-				var result = await m_Processor.GetAIResponse(content, instructions, full_input);
+				var result = await m_Processor.GetAIResponse(content, instructions, full_input, Role.user);
 
 				if (result == null)
 				{
@@ -361,7 +361,7 @@ namespace SSC
 				GeminiMessage instructions = aiConfig.GetCharacterInstruction();
 
 				m_TemporaryMemoryForAdNotification = null;
-				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_AdsBegin.Replace("{time}", (adInfo.duration_seconds / 60f).ToString(CultureInfo.GetCultureInfo("en-US"))));
+				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_AdsBegin.Replace("{time}", (adInfo.duration_seconds / 60f).ToString(CultureInfo.GetCultureInfo("en-US"))), Role.user);
 				if (result == null)
 					return;
 
@@ -413,7 +413,7 @@ namespace SSC
 				GeminiMessage instructions = aiConfig.GetCharacterInstruction();
 
 				m_TemporaryMemoryForAdNotification = null;
-				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_AdsFinished.Replace("{next_ads}", nextAdsIn.ToString()));
+				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_AdsFinished.Replace("{next_ads}", nextAdsIn.ToString()), Role.user);
 				if (result == null)
 					return;
 
@@ -452,7 +452,7 @@ namespace SSC
 				GeminiMessage instructions = aiConfig.GetCharacterInstruction();
 
 				m_TemporaryMemoryForAdNotification = null;
-				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_NotifyPrerolls);
+				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_NotifyPrerolls, Role.user);
 				if (result == null)
 					return;
 
@@ -508,7 +508,7 @@ namespace SSC
 				if (raid.viewers >= 10)
 					sb.AppendLine($"They raided with {userInfo.view_count} viewers.");
 
-				var result = await m_Processor.GetAIResponse(content, instructions, sb.ToString());
+				var result = await m_Processor.GetAIResponse(content, instructions, sb.ToString(), Role.user);
 				if (result == null)
 					return;
 
