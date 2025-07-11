@@ -14,7 +14,8 @@ namespace SSC.AI_Integration
 		public static AI_Casual_Chats Instance { get; private set; }
 		private GeminiAI ai;
 		private List<GeminiMessage> messagesToDisplay;
-		private List<GeminiMessage> privateMessages;
+		private GeminiContent privateMessages;
+		private bool block = false;
 
 
 		public AI_Casual_Chats(GeminiAI ai)
@@ -32,8 +33,8 @@ namespace SSC.AI_Integration
 				ai.OnStreamerContentUpdated += RefreshHistory;
 
 			LoadPrivateConversation();
-			RefreshHistory();
 			Initializing = false;
+			RefreshHistory();
 		}
 
 		private void LoadPrivateConversation()
@@ -42,10 +43,20 @@ namespace SSC.AI_Integration
 
 			if(File.Exists(path))
 			{
-				privateMessages = XML_Utils.Load(path, new List<GeminiMessage>());
+				privateMessages = XML_Utils.Load(path, new GeminiContent()
+				{
+					contents = new List<GeminiMessage>(),
+					StorePath = path,
+				});
 			}
 			else
-				privateMessages = new List<GeminiMessage>();
+			{
+				privateMessages = XML_Utils.Load(path, new GeminiContent()
+				{
+					contents = new List<GeminiMessage>(),
+					StorePath = path,
+				});
+			}
 		}
 
 		private void RefreshHistory()
@@ -64,9 +75,9 @@ namespace SSC.AI_Integration
 			List<GeminiMessage> messagesToDisplay = new List<GeminiMessage>();
 			if(CB_PrivateChat.Checked)
 			{
-				for (int i = privateMessages.Count - 1; i >= 0; i--)
+				for (int i = privateMessages.contents.Count - 1; i >= 0; i--)
 				{
-					var message = privateMessages[i];
+					var message = privateMessages.contents[i];
 					messagesToDisplay.Add(message);
 					counter++;
 					if (counter >= 25)
@@ -100,9 +111,15 @@ namespace SSC.AI_Integration
 			}
 		}
 
-		private void B_Send_Click(object sender, EventArgs e)
+		private async void B_Send_Click(object sender, EventArgs e)
 		{
+			if(CB_PrivateChat.Checked)
+			{
+			}
+			else
+			{
 
+			}
 		}
 
 		private void AI_Casual_Chats_FormClosing(object sender, FormClosingEventArgs e)
@@ -142,8 +159,13 @@ namespace SSC.AI_Integration
 
 			if(CB_PrivateChat.Checked)
 			{
-				privateMessages = AIMessageUtils.ImportFromGoogleFile(fileName);
-				XML_Utils.Save(GetFilePathPrivateConversation(), privateMessages);
+				var path = GetFilePathPrivateConversation();
+				privateMessages = new GeminiContent()
+				{
+					contents = AIMessageUtils.ImportFromGoogleFile(fileName),
+					StorePath = path
+				};
+				XML_Utils.Save(path, privateMessages);
 			}
 			else
 			{

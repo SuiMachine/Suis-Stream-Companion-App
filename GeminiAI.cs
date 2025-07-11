@@ -95,7 +95,7 @@ namespace SSC
 			});
 		}
 
-		private async Task GetResponse(ES_ChannelPointRedeemRequest request)
+		internal async Task GetResponse(ES_ChannelPointRedeemRequest request)
 		{
 			ChatBot bot = MainForm.Instance.TwitchBot;
 
