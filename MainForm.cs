@@ -20,6 +20,8 @@ namespace SSC
 
 	public partial class MainForm : Form
 	{
+		public static readonly MarkdownSharp.Markdown Markdown = new MarkdownSharp.Markdown();
+
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public static MainForm Instance { get; private set; }
 
 		public delegate void SetPreviewTextDelegate(string text, LineType type);       //used to safely handle the IRC output from bot class

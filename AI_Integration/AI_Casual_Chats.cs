@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using CefSharp;
+using CefSharp.WinForms;
+using System.Text;
 
 namespace SSC.AI_Integration
 {
@@ -16,7 +19,7 @@ namespace SSC.AI_Integration
 		private List<GeminiMessage> messagesToDisplay;
 		private GeminiContent privateMessages;
 		private bool block = false;
-
+		ChromiumWebBrowser browser = new ChromiumWebBrowser();
 
 		public AI_Casual_Chats(GeminiAI ai)
 		{
@@ -34,6 +37,8 @@ namespace SSC.AI_Integration
 
 			LoadPrivateConversation();
 			Initializing = false;
+			panel2.Controls.Add(browser);
+			browser.Dock = DockStyle.Fill;
 			RefreshHistory();
 		}
 
@@ -41,7 +46,7 @@ namespace SSC.AI_Integration
 		{
 			var path = GetFilePathPrivateConversation();
 
-			if(File.Exists(path))
+			if (File.Exists(path))
 			{
 				privateMessages = XML_Utils.Load(path, new GeminiContent()
 				{
@@ -61,10 +66,16 @@ namespace SSC.AI_Integration
 
 		private void RefreshHistory()
 		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new Action(() => { RefreshHistory(); }));
+				return;
+			}
+
 			if (Initializing)
 				return;
 			int counter = 0;
-			chatHistory.Controls.Clear();
+			//chatHistory.Controls.Clear();
 			if (!ai.IsConfigured())
 			{
 				MessageBox.Show("AI isn't properly configured!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -73,14 +84,14 @@ namespace SSC.AI_Integration
 			}
 
 			List<GeminiMessage> messagesToDisplay = new List<GeminiMessage>();
-			if(CB_PrivateChat.Checked)
+			if (CB_PrivateChat.Checked)
 			{
 				for (int i = privateMessages.contents.Count - 1; i >= 0; i--)
 				{
 					var message = privateMessages.contents[i];
 					messagesToDisplay.Add(message);
 					counter++;
-					if (counter >= 25)
+					if (counter >= 50)
 						break;
 				}
 			}
@@ -91,40 +102,69 @@ namespace SSC.AI_Integration
 					var message = ai.StreamerContent.contents[i];
 					messagesToDisplay.Add(message);
 					counter++;
-					if (counter >= 25)
+					if (counter >= 50)
 						break;
 				}
 			}
 
-
 			messagesToDisplay.Reverse();
-			chatHistory.RowCount = messagesToDisplay.Count;
-			chatHistory.AutoScroll = true;
-			foreach (var messageToDisplay in messagesToDisplay)
-			{
-				chatHistory.Controls.Add(new CasualChatsElements.CasualChat_History(messageToDisplay)
-				{
-					Dock = DockStyle.Fill,
-					AutoSize = true,
-					AutoSizeMode = AutoSizeMode.GrowOnly,
-				});
-			}
+			SetBrowserData(messagesToDisplay);
+		}
+
+		private void SetBrowserData(List<GeminiMessage> messagesToDisplay)
+		{
+			StringBuilder sb = new StringBuilder();
+
 		}
 
 		private async void B_Send_Click(object sender, EventArgs e)
 		{
-			if(CB_PrivateChat.Checked)
-			{
-			}
-			else
-			{
+			var text = RB_MessageToSend.Text.Trim();
+			if (text.Length <= 0)
+				return;
+			if (block)
+				return;
 
+			block = true;
+
+			try
+			{
+				if (CB_PrivateChat.Checked)
+				{
+					privateMessages.StorePath = GetFilePathPrivateConversation();
+					await ai.GetPrivateAnswer(privateMessages, GeminiMessage.CreateMessage(AIMessageUtils.AppendDateTimePrefix(text), Role.user), false);
+				}
+				else
+				{
+					//await ai.GetSecondaryAnswer(null, null, ai.StreamerContent, text, Role.user);
+				}
 			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Error: {ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+			finally
+			{
+				block = false;
+				ClearContent();
+				RefreshHistory();
+			}
+		}
+
+		private void ClearContent()
+		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new Action(() => { ClearContent(); }));
+				return;
+			}
+			RB_MessageToSend.Text = "";
 		}
 
 		private void AI_Casual_Chats_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			ai.OnStreamerContentUpdated -= RefreshHistory;
+			browser.Dispose();
 		}
 
 		private void B_ImportHistory_Click(object sender, EventArgs e)
@@ -157,7 +197,7 @@ namespace SSC.AI_Integration
 			if (MessageBox.Show("Warning, you are about to override a current history. Do you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
 				return;
 
-			if(CB_PrivateChat.Checked)
+			if (CB_PrivateChat.Checked)
 			{
 				var path = GetFilePathPrivateConversation();
 				privateMessages = new GeminiContent()

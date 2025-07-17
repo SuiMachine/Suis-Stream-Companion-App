@@ -5,6 +5,7 @@ using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 {
@@ -20,14 +21,17 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 
 		public override string FunctionDescription() => "Gets best time (world record) speedrunning leaderboard if it exists";
 
-		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
 		{
 			if (game_name == null)
+			{
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{game_name} is required!"));
 				return;
+			}
 			var speedrunClient = new SpeedrunComClient();
 			var game = speedrunClient.Games.SearchGame(game_name);
 			if (game == null)
-				MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, "No game was found.", SuiBotAI.Components.Other.Gemini.Role.tool);
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "No game was found."));
 			else
 			{
 				var categories = game.FullGameCategories;
@@ -50,7 +54,7 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 						sb.AppendLine($"* {category.Name}");
 					}
 					sb.AppendLine($"The default category is: {game.FullGameCategories.ElementAt(0)}");
-					MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, sb.ToString(), SuiBotAI.Components.Other.Gemini.Role.tool);
+					await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), sb.ToString()));
 				}
 				else
 				{
@@ -60,7 +64,7 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 					else
 						sb.AppendLine($"Category {foundCategory.Name} doesn't have any records.");
 
-					MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, sb.ToString(), SuiBotAI.Components.Other.Gemini.Role.tool);
+					await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), sb.ToString()));
 				}
 			}
 		}
@@ -80,14 +84,22 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 
 		public override string FunctionName() => "speedrun_personal_best";
 
-		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, SuiBotAI.Components.Other.Gemini.GeminiContent content)
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
 		{
-			if (game_name == null)
+			if(username == null)
+			{
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{nameof(username)} is required!"));
 				return;
+			}
+			if (game_name == null)
+			{
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{nameof(game_name)} is required!"));
+				return;
+			}
 			var speedrunClient = new SpeedrunComClient();
 			var game = speedrunClient.Games.SearchGame(game_name);
 			if (game == null)
-				MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, "No game was found.", SuiBotAI.Components.Other.Gemini.Role.tool);
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "No game was found."));
 			else
 			{
 				var categories = game.FullGameCategories;
@@ -109,7 +121,7 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 						sb.AppendLine($"* {category.Name}");
 					}
 					sb.AppendLine($"The default category is: {game.FullGameCategories.ElementAt(0)}");
-					MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, sb.ToString(), SuiBotAI.Components.Other.Gemini.Role.tool);
+					await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), sb.ToString()));
 				}
 				else
 				{
@@ -117,7 +129,7 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 					if (pbs.Count == 0)
 					{
 						string response = $"{username} has not done any runs in this game.";
-						MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, response, SuiBotAI.Components.Other.Gemini.Role.tool);
+						await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), response));
 						return;
 					}
 
@@ -125,13 +137,13 @@ namespace SSC.Structs.Gemini.FunctionTypes.Speedrun
 					if (matchingPB == null)
 					{
 						string response = $"{username} has not done any runs in category {foundCategory.Name}.";
-						MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, response, SuiBotAI.Components.Other.Gemini.Role.tool);
+						await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), response));
 					}
 					else
 					{
 						string response = $"{username} best time in {foundCategory.Name} is {matchingPB.Times.Primary.Value}.";
 
-						MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, response, SuiBotAI.Components.Other.Gemini.Role.tool);
+						await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), response));
 					}
 				}
 			}

@@ -2,6 +2,7 @@
 using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI.Components.Other.Gemini;
 using System.Linq;
+using System.Threading.Tasks;
 using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
 
 namespace SSC.Structs.Gemini.FunctionTypes.Other
@@ -14,17 +15,17 @@ namespace SSC.Structs.Gemini.FunctionTypes.Other
 		public override string FunctionName() => "play_sound_clip";
 		public override string FunctionDescription() => "Plays a sound clip assuming if it finds it. If no sound name is provided, a list of sounds is returned";
 
-		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
 		{
 			if (MainForm.Instance.TwitchBot?.SndDB == null)
 			{
-				MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, "Sounds rewards are currently not active.", Role.tool);
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Sounds rewards are currently not active."));
 				return;
 			}
 
 			if (ChatBot.AreRedeemsPaused)
 			{
-				MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, "Sounds rewards are currently paused.", Role.tool);
+				await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Sounds rewards are currently paused."));
 				return;
 			}
 
@@ -32,7 +33,7 @@ namespace SSC.Structs.Gemini.FunctionTypes.Other
 			{
 				SoundStorage.SoundEntry reward = MainForm.Instance.TwitchBot.SndDB.SoundList.FirstOrDefault(x => x.RewardName == Sound_Name);
 				if (reward == null)
-					MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, "Provided sound seems missing. It might have been deleted.", Role.tool);
+					await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Provided sound seems missing. It might have been deleted."));
 				else
 					MainForm.Instance.TwitchBot.SndDB.PlaySound(message.chatter_user_id, reward);
 			}
@@ -40,9 +41,9 @@ namespace SSC.Structs.Gemini.FunctionTypes.Other
 			{
 				var list = MainForm.Instance.TwitchBot.SndDB.GetList();
 				if (list == null)
-					MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, "List of sounds was empty.", Role.tool);
+					await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "List of sounds was empty."));
 				else
-					MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, list, Role.tool);
+					await MainForm.Instance?.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), list));
 			}
 		}
 	}

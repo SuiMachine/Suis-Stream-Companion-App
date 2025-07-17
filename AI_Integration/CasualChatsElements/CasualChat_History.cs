@@ -1,5 +1,6 @@
 ﻿using SuiBotAI.Components.Other.Gemini;
 using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -38,7 +39,11 @@ namespace SSC.AI_Integration.CasualChatsElements
 					break;
 			}
 
-			L_Text.Text = PartsToText(this.messageToDisplay.parts);
+			ProcessLinkLabelHack(PartsToText(this.messageToDisplay.parts));
+		}
+
+		private void ProcessLinkLabelHack(string htmlContent)
+		{
 		}
 
 		private string PartsToText(GeminiResponseMessagePart[] parts)
@@ -54,14 +59,14 @@ namespace SSC.AI_Integration.CasualChatsElements
 						var groups = DATE_TIME_REGEX.Match(text).Groups;
 						if(groups.Count == 3)
 						{
-							UTC_Time = DateTime.Parse(groups[2].Value.Trim());
+							UTC_Time = DateTime.Parse(groups[2].Value.Trim(), CultureInfo.InvariantCulture);
 							text = text.Substring(groups[0].Length).Trim();
-							sb.AppendLine(UTC_Time.ToString());
+							text = MainForm.Markdown.Transform(text);
 							sb.AppendLine(text);
 						}
 					}
 					else
-						sb.AppendLine(part.text);
+						sb.AppendLine(MainForm.Markdown.Transform(part.text));
 				}
 
 				if (part.functionCall != null)

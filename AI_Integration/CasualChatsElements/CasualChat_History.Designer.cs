@@ -31,7 +31,6 @@
 			table_Layout = new System.Windows.Forms.TableLayoutPanel();
 			picBox_AI = new System.Windows.Forms.PictureBox();
 			picBox_User = new System.Windows.Forms.PictureBox();
-			L_Text = new System.Windows.Forms.Label();
 			table_Layout.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)picBox_AI).BeginInit();
 			((System.ComponentModel.ISupportInitialize)picBox_User).BeginInit();
@@ -47,7 +46,6 @@
 			table_Layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			table_Layout.Controls.Add(picBox_AI, 0, 0);
 			table_Layout.Controls.Add(picBox_User, 2, 0);
-			table_Layout.Controls.Add(L_Text, 1, 0);
 			table_Layout.Dock = System.Windows.Forms.DockStyle.Fill;
 			table_Layout.Location = new System.Drawing.Point(0, 0);
 			table_Layout.Name = "table_Layout";
@@ -77,15 +75,6 @@
 			picBox_User.TabIndex = 1;
 			picBox_User.TabStop = false;
 			// 
-			// L_Text
-			// 
-			L_Text.AutoSize = true;
-			L_Text.Location = new System.Drawing.Point(75, 1);
-			L_Text.Name = "L_Text";
-			L_Text.Size = new System.Drawing.Size(38, 15);
-			L_Text.TabIndex = 2;
-			L_Text.Text = "label1";
-			// 
 			// CasualChat_History
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -95,7 +84,6 @@
 			Name = "CasualChat_History";
 			Size = new System.Drawing.Size(536, 72);
 			table_Layout.ResumeLayout(false);
-			table_Layout.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)picBox_AI).EndInit();
 			((System.ComponentModel.ISupportInitialize)picBox_User).EndInit();
 			ResumeLayout(false);
@@ -107,6 +95,5 @@
 		private System.Windows.Forms.TableLayoutPanel table_Layout;
 		private System.Windows.Forms.PictureBox picBox_AI;
 		private System.Windows.Forms.PictureBox picBox_User;
-		private System.Windows.Forms.Label L_Text;
 	}
 }
