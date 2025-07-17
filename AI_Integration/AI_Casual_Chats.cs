@@ -1,12 +1,13 @@
-﻿using SuiBotAI;
+﻿using CefSharp;
+using CefSharp.WinForms;
+using SuiBotAI;
 using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
-using CefSharp;
-using CefSharp.WinForms;
+using System.Security.Policy;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SSC.AI_Integration
 {
@@ -113,8 +114,48 @@ namespace SSC.AI_Integration
 
 		private void SetBrowserData(List<GeminiMessage> messagesToDisplay)
 		{
-			StringBuilder sb = new StringBuilder();
+			var config = AIConfig.GetInstance();
 
+			var uriAI = config.CasualChat_Icon_AI;
+			var uriUser = config.CasualChat_Icon_User;
+
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine("<html>");
+			sb.AppendLine("<head><title>AI Chats</title></head>");
+			sb.AppendLine(@"<body style=""background: rgb(25,25,25);"">");
+			sb.AppendLine("<script type=\"text/javascript\">\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function(event) {\r\n\r\nwindow.scrollTo(0,document.body.scrollHeight);\r\n\r\n});\r\n\r\n</script>");
+			sb.AppendLine("<div>");
+			foreach(var message in messagesToDisplay)
+			{
+				if(message.role == Role.user)
+				{
+					var parts = "";
+					foreach (var part in message.parts)
+					{
+						if (part.text != null)
+							parts += part.text + "\r\n";
+					}
+					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriUser}\" alt=\"AI\" style=\"width:72px;height:72px;margin-right:8px;float: right;\">\r\n{parts}</p>\r\n</div>");
+				}
+				else
+				{
+					var parts = "";
+					foreach(var part in message.parts)
+					{
+						if (part.text != null)
+							parts += part.text + "\r\n";
+					}
+
+					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriAI}\" alt=\"USER\" style=\"width:72px;height:72px;margin-right:8px;float: left;\">\r\n{parts}</p>\r\n</div>");
+				}
+			}
+
+			sb.AppendLine("</div>");
+			sb.AppendLine("</body>");
+			sb.AppendLine("</html>");
+			browser.LoadHtml(sb.ToString());
+			if(browser.IsBrowserInitialized)
+				browser.ExecuteScriptAsync("window.scrollTo(0, document.body.scrollHeight)");
 		}
 
 		private async void B_Send_Click(object sender, EventArgs e)
@@ -228,6 +269,15 @@ namespace SSC.AI_Integration
 			else
 				ai.OnStreamerContentUpdated += RefreshHistory;
 			AIConfig.GetInstance().SaveSettings();
+		}
+
+		private void B_Edit_Display_Click(object sender, EventArgs e)
+		{
+			var editForm = new CasualChatsElements.EditDisplay();
+			if (editForm.ShowDialog() == DialogResult.OK)
+			{
+				RefreshHistory();
+			}
 		}
 	}
 }

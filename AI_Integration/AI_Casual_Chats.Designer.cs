@@ -36,6 +36,7 @@
 			RB_MessageToSend = new System.Windows.Forms.RichTextBox();
 			listView_Attachements = new System.Windows.Forms.ListView();
 			panel1 = new System.Windows.Forms.Panel();
+			B_Edit_Display = new System.Windows.Forms.Button();
 			B_ImportHistory = new System.Windows.Forms.Button();
 			CB_PrivateChat = new System.Windows.Forms.CheckBox();
 			CB_UseStreamDefinition = new System.Windows.Forms.CheckBox();
@@ -136,6 +137,7 @@
 			// 
 			// panel1
 			// 
+			panel1.Controls.Add(B_Edit_Display);
 			panel1.Controls.Add(B_ImportHistory);
 			panel1.Controls.Add(CB_PrivateChat);
 			panel1.Controls.Add(CB_UseStreamDefinition);
@@ -144,6 +146,16 @@
 			panel1.Name = "panel1";
 			panel1.Size = new System.Drawing.Size(640, 27);
 			panel1.TabIndex = 3;
+			// 
+			// B_Edit_Display
+			// 
+			B_Edit_Display.Location = new System.Drawing.Point(346, 3);
+			B_Edit_Display.Name = "B_Edit_Display";
+			B_Edit_Display.Size = new System.Drawing.Size(77, 23);
+			B_Edit_Display.TabIndex = 3;
+			B_Edit_Display.Text = "Edit display";
+			B_Edit_Display.UseVisualStyleBackColor = true;
+			B_Edit_Display.Click += B_Edit_Display_Click;
 			// 
 			// B_ImportHistory
 			// 
@@ -219,5 +231,6 @@
 		private System.Windows.Forms.CheckBox CB_PrivateChat;
 		private System.Windows.Forms.Button B_ImportHistory;
 		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.Button B_Edit_Display;
 	}
 }

@@ -330,6 +330,8 @@ namespace SSC
 		public string TwitchAwardID { get; set; } = "";
 		public bool CasualChat_PrivateConversation { get; set; } = false;
 		public bool CasualChat_StreamDefinition { get; set; } = false;
+		public string CasualChat_Icon_User { get; set; } = "";
+		public string CasualChat_Icon_AI { get; set; } = "";
 		public EventSettings Events = new EventSettings();
 
 		public void SaveSettings() => XML_Utils.Save(GetConfigPath(), this);
