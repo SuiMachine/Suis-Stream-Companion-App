@@ -40,47 +40,53 @@ namespace SSC.AI_Integration.CasualChatsElements
 		{
 			var fd = new OpenFileDialog()
 			{
-				Filter = "Graphics files|*.webp;*.jpg;*.gif;*png"
+				Filter = "Graphics files|*.webp;*.jpg;*.gif;*png",
+				InitialDirectory = AI_Casual_Chats.GetFolderAIData(),
 			};
 			if (fd.ShowDialog() != DialogResult.OK)
 				return;
-			TB_UserIcon.Text = fd.FileName;
+			TB_UserIcon.Text = Path.GetFileName(fd.FileName);
 		}
 
 		private void B_BrowseAI_Click(object sender, EventArgs e)
 		{
 			var fd = new OpenFileDialog()
 			{
-				Filter = "Graphics files|*.webp;*.jpg;*.gif;*png"
+				Filter = "Graphics files|*.webp;*.jpg;*.gif;*png",
+				InitialDirectory = AI_Casual_Chats.GetFolderAIData()
 			};
 			if (fd.ShowDialog() != DialogResult.OK)
 				return;
-			TB_AIIcon.Text = fd.FileName;
+			TB_AIIcon.Text = Path.GetFileName(fd.FileName);
 		}
 
 		private void TB_UserIcon_TextChanged(object sender, EventArgs e)
 		{
-			if (File.Exists(TB_UserIcon.Text))
+			var fullPath = Path.Combine(AI_Casual_Chats.GetFolderAIData(), TB_UserIcon.Text);
+
+			if (File.Exists(fullPath))
 			{
 				if (pic_User.Image != null)
 				{
 					pic_User.Image.Dispose();
 					pic_User.Image = null;
 				}
-				pic_User.Image = Image.FromFile(TB_UserIcon.Text);
+				pic_User.Image = Image.FromFile(fullPath);
 			}
 		}
 
 		private void TB_AIIcon_TextChanged(object sender, EventArgs e)
 		{
-			if (File.Exists(TB_AIIcon.Text))
+			var fullPath = Path.Combine(AI_Casual_Chats.GetFolderAIData(), TB_AIIcon.Text);
+
+			if (File.Exists(fullPath))
 			{
 				if (pic_AI.Image != null)
 				{
 					pic_AI.Image.Dispose();
 					pic_AI.Image = null;
 				}
-				pic_AI.Image = Image.FromFile(TB_AIIcon.Text);
+				pic_AI.Image = Image.FromFile(fullPath);
 			}
 		}
 	}

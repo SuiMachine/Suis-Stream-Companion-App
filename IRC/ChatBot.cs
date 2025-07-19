@@ -7,7 +7,6 @@ using SuiBot_TwitchSocket.Interfaces;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
 
 namespace SSC.Chat
 {
@@ -236,7 +235,7 @@ namespace SSC.Chat
 
 		public void TwitchSocket_SuspiciousMessageReceived(ES_Suspicious_UserMessage suspiciousMessage) { }
 
-		public void TwitchSocket_ChannelPointsRedeem(ES_ChannelPointRedeemRequest redeemInfo)
+		public void TwitchSocket_ChannelPointsRedeem(ES_ChannelPoints.ES_ChannelPointRedeemRequest redeemInfo)
 		{
 			if (redeemInfo.broadcaster_user_id == ChannelInstance.ChannelID)
 				m_Parent.TwitchEvents.OnChannelPointsRedeem?.Invoke(redeemInfo);
@@ -302,6 +301,18 @@ namespace SSC.Chat
 				return;
 
 			MainForm.Instance?.TwitchEvents?.OnChannelRaid?.Invoke(raidInfo);
+		}
+
+		public void TwitchSocket_SharedChatBegin(ES_SharedChatEnd sharedChatBegin)
+		{
+		}
+
+		public void TwitchSocket_SharedChatUpdate(ES_SharedChatUpdate sharedChatUpdate)
+		{
+		}
+
+		public void TwitchSocket_SharedChatEnd(ES_SharedChatBegin sharedChatEnd)
+		{
 		}
 		#endregion
 	}

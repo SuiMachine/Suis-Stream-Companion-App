@@ -1,11 +1,11 @@
 ﻿using CefSharp;
+using CefSharp.SchemeHandler;
 using CefSharp.WinForms;
 using SuiBotAI;
 using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
 using System.Text;
 using System.Windows.Forms;
 
@@ -13,6 +13,8 @@ namespace SSC.AI_Integration
 {
 	public partial class AI_Casual_Chats : Form
 	{
+		public static string GetFolderAIData() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_Data");
+
 		private static string GetFilePathPrivateConversation() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "PrivateConversation.xml");
 		private bool Initializing;
 		public static AI_Casual_Chats Instance { get; private set; }
@@ -20,7 +22,7 @@ namespace SSC.AI_Integration
 		private List<GeminiMessage> messagesToDisplay;
 		private GeminiContent privateMessages;
 		private bool block = false;
-		ChromiumWebBrowser browser = new ChromiumWebBrowser();
+		ChromiumWebBrowser browser;
 
 		public AI_Casual_Chats(GeminiAI ai)
 		{
@@ -37,9 +39,29 @@ namespace SSC.AI_Integration
 				ai.OnStreamerContentUpdated += RefreshHistory;
 
 			LoadPrivateConversation();
+
+			var folder = GetFolderAIData();
+			Directory.CreateDirectory(folder);
 			Initializing = false;
+			var settings = new CefSettings();
+			settings.RegisterScheme(new CefCustomScheme()
+			{
+				SchemeName = "https",
+				DomainName = "cefsharp.content",
+				SchemeHandlerFactory = new FolderSchemeHandlerFactory(
+					rootFolder: folder,
+					hostName: "cefsharp.content",
+					defaultPage: "index.html" // will default to index.html
+				)
+			});
+			settings.CefCommandLineArgs.Add("allow-file-access-from-files");
+			settings.CefCommandLineArgs.Add("allow-universal-access-from-files");
+			Cef.Initialize(settings);
+			browser = new ChromiumWebBrowser();
 			panel2.Controls.Add(browser);
 			browser.Dock = DockStyle.Fill;
+
+
 			RefreshHistory();
 		}
 
@@ -112,12 +134,14 @@ namespace SSC.AI_Integration
 			SetBrowserData(messagesToDisplay);
 		}
 
+
 		private void SetBrowserData(List<GeminiMessage> messagesToDisplay)
 		{
 			var config = AIConfig.GetInstance();
 
-			var uriAI = config.CasualChat_Icon_AI;
-			var uriUser = config.CasualChat_Icon_User;
+			var uriAI = "https://cefsharp.content/" + config.CasualChat_Icon_AI;
+			var uriUser = "https://cefsharp.content/" + config.CasualChat_Icon_User;
+			var markdown = new MarkdownSharp.Markdown();
 
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("<html>");
@@ -133,7 +157,7 @@ namespace SSC.AI_Integration
 					foreach (var part in message.parts)
 					{
 						if (part.text != null)
-							parts += part.text + "\r\n";
+							parts += markdown.Transform(part.text) + "\r\n";
 					}
 					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriUser}\" alt=\"AI\" style=\"width:72px;height:72px;margin-right:8px;float: right;\">\r\n{parts}</p>\r\n</div>");
 				}
@@ -143,7 +167,7 @@ namespace SSC.AI_Integration
 					foreach(var part in message.parts)
 					{
 						if (part.text != null)
-							parts += part.text + "\r\n";
+							parts += markdown.Transform(part.text) + "\r\n";
 					}
 
 					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriAI}\" alt=\"USER\" style=\"width:72px;height:72px;margin-right:8px;float: left;\">\r\n{parts}</p>\r\n</div>");
