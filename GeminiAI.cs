@@ -363,7 +363,6 @@ namespace SSC
 				{
 					GetStreamerTools()
 				};
-
 			}
 
 			var result = await m_Processor.GetAIResponse(content, instructions, messageToAppend);

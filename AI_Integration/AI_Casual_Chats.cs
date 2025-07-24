@@ -1,12 +1,14 @@
 ﻿using CefSharp;
 using CefSharp.SchemeHandler;
 using CefSharp.WinForms;
+using NAudio.Wave;
 using SuiBotAI;
 using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSC.AI_Integration
@@ -16,19 +18,24 @@ namespace SSC.AI_Integration
 		public static string GetFolderAIData() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_Data");
 
 		private static string GetFilePathPrivateConversation() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "PrivateConversation.xml");
+
 		private bool Initializing;
 		public static AI_Casual_Chats Instance { get; private set; }
 		private GeminiAI ai;
 		private List<GeminiMessage> messagesToDisplay;
 		private GeminiContent privateMessages;
 		private bool block = false;
+
 		ChromiumWebBrowser browser;
+
+		bool recording = false;
 
 		public AI_Casual_Chats(GeminiAI ai)
 		{
 			Initializing = true;
 			InitializeComponent();
 			this.ai = ai;
+			Instance = this;
 		}
 
 		private void AI_Casual_Chats_Load(object sender, EventArgs e)
@@ -56,11 +63,11 @@ namespace SSC.AI_Integration
 			});
 			settings.CefCommandLineArgs.Add("allow-file-access-from-files");
 			settings.CefCommandLineArgs.Add("allow-universal-access-from-files");
-			Cef.Initialize(settings);
+			if (!Cef.IsInitialized ?? false)
+				Cef.Initialize(settings);
 			browser = new ChromiumWebBrowser();
 			panel2.Controls.Add(browser);
 			browser.Dock = DockStyle.Fill;
-
 
 			RefreshHistory();
 		}
@@ -149,9 +156,9 @@ namespace SSC.AI_Integration
 			sb.AppendLine(@"<body style=""background: rgb(25,25,25);"">");
 			sb.AppendLine("<script type=\"text/javascript\">\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function(event) {\r\n\r\nwindow.scrollTo(0,document.body.scrollHeight);\r\n\r\n});\r\n\r\n</script>");
 			sb.AppendLine("<div>");
-			foreach(var message in messagesToDisplay)
+			foreach (var message in messagesToDisplay)
 			{
-				if(message.role == Role.user)
+				if (message.role == Role.user)
 				{
 					var parts = "";
 					foreach (var part in message.parts)
@@ -164,7 +171,7 @@ namespace SSC.AI_Integration
 				else
 				{
 					var parts = "";
-					foreach(var part in message.parts)
+					foreach (var part in message.parts)
 					{
 						if (part.text != null)
 							parts += markdown.Transform(part.text) + "\r\n";
@@ -178,7 +185,7 @@ namespace SSC.AI_Integration
 			sb.AppendLine("</body>");
 			sb.AppendLine("</html>");
 			browser.LoadHtml(sb.ToString());
-			if(browser.IsBrowserInitialized)
+			if (browser.IsBrowserInitialized)
 				browser.ExecuteScriptAsync("window.scrollTo(0, document.body.scrollHeight)");
 		}
 
@@ -301,6 +308,40 @@ namespace SSC.AI_Integration
 			if (editForm.ShowDialog() == DialogResult.OK)
 			{
 				RefreshHistory();
+			}
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			recording = !recording;
+			if (recording)
+			{
+				var waveFormat = new WaveFormat(16000, 1);
+				Task.Run(async () =>
+				{
+					using var memStream = new MemoryStream();
+					using var waveStream = new WaveFileWriter(memStream, waveFormat);
+					using (var waveIn = new WaveInEvent())
+					{
+						waveIn.WaveFormat = waveFormat;
+						waveIn.DataAvailable += (s, e) =>
+						{
+							waveStream.Write(e.Buffer, 0, e.BytesRecorded);
+						};
+
+						waveIn.StartRecording();
+						while (recording)
+							await Task.Delay(15);
+
+						waveIn.StopRecording();
+					}
+					;
+					await Task.Delay(15);
+
+					memStream.Position = 0;
+					var bytes = memStream.ToArray();
+					await ai.GetPrivateAnswer(privateMessages, GeminiMessage.CreateInlineData("audio/wav", bytes), false);
+				});
 			}
 		}
 	}

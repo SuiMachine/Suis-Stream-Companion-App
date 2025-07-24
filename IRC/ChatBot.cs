@@ -302,8 +302,7 @@ namespace SSC.Chat
 
 			MainForm.Instance?.TwitchEvents?.OnChannelRaid?.Invoke(raidInfo);
 		}
-
-		public void TwitchSocket_SharedChatBegin(ES_SharedChatEnd sharedChatBegin)
+		public void TwitchSocket_SharedChatBegin(ES_SharedChatBegin sharedChatBegin)
 		{
 		}
 
@@ -311,7 +310,7 @@ namespace SSC.Chat
 		{
 		}
 
-		public void TwitchSocket_SharedChatEnd(ES_SharedChatBegin sharedChatEnd)
+		public void TwitchSocket_SharedChatEnd(ES_SharedChatEnd sharedChatEnd)
 		{
 		}
 		#endregion

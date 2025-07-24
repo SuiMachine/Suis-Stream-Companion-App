@@ -41,6 +41,7 @@
 			CB_PrivateChat = new System.Windows.Forms.CheckBox();
 			CB_UseStreamDefinition = new System.Windows.Forms.CheckBox();
 			panel2 = new System.Windows.Forms.Panel();
+			button1 = new System.Windows.Forms.Button();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
@@ -137,6 +138,7 @@
 			// 
 			// panel1
 			// 
+			panel1.Controls.Add(button1);
 			panel1.Controls.Add(B_Edit_Display);
 			panel1.Controls.Add(B_ImportHistory);
 			panel1.Controls.Add(CB_PrivateChat);
@@ -197,6 +199,16 @@
 			panel2.Size = new System.Drawing.Size(640, 307);
 			panel2.TabIndex = 4;
 			// 
+			// button1
+			// 
+			button1.Location = new System.Drawing.Point(429, 4);
+			button1.Name = "button1";
+			button1.Size = new System.Drawing.Size(77, 23);
+			button1.TabIndex = 4;
+			button1.Text = "Test";
+			button1.UseVisualStyleBackColor = true;
+			button1.Click += button1_Click;
+			// 
 			// AI_Casual_Chats
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -232,5 +244,6 @@
 		private System.Windows.Forms.Button B_ImportHistory;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Button B_Edit_Display;
+		private System.Windows.Forms.Button button1;
 	}
 }
