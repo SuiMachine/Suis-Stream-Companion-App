@@ -332,6 +332,7 @@ namespace SSC
 		public bool CasualChat_StreamDefinition { get; set; } = false;
 		public string CasualChat_Icon_User { get; set; } = "";
 		public string CasualChat_Icon_AI { get; set; } = "";
+		public string NotesFile { get; set; } = "";
 		public EventSettings Events = new EventSettings();
 
 		public void SaveSettings() => XML_Utils.Save(GetConfigPath(), this);

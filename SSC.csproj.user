@@ -19,6 +19,9 @@
     <Compile Update="AI_Integration\CasualChatsElements\EditDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="AI_Integration\AI_Notes.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DialogBoxes\ProgressDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

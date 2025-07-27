@@ -251,7 +251,7 @@ namespace SSC.AI_Integration
 				var image = Clipboard.GetImage();
 				var filesList = Clipboard.GetFileDropList();
 				var audio = Clipboard.GetAudioStream();
-				if(text != null && filesList.Count == 0 && audio == null && image == null)
+				if (text != null && filesList.Count == 0 && audio == null && image == null)
 					return base.ProcessCmdKey(ref msg, keyData);
 
 				return true;
@@ -276,31 +276,6 @@ namespace SSC.AI_Integration
 		{
 			ai.OnStreamerContentUpdated -= RefreshHistory;
 			browser.Dispose();
-		}
-
-		private void B_ImportHistory_Click(object sender, EventArgs e)
-		{
-			var message = new UniversalMessageBox("Import from:", "Google", "XML", "Cancel");
-			var result = message.ShowDialog();
-			if (result == DialogResult.Cancel || message.Option == 3)
-				return;
-
-			if (message.Option == 1)
-			{
-				var f = new OpenFileDialog()
-				{
-					CheckFileExists = true,
-					ShowHelp = true,
-					Filter = "Google history file|*.*"
-				};
-				result = f.ShowDialog();
-				if (result == DialogResult.OK)
-					ImportFromGoogleFile(f.FileName);
-			}
-			else
-			{
-
-			}
 		}
 
 		private void ImportFromGoogleFile(string fileName)
@@ -341,15 +316,6 @@ namespace SSC.AI_Integration
 			AIConfig.GetInstance().SaveSettings();
 		}
 
-		private void B_Edit_Display_Click(object sender, EventArgs e)
-		{
-			var editForm = new CasualChatsElements.EditDisplay();
-			if (editForm.ShowDialog() == DialogResult.OK)
-			{
-				RefreshHistory();
-			}
-		}
-
 		private void button1_Click(object sender, EventArgs e)
 		{
 			recording = !recording;
@@ -373,7 +339,8 @@ namespace SSC.AI_Integration
 							await Task.Delay(15);
 
 						waveIn.StopRecording();
-					};
+					}
+					;
 					await Task.Delay(15);
 
 					memStream.Position = 0;
@@ -387,13 +354,57 @@ namespace SSC.AI_Integration
 		{
 			Task.Run(async () =>
 			{
-				if(CB_PrivateChat.Checked)
+				if (CB_PrivateChat.Checked)
 				{
 					privateMessages.StorePath = GetFilePathPrivateConversation();
 					privateMessages = await ai.ProcessSummary(privateMessages, MINIMUM_AMOUNT_OF_LINES);
 				}
 				RefreshHistory();
 			});
+		}
+
+		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+
+		private void importHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var message = new UniversalMessageBox("Import from:", "Google", "XML", "Cancel");
+			var result = message.ShowDialog();
+			if (result == DialogResult.Cancel || message.Option == 3)
+				return;
+
+			if (message.Option == 1)
+			{
+				var f = new OpenFileDialog()
+				{
+					CheckFileExists = true,
+					ShowHelp = true,
+					Filter = "Google history file|*.*"
+				};
+				result = f.ShowDialog();
+				if (result == DialogResult.OK)
+					ImportFromGoogleFile(f.FileName);
+			}
+			else
+			{
+
+			}
+		}
+
+		private void editDisplayToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var editForm = new CasualChatsElements.EditDisplay();
+			if (editForm.ShowDialog() == DialogResult.OK)
+			{
+				RefreshHistory();
+			}
+		}
+
+		private void showNotesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
