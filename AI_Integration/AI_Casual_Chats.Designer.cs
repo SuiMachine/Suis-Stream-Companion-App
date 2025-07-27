@@ -36,12 +36,13 @@
 			RB_MessageToSend = new System.Windows.Forms.RichTextBox();
 			listView_Attachements = new System.Windows.Forms.ListView();
 			panel1 = new System.Windows.Forms.Panel();
+			button1 = new System.Windows.Forms.Button();
 			B_Edit_Display = new System.Windows.Forms.Button();
 			B_ImportHistory = new System.Windows.Forms.Button();
 			CB_PrivateChat = new System.Windows.Forms.CheckBox();
 			CB_UseStreamDefinition = new System.Windows.Forms.CheckBox();
 			panel2 = new System.Windows.Forms.Panel();
-			button1 = new System.Windows.Forms.Button();
+			B_RunSummery = new System.Windows.Forms.Button();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
@@ -138,6 +139,7 @@
 			// 
 			// panel1
 			// 
+			panel1.Controls.Add(B_RunSummery);
 			panel1.Controls.Add(button1);
 			panel1.Controls.Add(B_Edit_Display);
 			panel1.Controls.Add(B_ImportHistory);
@@ -148,6 +150,16 @@
 			panel1.Name = "panel1";
 			panel1.Size = new System.Drawing.Size(640, 27);
 			panel1.TabIndex = 3;
+			// 
+			// button1
+			// 
+			button1.Location = new System.Drawing.Point(429, 3);
+			button1.Name = "button1";
+			button1.Size = new System.Drawing.Size(77, 23);
+			button1.TabIndex = 4;
+			button1.Text = "Test";
+			button1.UseVisualStyleBackColor = true;
+			button1.Click += button1_Click;
 			// 
 			// B_Edit_Display
 			// 
@@ -199,15 +211,15 @@
 			panel2.Size = new System.Drawing.Size(640, 307);
 			panel2.TabIndex = 4;
 			// 
-			// button1
+			// B_RunSummery
 			// 
-			button1.Location = new System.Drawing.Point(429, 4);
-			button1.Name = "button1";
-			button1.Size = new System.Drawing.Size(77, 23);
-			button1.TabIndex = 4;
-			button1.Text = "Test";
-			button1.UseVisualStyleBackColor = true;
-			button1.Click += button1_Click;
+			B_RunSummery.Location = new System.Drawing.Point(512, 3);
+			B_RunSummery.Name = "B_RunSummery";
+			B_RunSummery.Size = new System.Drawing.Size(92, 23);
+			B_RunSummery.TabIndex = 5;
+			B_RunSummery.Text = "Run summery";
+			B_RunSummery.UseVisualStyleBackColor = true;
+			B_RunSummery.Click += B_RunSummery_Click;
 			// 
 			// AI_Casual_Chats
 			// 
@@ -245,5 +257,6 @@
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Button B_Edit_Display;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button B_RunSummery;
 	}
 }

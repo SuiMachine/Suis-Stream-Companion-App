@@ -281,11 +281,11 @@ namespace SSC
 
 		internal async Task GetSecondaryAnswer(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content, GeminiMessage messageToAppend)
 		{
-			if(channelInstance == null)
+			if (channelInstance == null)
 			{
 				await GetPrivateAnswer(content, messageToAppend, true);
 				return;
-			}	
+			}
 
 			ChatBot bot = MainForm.Instance.TwitchBot;
 
@@ -607,6 +607,82 @@ namespace SSC
 					bot?.ChannelInstance?.SendChatMessage(text);
 				}
 			});
+		}
+
+		public async Task<GeminiContent> ProcessSummary(GeminiContent privateMessages)
+		{
+			string summaryHeader = "[This is a summary]:";
+			var aiConfig = AIConfig.GetInstance();
+
+			GeminiContent content = new GeminiContent
+			{
+				contents = new List<GeminiMessage>(),
+				safetySettings = aiConfig.GetSafetySettingsNone(),
+				tools = null,
+				generationConfig = new GeminiContent.GenerationConfig(),
+			};
+
+			GeminiMessage instructions = new GeminiMessage()
+			{
+				role = Role.user,
+				parts = new GeminiResponseMessagePart[]
+				{
+					new GeminiResponseMessagePart() { text = "" }
+				}
+			};
+
+			int summaryStartPoint = 0;
+			while (summaryStartPoint < privateMessages.contents.Count)
+			{
+				if (privateMessages.contents[summaryStartPoint].parts.Any(x => x.text != null && x.text.StartsWith(summaryHeader)))
+				{
+					summaryStartPoint++;
+					continue;
+				}
+				else
+					break;
+
+			}
+
+			if (summaryStartPoint == privateMessages.contents.Count)
+				return privateMessages;
+
+			int summaryEndPoint = summaryStartPoint + 25;
+			if (summaryEndPoint >= privateMessages.contents.Count)
+				summaryEndPoint = privateMessages.contents.Count;
+			if (summaryStartPoint == summaryEndPoint)
+				return privateMessages;
+
+			for (int i = summaryStartPoint; i < summaryEndPoint; i++)
+			{
+				content.contents.Add(privateMessages.contents[i]);
+			}
+
+			var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage("Summarize conversation until this point. **Do not use any other conversation text - It should be just a summary!**", Role.user));
+			if (result == null)
+				return privateMessages;
+
+			privateMessages.contents.RemoveRange(summaryStartPoint, summaryEndPoint - summaryStartPoint);
+			foreach (var element in result.candidates)
+			{
+				if (element.content != null)
+				{
+					foreach (var part in element.content.parts)
+					{
+						if (part.text != null)
+						{
+							part.text = summaryHeader + "\r\n" + part.text;
+							break;
+						}
+					}
+				}
+				else
+					throw new NullReferenceException("Element was null!");
+			}
+			privateMessages.contents.Insert(summaryStartPoint, result.candidates[0].content);
+
+			XML_Utils.Save(privateMessages.StorePath, privateMessages);
+			return privateMessages;
 		}
 	}
 }

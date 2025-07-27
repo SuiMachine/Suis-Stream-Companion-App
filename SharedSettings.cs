@@ -360,6 +360,18 @@ namespace SSC
 			};
 		}
 
+		public GeminiSafetySettingsCategory[] GetSafetySettingsNone()
+		{
+			return new GeminiSafetySettingsCategory[]
+			{
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_HARASSMENT", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", AISafetySettingsValues.BLOCK_NONE),
+			};
+		}
+
 		public GeminiMessage GetInstruction(string username, bool isStreamer, bool attachIsLive)
 		{
 			var sb = new StringBuilder();

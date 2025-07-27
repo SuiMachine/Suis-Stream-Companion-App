@@ -63,7 +63,7 @@ namespace SSC.AI_Integration
 			});
 			settings.CefCommandLineArgs.Add("allow-file-access-from-files");
 			settings.CefCommandLineArgs.Add("allow-universal-access-from-files");
-			if (!Cef.IsInitialized ?? false)
+			if (!Cef.IsInitialized ?? true)
 				Cef.Initialize(settings);
 			browser = new ChromiumWebBrowser();
 			panel2.Controls.Add(browser);
@@ -155,7 +155,7 @@ namespace SSC.AI_Integration
 			sb.AppendLine("<head><title>AI Chats</title></head>");
 			sb.AppendLine(@"<body style=""background: rgb(25,25,25);"">");
 			sb.AppendLine("<script type=\"text/javascript\">\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function(event) {\r\n\r\nwindow.scrollTo(0,document.body.scrollHeight);\r\n\r\n});\r\n\r\n</script>");
-			sb.AppendLine("<div>");
+			//sb.AppendLine("<div>");
 			foreach (var message in messagesToDisplay)
 			{
 				if (message.role == Role.user)
@@ -166,7 +166,7 @@ namespace SSC.AI_Integration
 						if (part.text != null)
 							parts += markdown.Transform(part.text) + "\r\n";
 					}
-					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriUser}\" alt=\"AI\" style=\"width:72px;height:72px;margin-right:8px;float: right;\">\r\n{parts}</p>\r\n</div>");
+					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriUser}\" alt=\"AI\" style=\"width:72px;height:72px;margin-right:8px;float: right;\">\r\n{parts}</p>\r\n");
 				}
 				else
 				{
@@ -177,11 +177,11 @@ namespace SSC.AI_Integration
 							parts += markdown.Transform(part.text) + "\r\n";
 					}
 
-					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriAI}\" alt=\"USER\" style=\"width:72px;height:72px;margin-right:8px;float: left;\">\r\n{parts}</p>\r\n</div>");
+					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriAI}\" alt=\"USER\" style=\"width:72px;height:72px;margin-right:8px;float: left;\">\r\n{parts}</p>\r\n");
 				}
 			}
 
-			sb.AppendLine("</div>");
+			//sb.AppendLine("</div>");
 			sb.AppendLine("</body>");
 			sb.AppendLine("</html>");
 			browser.LoadHtml(sb.ToString());
@@ -343,6 +343,19 @@ namespace SSC.AI_Integration
 					await ai.GetPrivateAnswer(privateMessages, GeminiMessage.CreateInlineData("audio/wav", bytes), false);
 				});
 			}
+		}
+
+		private void B_RunSummery_Click(object sender, EventArgs e)
+		{
+			Task.Run(async () =>
+			{
+				if(CB_PrivateChat.Checked)
+				{
+					privateMessages.StorePath = GetFilePathPrivateConversation();
+					privateMessages = await ai.ProcessSummary(privateMessages);
+				}
+				RefreshHistory();
+			});
 		}
 	}
 }
