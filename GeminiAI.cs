@@ -609,10 +609,12 @@ namespace SSC
 			});
 		}
 
-		public async Task<GeminiContent> ProcessSummary(GeminiContent privateMessages)
+		public async Task<GeminiContent> ProcessSummary(GeminiContent privateMessages, int minimum_amount_of_content)
 		{
 			string summaryHeader = "[This is a summary]:";
 			var aiConfig = AIConfig.GetInstance();
+			if (privateMessages.contents.Count < minimum_amount_of_content)
+				return privateMessages;
 
 			GeminiContent content = new GeminiContent
 			{
@@ -631,7 +633,7 @@ namespace SSC
 				}
 			};
 
-			int summaryStartPoint = 0;
+			int summaryStartPoint = minimum_amount_of_content / 2;
 			while (summaryStartPoint < privateMessages.contents.Count)
 			{
 				if (privateMessages.contents[summaryStartPoint].parts.Any(x => x.text != null && x.text.StartsWith(summaryHeader)))
@@ -641,13 +643,13 @@ namespace SSC
 				}
 				else
 					break;
-
 			}
 
 			if (summaryStartPoint == privateMessages.contents.Count)
 				return privateMessages;
 
-			int summaryEndPoint = summaryStartPoint + 25;
+			int summaryCount = minimum_amount_of_content / 2;
+			int summaryEndPoint = summaryStartPoint + summaryCount;
 			if (summaryEndPoint >= privateMessages.contents.Count)
 				summaryEndPoint = privateMessages.contents.Count;
 			if (summaryStartPoint == summaryEndPoint)

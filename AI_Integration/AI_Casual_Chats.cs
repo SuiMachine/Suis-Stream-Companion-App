@@ -15,7 +15,12 @@ namespace SSC.AI_Integration
 {
 	public partial class AI_Casual_Chats : Form
 	{
+		public const int DISPLAY_LINES_COUNT = 50;
+		public const int MINIMUM_AMOUNT_OF_LINES = 2 * DISPLAY_LINES_COUNT;
+
 		public static string GetFolderAIData() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_Data");
+		public static string GetCSSFolder() => Path.Combine(Directory.GetCurrentDirectory(), "CSS");
+
 
 		private static string GetFilePathPrivateConversation() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "PrivateConversation.xml");
 
@@ -54,11 +59,20 @@ namespace SSC.AI_Integration
 			settings.RegisterScheme(new CefCustomScheme()
 			{
 				SchemeName = "https",
-				DomainName = "cefsharp.content",
+				DomainName = "user.content",
 				SchemeHandlerFactory = new FolderSchemeHandlerFactory(
 					rootFolder: folder,
-					hostName: "cefsharp.content",
-					defaultPage: "index.html" // will default to index.html
+					hostName: "user.content"
+				)
+			});
+
+			settings.RegisterScheme(new CefCustomScheme()
+			{
+				SchemeName = "https",
+				DomainName = "cefsharp.content",
+				SchemeHandlerFactory = new FolderSchemeHandlerFactory(
+					rootFolder: GetCSSFolder(),
+					hostName: "cefsharp.content"
 				)
 			});
 			settings.CefCommandLineArgs.Add("allow-file-access-from-files");
@@ -146,16 +160,20 @@ namespace SSC.AI_Integration
 		{
 			var config = AIConfig.GetInstance();
 
-			var uriAI = "https://cefsharp.content/" + config.CasualChat_Icon_AI;
-			var uriUser = "https://cefsharp.content/" + config.CasualChat_Icon_User;
+			var uriAI = "https://user.content/" + config.CasualChat_Icon_AI;
+			var uriUser = "https://user.content/" + config.CasualChat_Icon_User;
+
+			var css = "https://cefsharp.content/style.css";
+
 			var markdown = new MarkdownSharp.Markdown();
 
 			StringBuilder sb = new StringBuilder();
-			sb.AppendLine("<html>");
+			sb.AppendLine("<html>\r\n");
+			sb.AppendLine($@"<link rel=""stylesheet"" href=""{css}"">");
 			sb.AppendLine("<head><title>AI Chats</title></head>");
 			sb.AppendLine(@"<body style=""background: rgb(25,25,25);"">");
 			sb.AppendLine("<script type=\"text/javascript\">\r\n\r\ndocument.addEventListener(\"DOMContentLoaded\", function(event) {\r\n\r\nwindow.scrollTo(0,document.body.scrollHeight);\r\n\r\n});\r\n\r\n</script>");
-			//sb.AppendLine("<div>");
+			sb.AppendLine("<div class=\"entire\">");
 			foreach (var message in messagesToDisplay)
 			{
 				if (message.role == Role.user)
@@ -164,9 +182,9 @@ namespace SSC.AI_Integration
 					foreach (var part in message.parts)
 					{
 						if (part.text != null)
-							parts += markdown.Transform(part.text) + "\r\n";
+							parts += markdown.Transform(part.text);
 					}
-					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriUser}\" alt=\"AI\" style=\"width:72px;height:72px;margin-right:8px;float: right;\">\r\n{parts}</p>\r\n");
+					sb.AppendLine($"<div class=\"ResponseSection\"><img class=\"User\" src=\"{uriUser}\" alt=\"AI\">\r\n{parts}</div>\r\n");
 				}
 				else
 				{
@@ -174,14 +192,14 @@ namespace SSC.AI_Integration
 					foreach (var part in message.parts)
 					{
 						if (part.text != null)
-							parts += markdown.Transform(part.text) + "\r\n";
+							parts += markdown.Transform(part.text);
 					}
 
-					sb.AppendLine($"<p style=\"border: white;border-style: double;color: white;min-height: 72px;\"><img src=\"{uriAI}\" alt=\"USER\" style=\"width:72px;height:72px;margin-right:8px;float: left;\">\r\n{parts}</p>\r\n");
+					sb.AppendLine($"<div class=\"ResponseSection\"><img class=\"AI\" src=\"{uriAI}\" alt=\"AI\">\r\n{parts}</div>\r\n");
 				}
 			}
 
-			//sb.AppendLine("</div>");
+			sb.AppendLine("</div>");
 			sb.AppendLine("</body>");
 			sb.AppendLine("</html>");
 			browser.LoadHtml(sb.ToString());
@@ -192,6 +210,7 @@ namespace SSC.AI_Integration
 		private async void B_Send_Click(object sender, EventArgs e)
 		{
 			var text = RB_MessageToSend.Text.Trim();
+
 			if (text.Length <= 0)
 				return;
 			if (block)
@@ -220,6 +239,26 @@ namespace SSC.AI_Integration
 				block = false;
 				ClearContent();
 				RefreshHistory();
+			}
+		}
+
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			if (keyData == (Keys.Control | Keys.V))
+			{
+				//Process getting images out of here
+				var text = Clipboard.GetText();
+				var image = Clipboard.GetImage();
+				var filesList = Clipboard.GetFileDropList();
+				var audio = Clipboard.GetAudioStream();
+				if(text != null && filesList.Count == 0 && audio == null && image == null)
+					return base.ProcessCmdKey(ref msg, keyData);
+
+				return true;
+			}
+			else
+			{
+				return base.ProcessCmdKey(ref msg, keyData);
 			}
 		}
 
@@ -334,8 +373,7 @@ namespace SSC.AI_Integration
 							await Task.Delay(15);
 
 						waveIn.StopRecording();
-					}
-					;
+					};
 					await Task.Delay(15);
 
 					memStream.Position = 0;
@@ -352,7 +390,7 @@ namespace SSC.AI_Integration
 				if(CB_PrivateChat.Checked)
 				{
 					privateMessages.StorePath = GetFilePathPrivateConversation();
-					privateMessages = await ai.ProcessSummary(privateMessages);
+					privateMessages = await ai.ProcessSummary(privateMessages, MINIMUM_AMOUNT_OF_LINES);
 				}
 				RefreshHistory();
 			});
