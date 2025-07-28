@@ -36,6 +36,7 @@
 			menuStrip1 = new System.Windows.Forms.MenuStrip();
 			fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			runBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			openAIChatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			connectOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			connectionSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,8 @@
 			trayMenu = new System.Windows.Forms.ContextMenuStrip(components);
 			showProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			openAIChatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			notesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)trackBar_Volume).BeginInit();
 			menuStrip1.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
@@ -97,7 +99,7 @@
 			// 
 			// menuStrip1
 			// 
-			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, soundsToolStripMenuItem, aIIntegrationToolStripMenuItem });
+			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, soundsToolStripMenuItem, aIIntegrationToolStripMenuItem, otherToolStripMenuItem });
 			menuStrip1.Location = new System.Drawing.Point(0, 0);
 			menuStrip1.Name = "menuStrip1";
 			menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -119,6 +121,13 @@
 			runBotToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			runBotToolStripMenuItem.Text = "Run Bot";
 			runBotToolStripMenuItem.Click += RunBotToolStripMenuItem_Click;
+			// 
+			// openAIChatToolStripMenuItem
+			// 
+			openAIChatToolStripMenuItem.Name = "openAIChatToolStripMenuItem";
+			openAIChatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			openAIChatToolStripMenuItem.Text = "Open AI chat";
+			openAIChatToolStripMenuItem.Click += openAIChatToolStripMenuItem_Click;
 			// 
 			// connectOnStartupToolStripMenuItem
 			// 
@@ -173,21 +182,21 @@
 			// askAIToolStripMenuItem
 			// 
 			askAIToolStripMenuItem.Name = "askAIToolStripMenuItem";
-			askAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			askAIToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			askAIToolStripMenuItem.Text = "Ask AI";
 			askAIToolStripMenuItem.Click += ai_askToolStripMenuItem_Click;
 			// 
 			// streamEventsToolStripMenuItem
 			// 
 			streamEventsToolStripMenuItem.Name = "streamEventsToolStripMenuItem";
-			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			streamEventsToolStripMenuItem.Text = "Stream Events";
 			streamEventsToolStripMenuItem.Click += ai_streamEventsToolStripMenuItem_Click;
 			// 
 			// weatherToolStripMenuItem
 			// 
 			weatherToolStripMenuItem.Name = "weatherToolStripMenuItem";
-			weatherToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			weatherToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			weatherToolStripMenuItem.Text = "Weather";
 			weatherToolStripMenuItem.Click += weatherToolStripMenuItem_Click;
 			// 
@@ -246,12 +255,19 @@
 			closeToolStripMenuItem.Text = "Close";
 			closeToolStripMenuItem.Click += CloseToolStripMenuItem_Click;
 			// 
-			// openAIChatToolStripMenuItem
+			// otherToolStripMenuItem
 			// 
-			openAIChatToolStripMenuItem.Name = "openAIChatToolStripMenuItem";
-			openAIChatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			openAIChatToolStripMenuItem.Text = "Open AI chat";
-			openAIChatToolStripMenuItem.Click += openAIChatToolStripMenuItem_Click;
+			otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { notesToolStripMenuItem });
+			otherToolStripMenuItem.Name = "otherToolStripMenuItem";
+			otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+			otherToolStripMenuItem.Text = "Other";
+			// 
+			// notesToolStripMenuItem
+			// 
+			notesToolStripMenuItem.Name = "notesToolStripMenuItem";
+			notesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			notesToolStripMenuItem.Text = "Notes";
+			notesToolStripMenuItem.Click += notesToolStripMenuItem_Click;
 			// 
 			// MainForm
 			// 
@@ -305,6 +321,8 @@
 		private System.Windows.Forms.ToolStripMenuItem streamEventsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem weatherToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem openAIChatToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem notesToolStripMenuItem;
 	}
 }
 

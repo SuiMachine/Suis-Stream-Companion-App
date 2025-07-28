@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
+using SSC.AI_Integration;
 
 namespace SSC
 {
@@ -350,7 +351,7 @@ namespace SSC
 
 		private void ai_askToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			AI_Integration.AskAI_Configuration_Form ai_form = new AI_Integration.AskAI_Configuration_Form();
+			AskAI_Configuration_Form ai_form = new AskAI_Configuration_Form();
 			var result = ai_form.ShowDialog();
 			if (result == DialogResult.OK)
 			{
@@ -359,7 +360,7 @@ namespace SSC
 
 		private void ai_streamEventsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			AI_Integration.AI_StreamEvents ai_form = new AI_Integration.AI_StreamEvents();
+			AI_StreamEvents ai_form = new AI_StreamEvents();
 			var result = ai_form.ShowDialog();
 			if (result == DialogResult.OK)
 			{
@@ -369,7 +370,7 @@ namespace SSC
 
 		private void weatherToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			AI_Integration.AI_Weather_Setting weather = new AI_Integration.AI_Weather_Setting();
+			AI_Weather_Setting weather = new AI_Weather_Setting();
 			var result = weather.ShowDialog();
 			if (result == DialogResult.OK)
 			{
@@ -379,8 +380,19 @@ namespace SSC
 
 		private void openAIChatToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			AI_Integration.AI_Casual_Chats chats = new AI_Integration.AI_Casual_Chats(AI);
+			AI_Casual_Chats chats = new AI_Casual_Chats(AI);
 			chats.Show();
+		}
+
+		private void notesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			NotesForm notesForm;
+			if(NotesForm.Instance == null)
+				notesForm = new NotesForm();
+			else
+				notesForm = NotesForm.Instance;
+
+			notesForm.Show();
 		}
 	}
 }

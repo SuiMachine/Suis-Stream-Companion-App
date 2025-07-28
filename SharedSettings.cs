@@ -97,6 +97,7 @@ namespace SSC
 		[XmlElement] public int WebSocketsServerPort { get; set; }
 		[XmlElement] public string MixItUpWebookURL { get; set; }
 		[XmlElement] public string UniversalRewardID { get; set; }
+		[XmlElement] public string LastNotesFile { get; set; }
 		#endregion
 
 		public PrivateSettings()
@@ -113,6 +114,7 @@ namespace SSC
 			RunWebSocketsServer = false;
 			WebSocketsServerPort = 8005;
 			UniversalRewardID = "";
+			LastNotesFile = "";
 		}
 
 		#region Load/Save
@@ -332,7 +334,6 @@ namespace SSC
 		public bool CasualChat_StreamDefinition { get; set; } = false;
 		public string CasualChat_Icon_User { get; set; } = "";
 		public string CasualChat_Icon_AI { get; set; } = "";
-		public string NotesFile { get; set; } = "";
 		public EventSettings Events = new EventSettings();
 
 		public void SaveSettings() => XML_Utils.Save(GetConfigPath(), this);
