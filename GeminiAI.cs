@@ -1,11 +1,9 @@
-﻿using NAudio.Gui;
-using SSC.Chat;
+﻿using SSC.Chat;
 using SSC.Structs.Gemini;
 using SSC.Structs.Gemini.FunctionTypes;
 using SSC.Structs.Gemini.FunctionTypes.Other;
 using SSC.Structs.Gemini.FunctionTypes.Speedrun;
 using SuiBot_TwitchSocket.API.EventSub;
-using SuiBot_TwitchSocket.Interfaces;
 using SuiBotAI;
 using SuiBotAI.Components;
 using SuiBotAI.Components.Other.Gemini;
@@ -17,7 +15,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
-using static SuiBotAI.Components.Other.Gemini.GeminiContent;
 using static SuiBotAI.Components.SuiBotAIProcessor;
 
 namespace SSC
@@ -88,7 +85,13 @@ namespace SSC
 				new SpeedrunPBCall(),
 				new OpenWeatherCall(),
 				new PlaySoundCall(),
-				new CurrentDateTimeCall());
+				new CurrentDateTimeCall(),
+				new GetMessageCountGeminiCall(),
+				new AddANoteGeminiCall(),
+				new GetAllNotesGeminiCall(),
+				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDsForNameCalls(),
+				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDDataCalls()
+				);
 		}
 
 		public void PointsRedeem(ES_ChannelPointRedeemRequest request)
@@ -660,7 +663,7 @@ namespace SSC
 				content.contents.Add(privateMessages.contents[i]);
 			}
 
-			var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage("Summarize conversation until this point. **Do not use any other conversation text - It should be just a summary!**", Role.user));
+			var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage("Summarize conversation until this point. **Do not use any other conversation text - It should be just a summary! Do not call any of the functions!**", Role.user));
 			if (result == null)
 				return privateMessages;
 

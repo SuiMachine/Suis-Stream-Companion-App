@@ -15,9 +15,8 @@ namespace SSC
 		{
 			if (m_Instance == null)
 			{
-
-			}
 				m_Instance = new Notes();
+			}
 			return m_Instance;
 		}
 

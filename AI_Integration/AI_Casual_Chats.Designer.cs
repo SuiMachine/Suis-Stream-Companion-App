@@ -135,6 +135,7 @@
 			RB_MessageToSend.Size = new System.Drawing.Size(502, 26);
 			RB_MessageToSend.TabIndex = 2;
 			RB_MessageToSend.Text = "";
+			RB_MessageToSend.KeyDown += RB_MessageToSend_KeyDown;
 			// 
 			// listView_Attachements
 			// 
@@ -258,7 +259,7 @@
 			// showNotesToolStripMenuItem
 			// 
 			showNotesToolStripMenuItem.Name = "showNotesToolStripMenuItem";
-			showNotesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			showNotesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			showNotesToolStripMenuItem.Text = "Show notes";
 			showNotesToolStripMenuItem.Click += showNotesToolStripMenuItem_Click;
 			// 

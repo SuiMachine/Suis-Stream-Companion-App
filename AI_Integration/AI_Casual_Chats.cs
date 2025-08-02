@@ -15,7 +15,7 @@ namespace SSC.AI_Integration
 {
 	public partial class AI_Casual_Chats : Form
 	{
-		public const int DISPLAY_LINES_COUNT = 50;
+		public const int DISPLAY_LINES_COUNT = 10;
 		public const int MINIMUM_AMOUNT_OF_LINES = 2 * DISPLAY_LINES_COUNT;
 
 		public static string GetFolderAIData() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_Data");
@@ -29,7 +29,20 @@ namespace SSC.AI_Integration
 		private GeminiAI ai;
 		private List<GeminiMessage> messagesToDisplay;
 		private GeminiContent privateMessages;
-		private bool block = false;
+		private bool m_BlockSend = false;
+		public bool BlockSend
+		{
+			get => m_BlockSend;
+			set
+			{
+				if (m_BlockSend != value)
+				{
+					m_BlockSend = value;
+					B_Send.Invoke(() => B_Send.Enabled = !value);
+					RB_MessageToSend.Invoke(() => RB_MessageToSend.Enabled = !value);
+				}
+			}
+		}
 
 		ChromiumWebBrowser browser;
 
@@ -207,22 +220,29 @@ namespace SSC.AI_Integration
 				browser.ExecuteScriptAsync("window.scrollTo(0, document.body.scrollHeight)");
 		}
 
-		private async void B_Send_Click(object sender, EventArgs e)
+		private void B_Send_Click(object sender, EventArgs e)
 		{
-			var text = RB_MessageToSend.Text.Trim();
+			if (BlockSend)
+				return;
+			var t = RB_MessageToSend.Text.Trim(['\r', '\n', ' ', '\t']);
+			Task.Run(async () => await SendMessage(t));
+		}
 
+		private async Task SendMessage(string text)
+		{
 			if (text.Length <= 0)
 				return;
-			if (block)
+			if (BlockSend)
 				return;
 
-			block = true;
+			BlockSend = true;
 
 			try
 			{
 				if (CB_PrivateChat.Checked)
 				{
 					privateMessages.StorePath = GetFilePathPrivateConversation();
+					
 					await ai.GetPrivateAnswer(privateMessages, GeminiMessage.CreateMessage(AIMessageUtils.AppendDateTimePrefix(text), Role.user), false);
 				}
 				else
@@ -236,7 +256,7 @@ namespace SSC.AI_Integration
 			}
 			finally
 			{
-				block = false;
+				BlockSend = false;
 				ClearContent();
 				RefreshHistory();
 			}
@@ -405,6 +425,17 @@ namespace SSC.AI_Integration
 		private void showNotesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void RB_MessageToSend_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Control && e.KeyCode == Keys.Enter)
+			{
+				if (BlockSend)
+					return;
+				var t = RB_MessageToSend.Text.Trim(['\r', '\n', ' ', '\t' ]);
+				Task.Run(async () => await SendMessage(t));
+			}
 		}
 	}
 }

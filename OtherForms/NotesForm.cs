@@ -24,8 +24,14 @@ namespace SSC.AI_Integration
 			this.Rebuild();
 		}
 
-		private void Rebuild()
+		public void Rebuild()
 		{
+			if(this.InvokeRequired)
+			{
+				this.Invoke(Rebuild);
+				return;
+			}
+
 			this.chkList_Notes.Items.Clear();
 			foreach (var note in notesUsed.CurrentNotes)
 			{
