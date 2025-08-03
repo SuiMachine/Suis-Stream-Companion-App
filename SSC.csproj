@@ -18,6 +18,7 @@
   <ItemGroup>
     <PackageReference Include="CefSharp.Common" Version="138.0.170" />
     <PackageReference Include="CefSharp.WinForms.NETCore" Version="138.0.170" />
+    <PackageReference Include="KokoroSharp.CPU" Version="0.6.2" />
     <PackageReference Include="MarkdownSharp" Version="2.0.5" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
