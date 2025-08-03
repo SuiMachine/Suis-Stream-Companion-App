@@ -7,19 +7,36 @@ p {
 }
 
 div.ResponseSection {
-  border: rgb(184, 184, 184);
-  border-style: double;
-  color: white;
-  min-height: 72px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+    border: rgb(184, 184, 184);
+    border-style: dashed;
+    border-width: 1px;
+    color: white;
+    min-height: 72px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.ResponseSectionFunctionCall {
+    border: rgb(184, 184, 184);
+    border-style: dashed;
+    border-width: 1px;
+    text-align: center;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.DateTime {
+    text-align: center;
+    color: grey;
+    padding-bottom: 10px;
 }
 
 img.AI {
-  width: 72px;
-  height:72px;
-  margin-right:8px;
-  float: left;
+    width: 72px;
+    height: 72px;
+    margin-right: 8px;
+    float: left;
 }
 
 img.User {

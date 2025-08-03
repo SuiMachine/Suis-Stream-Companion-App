@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 using SSC.AI_Integration;
+using System.IO;
 
 namespace SSC
 {
@@ -45,11 +46,11 @@ namespace SSC
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
-		{
+		{			
 			var settings = PrivateSettings.GetInstance();
 			webSockets = new WebSocketsListener();
 			AI = new GeminiAI();
-			UpdateColors();
+			//UpdateColors();
 			connectOnStartupToolStripMenuItem.Checked = settings.Autostart;
 			int valrr = Convert.ToInt32(100 * settings.Volume);
 			trackBar_Volume.Value = valrr;
@@ -63,6 +64,8 @@ namespace SSC
 
 			if (settings.RunWebSocketsServer)
 				webSockets.Start();
+
+			_ = Reminders.GetInstance();
 		}
 
 		private void StartBot()
@@ -287,7 +290,7 @@ namespace SSC
 		{
 			var settings = PrivateSettings.GetInstance();
 
-			var CustomColorTable = new Extensions.OverridenColorTable()
+/*			var CustomColorTable = new Extensions.OverridenColorTable()
 			{
 				UseSystemColors = false,
 				ColorMenuBorder = Color.Black,
@@ -296,13 +299,11 @@ namespace SSC
 				ColorMenuBackground = settings.Colors.MenuStripBackground,
 
 				TextColor = settings.Colors.MenuStripText
-			};
+			};*/
 
-			this.BackColor = settings.Colors.FormBackground;
-			this.ForeColor = settings.Colors.FormTextColor;
-			menuStrip1.Renderer = new ToolStripProfessionalRenderer(CustomColorTable);
-			menuStrip1.ForeColor = settings.Colors.MenuStripBarText;
-			ReColorChildren(menuStrip1);
+			//menuStrip1.Renderer = new ToolStripProfessionalRenderer(CustomColorTable);
+			//menuStrip1.ForeColor = settings.Colors.MenuStripBarText;
+			//ReColorChildren(menuStrip1);
 
 			RB_Preview.BackColor = settings.Colors.LineColorBackground;
 			RB_Preview.Clear();
@@ -388,11 +389,15 @@ namespace SSC
 		{
 			NotesForm notesForm;
 			if(NotesForm.Instance == null)
+			{
 				notesForm = new NotesForm();
+				notesForm.Show();
+			}
 			else
-				notesForm = NotesForm.Instance;
+			{
+				NotesForm.Instance.Focus();
+			}
 
-			notesForm.Show();
 		}
 	}
 }

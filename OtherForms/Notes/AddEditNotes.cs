@@ -5,16 +5,16 @@ namespace SSC.OtherForms.Notes
 {
 	public partial class AddEditNotes : Form
 	{
-		public SSC.Notes.NotesEntity Entity { get; private set; }
+		public Structs.Notes.NotesEntity Entity { get; private set; }
 
 		public AddEditNotes()
 		{
-			this.Entity = new SSC.Notes.NotesEntity();
+			this.Entity = new Structs.Notes.NotesEntity();
 			InitializeComponent();
 			this.Text = "Add entry";
 		}
 
-		public AddEditNotes(SSC.Notes.NotesEntity entity)
+		public AddEditNotes(Structs.Notes.NotesEntity entity)
 		{
 			this.Entity = entity;
 			InitializeComponent();

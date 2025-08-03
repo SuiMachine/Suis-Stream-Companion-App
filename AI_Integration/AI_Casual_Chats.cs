@@ -7,7 +7,9 @@ using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,6 +17,7 @@ namespace SSC.AI_Integration
 {
 	public partial class AI_Casual_Chats : Form
 	{
+		public readonly static Regex DateTimeFind = new Regex("\\[DATETIME:\\sLocal\\s([0-9\\-\\s\\:]+)\\|\\sUTC([0-9\\-\\s\\:Z]+)\\]\\:", RegexOptions.Compiled);
 		public const int DISPLAY_LINES_COUNT = 10;
 		public const int MINIMUM_AMOUNT_OF_LINES = 2 * DISPLAY_LINES_COUNT;
 
@@ -192,12 +195,35 @@ namespace SSC.AI_Integration
 				if (message.role == Role.user)
 				{
 					var parts = "";
-					foreach (var part in message.parts)
+					if (message.parts.All(x => x.text == null))
 					{
-						if (part.text != null)
-							parts += markdown.Transform(part.text);
+						foreach (var part in message.parts)
+						{
+							if (part.functionResponse != null)
+								parts += "Function response: " + part.functionResponse.name;
+						}
+						sb.AppendLine($"<div class=\"ResponseSectionFunctionCall\">{parts}</div>\r\n");
 					}
-					sb.AppendLine($"<div class=\"ResponseSection\"><img class=\"User\" src=\"{uriUser}\" alt=\"AI\">\r\n{parts}</div>\r\n");
+					else
+					{
+						foreach (var part in message.parts)
+						{
+							if (part.text != null)
+							{
+								MatchCollection foundElements;
+								if (part.text.StartsWith("[DATETIME:") && (foundElements = DateTimeFind.Matches(part.text)).Count > 0)
+								{
+									var utcTime = DateTime.Parse(foundElements[0].Groups[2].Value.Trim());
+									var subString = part.text.Substring(foundElements[0].Groups[0].Length).Trim();
+									parts += $"<div class=\"DateTime\">{utcTime.ToString()}</div>\r\n";
+									parts += markdown.Transform(subString);
+								}
+								else
+									parts += markdown.Transform(part.text);
+							}
+						}
+						sb.AppendLine($"<div class=\"ResponseSection\"><img class=\"User\" src=\"{uriUser}\" alt=\"AI\">\r\n{parts}</div>\r\n");
+					}
 				}
 				else
 				{
@@ -242,7 +268,7 @@ namespace SSC.AI_Integration
 				if (CB_PrivateChat.Checked)
 				{
 					privateMessages.StorePath = GetFilePathPrivateConversation();
-					
+
 					await ai.GetPrivateAnswer(privateMessages, GeminiMessage.CreateMessage(AIMessageUtils.AppendDateTimePrefix(text), Role.user), false);
 				}
 				else
@@ -296,6 +322,9 @@ namespace SSC.AI_Integration
 		{
 			ai.OnStreamerContentUpdated -= RefreshHistory;
 			browser.Dispose();
+			if (Instance == this)
+				Instance = null;
+			GC.Collect();
 		}
 
 		private void ImportFromGoogleFile(string fileName)
@@ -374,12 +403,14 @@ namespace SSC.AI_Integration
 		{
 			Task.Run(async () =>
 			{
+				BlockSend = true;
 				if (CB_PrivateChat.Checked)
 				{
 					privateMessages.StorePath = GetFilePathPrivateConversation();
 					privateMessages = await ai.ProcessSummary(privateMessages, MINIMUM_AMOUNT_OF_LINES);
 				}
 				RefreshHistory();
+				BlockSend = false;
 			});
 		}
 
@@ -424,18 +455,31 @@ namespace SSC.AI_Integration
 
 		private void showNotesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			if (NotesForm.Instance != null)
+			{
+				NotesForm.Instance.Focus();
+			}
+			else
+			{
+				var notes = new NotesForm();
+				notes.Show();
+			}
 		}
 
 		private void RB_MessageToSend_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Control && e.KeyCode == Keys.Enter)
+			if (!e.Shift && !e.Alt && e.KeyCode == Keys.Enter)
 			{
 				if (BlockSend)
 					return;
-				var t = RB_MessageToSend.Text.Trim(['\r', '\n', ' ', '\t' ]);
+				var t = RB_MessageToSend.Text.Trim(['\r', '\n', ' ', '\t']);
 				Task.Run(async () => await SendMessage(t));
 			}
+		}
+
+		internal void PassReminder(Reminders.ReminderEntities closestReminder)
+		{
+			//Idk, maybe?
 		}
 	}
 }

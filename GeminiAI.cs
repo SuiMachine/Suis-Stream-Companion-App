@@ -86,9 +86,14 @@ namespace SSC
 				new OpenWeatherCall(),
 				new PlaySoundCall(),
 				new CurrentDateTimeCall(),
-				new GetMessageCountGeminiCall(),
-				new AddANoteGeminiCall(),
-				new GetAllNotesGeminiCall(),
+				new GetChatHistoryCall(),
+				new GetMessageCountAICall(),
+				new AddANoteAICall(),
+				new EditANoteAICall(),
+				new RemoveANoteAICall(),
+				new GetAllNotesAICall(),
+				new AddReminderAICall(),
+				new DisplaySystemNotificationCall(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDsForNameCalls(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDDataCalls()
 				);
@@ -682,7 +687,14 @@ namespace SSC
 					}
 				}
 				else
-					throw new NullReferenceException("Element was null!");
+				{
+					if(element.finishReason == "UNEXPECTED_TOOL_CALL")
+					{
+						throw new NullReferenceException("Element was null!");
+					}
+					else
+						throw new NullReferenceException("Element was null!");
+				}
 			}
 			privateMessages.contents.Insert(summaryStartPoint, result.candidates[0].content);
 
