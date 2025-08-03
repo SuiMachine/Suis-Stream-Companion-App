@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SSC.AI_Integration;
 using SSC.Chat;
+using SSC.OtherForms;
 using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI.Components.Other.Gemini;
 using System;
@@ -245,6 +246,8 @@ namespace SSC.Structs.Gemini.FunctionTypes
 
 			Reminders.GetInstance().AddReminder(parsedDateTime, Reminder_Text);
 			var globalizationOverride = CultureInfo.GetCultureInfo("en-US");
+			ReminderForm.Instance?.ReloadList();
+
 			await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"Added a reminder on {parsedDateTime.ToString("yyy-MM-dd", globalizationOverride)} {parsedDateTime:HH:mm:ss}Z"));
 		}
 	}

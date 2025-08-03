@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using SSC.AI_Integration;
 using System.IO;
+using SSC.OtherForms;
 
 namespace SSC
 {
@@ -46,7 +47,7 @@ namespace SSC
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
-		{			
+		{
 			var settings = PrivateSettings.GetInstance();
 			webSockets = new WebSocketsListener();
 			AI = new GeminiAI();
@@ -65,7 +66,7 @@ namespace SSC
 			if (settings.RunWebSocketsServer)
 				webSockets.Start();
 
-			_ = Reminders.GetInstance();
+			UpdateReminderIcon();
 		}
 
 		private void StartBot()
@@ -98,22 +99,22 @@ namespace SSC
 				switch (type)
 				{
 					case LineType.Generic:
-						RB_Preview.SelectionColor = settings.Colors.LineColorGeneric;
+						RB_Preview.SelectionColor = Color.White;
 						break;
 					case LineType.TwitchSocketCommand:
-						RB_Preview.SelectionColor = settings.Colors.LineColorIrcCommand;
+						RB_Preview.SelectionColor = Color.DarkGreen;
 						break;
 					case LineType.ModCommand:
-						RB_Preview.SelectionColor = settings.Colors.LineColorModeration;
+						RB_Preview.SelectionColor = Color.Green;
 						break;
 					case LineType.SoundCommand:
-						RB_Preview.SelectionColor = settings.Colors.LineColorSoundPlayback;
+						RB_Preview.SelectionColor = Color.AliceBlue;
 						break;
 					case LineType.WebSocket:
-						RB_Preview.SelectionColor = settings.Colors.LineColorWebSocket;
+						RB_Preview.SelectionColor = Color.GreenYellow;
 						break;
 					default:
-						RB_Preview.SelectionColor = settings.Colors.LineColorGeneric;
+						RB_Preview.SelectionColor = Color.White;
 						break;
 
 				}
@@ -285,50 +286,6 @@ namespace SSC
 		#endregion
 		#endregion
 
-		#region ColorThemeOverrideFunctions
-		private void UpdateColors()
-		{
-			var settings = PrivateSettings.GetInstance();
-
-/*			var CustomColorTable = new Extensions.OverridenColorTable()
-			{
-				UseSystemColors = false,
-				ColorMenuBorder = Color.Black,
-				ColorMenuBarBackground = settings.Colors.MenuStripBarBackground,
-				ColorMenuItemSelected = settings.Colors.MenuStripBackgroundSelected,
-				ColorMenuBackground = settings.Colors.MenuStripBackground,
-
-				TextColor = settings.Colors.MenuStripText
-			};*/
-
-			//menuStrip1.Renderer = new ToolStripProfessionalRenderer(CustomColorTable);
-			//menuStrip1.ForeColor = settings.Colors.MenuStripBarText;
-			//ReColorChildren(menuStrip1);
-
-			RB_Preview.BackColor = settings.Colors.LineColorBackground;
-			RB_Preview.Clear();
-		}
-
-		private void ReColorChildren(MenuStrip menuStrip1)
-		{
-			var settings = PrivateSettings.GetInstance();
-
-
-			for (int i = 0; i < menuStrip1.Items.Count; i++)
-			{
-				if (menuStrip1.Items[1].GetType() == typeof(ToolStripMenuItem))
-				{
-					var TempCast = (ToolStripMenuItem)menuStrip1.Items[i];
-					foreach (ToolStripItem child in TempCast.DropDownItems)
-					{
-						child.BackColor = settings.Colors.MenuStripBackground;
-						child.ForeColor = settings.Colors.MenuStripText;
-					}
-				}
-			}
-		}
-		#endregion
-
 		private void DatabaseEditorToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			SoundDatabaseEditor.DB_Editor scf = new SoundDatabaseEditor.DB_Editor(SoundDB.SoundList);
@@ -385,10 +342,44 @@ namespace SSC
 			chats.Show();
 		}
 
-		private void notesToolStripMenuItem_Click(object sender, EventArgs e)
+		public void UpdateReminderIcon()
+		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new Action(() => { UpdateReminderIcon(); }));
+				return;
+			}
+
+			var reminders = Reminders.GetInstance();
+
+			foreach (var reminder in reminders.Entities)
+			{
+				if (reminder.Notified && !reminder.Acknowledged)
+				{
+					notificationToolStripMenuItem.Visible = true;
+					return;
+				}
+			}
+			notificationToolStripMenuItem.Visible = false;
+		}
+
+		private void remindersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (ReminderForm.Instance != null)
+			{
+				ReminderForm.Instance.Focus();
+			}
+			else
+			{
+				var form = new ReminderForm();
+				form.Show();
+			}
+		}
+
+		private void notesToolStripItem_Click(object sender, EventArgs e)
 		{
 			NotesForm notesForm;
-			if(NotesForm.Instance == null)
+			if (NotesForm.Instance == null)
 			{
 				notesForm = new NotesForm();
 				notesForm.Show();
@@ -397,7 +388,6 @@ namespace SSC
 			{
 				NotesForm.Instance.Focus();
 			}
-
 		}
 	}
 }

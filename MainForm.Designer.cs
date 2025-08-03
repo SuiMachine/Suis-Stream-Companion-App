@@ -48,7 +48,8 @@
 			streamEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			weatherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			notesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			notesToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+			remindersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			notificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			panel1 = new System.Windows.Forms.Panel();
@@ -179,7 +180,7 @@
 			soundSettings.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			soundSettings.ForeColor = System.Drawing.Color.WhiteSmoke;
 			soundSettings.Name = "soundSettings";
-			soundSettings.Size = new System.Drawing.Size(180, 22);
+			soundSettings.Size = new System.Drawing.Size(127, 22);
 			soundSettings.Text = "Sounds";
 			soundSettings.Click += DatabaseEditorToolStripMenuItem_Click;
 			// 
@@ -188,7 +189,7 @@
 			voiceModSettings.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			voiceModSettings.ForeColor = System.Drawing.Color.WhiteSmoke;
 			voiceModSettings.Name = "voiceModSettings";
-			voiceModSettings.Size = new System.Drawing.Size(180, 22);
+			voiceModSettings.Size = new System.Drawing.Size(127, 22);
 			voiceModSettings.Text = "VoiceMod";
 			voiceModSettings.Click += VoiceModSettings_Click;
 			// 
@@ -205,7 +206,7 @@
 			askAIToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			askAIToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			askAIToolStripMenuItem.Name = "askAIToolStripMenuItem";
-			askAIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			askAIToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			askAIToolStripMenuItem.Text = "Ask AI";
 			askAIToolStripMenuItem.Click += ai_askToolStripMenuItem_Click;
 			// 
@@ -214,7 +215,7 @@
 			streamEventsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			streamEventsToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			streamEventsToolStripMenuItem.Name = "streamEventsToolStripMenuItem";
-			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			streamEventsToolStripMenuItem.Text = "Stream Events";
 			streamEventsToolStripMenuItem.Click += ai_streamEventsToolStripMenuItem_Click;
 			// 
@@ -223,26 +224,35 @@
 			weatherToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			weatherToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			weatherToolStripMenuItem.Name = "weatherToolStripMenuItem";
-			weatherToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			weatherToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
 			weatherToolStripMenuItem.Text = "Weather";
 			weatherToolStripMenuItem.Click += weatherToolStripMenuItem_Click;
 			// 
 			// otherToolStripMenuItem
 			// 
-			otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { notesToolStripMenuItem });
+			otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { notesToolStripItem, remindersToolStripMenuItem });
 			otherToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			otherToolStripMenuItem.Name = "otherToolStripMenuItem";
 			otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
 			otherToolStripMenuItem.Text = "&Other";
 			// 
-			// notesToolStripMenuItem
+			// notesToolStripItem
 			// 
-			notesToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-			notesToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
-			notesToolStripMenuItem.Name = "notesToolStripMenuItem";
-			notesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			notesToolStripMenuItem.Text = "Notes";
-			notesToolStripMenuItem.Click += notesToolStripMenuItem_Click;
+			notesToolStripItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+			notesToolStripItem.ForeColor = System.Drawing.Color.WhiteSmoke;
+			notesToolStripItem.Name = "notesToolStripItem";
+			notesToolStripItem.Size = new System.Drawing.Size(130, 22);
+			notesToolStripItem.Text = "Notes";
+			notesToolStripItem.Click += notesToolStripItem_Click;
+			// 
+			// remindersToolStripMenuItem
+			// 
+			remindersToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+			remindersToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
+			remindersToolStripMenuItem.Name = "remindersToolStripMenuItem";
+			remindersToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+			remindersToolStripMenuItem.Text = "Reminders";
+			remindersToolStripMenuItem.Click += remindersToolStripMenuItem_Click;
 			// 
 			// notificationToolStripMenuItem
 			// 
@@ -250,6 +260,7 @@
 			notificationToolStripMenuItem.Image = Properties.Resources.notification;
 			notificationToolStripMenuItem.Name = "notificationToolStripMenuItem";
 			notificationToolStripMenuItem.Size = new System.Drawing.Size(28, 20);
+			notificationToolStripMenuItem.Click += remindersToolStripMenuItem_Click;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -361,8 +372,9 @@
 		private System.Windows.Forms.ToolStripMenuItem weatherToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem openAIChatToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem notesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem notificationToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem remindersToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem notesToolStripItem;
 	}
 }
 

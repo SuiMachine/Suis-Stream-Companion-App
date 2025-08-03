@@ -1,4 +1,5 @@
 ﻿using SSC.AI_Integration;
+using SSC.OtherForms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +17,7 @@ namespace SSC
 		private Task m_TickCounter;
 		private CancellationTokenSource cancelationSource;
 		private bool m_AllChecked;
-		private ReminderEntities closestReminder = null;
+		public ReminderEntities ClosestReminder { get; private set; } = null;
 		public static Reminders GetInstance()
 		{
 			if (m_Instance == null)
@@ -46,13 +47,20 @@ namespace SSC
 						return;
 					}
 
+					//Block it!
+					if (ReminderForm.Instance != null)
+					{
+						await Task.Delay(1_000);
+						continue;
+					}
+
 					if (m_AllChecked)
 					{
 						await Task.Delay(60_000);
 						continue;
 					}
 
-					if (closestReminder == null)
+					if (ClosestReminder == null)
 					{
 						if (Entities.Count == 0)
 						{
@@ -70,12 +78,12 @@ namespace SSC
 							if (entity.UTCTime < closestReminderDT)
 							{
 								closestReminderDT = entity.UTCTime;
-								closestReminder = entity;
+								ClosestReminder = entity;
 								m_AllChecked = false;
 							}
 						}
 
-						if(closestReminder == null)
+						if (ClosestReminder == null)
 						{
 							m_AllChecked = true;
 							await Task.Delay(1000);
@@ -83,18 +91,19 @@ namespace SSC
 						}
 					}
 
-					if (closestReminder.UTCTime < DateTime.UtcNow)
+					if (ClosestReminder.UTCTime < DateTime.UtcNow)
 					{
 						if (AI_Casual_Chats.Instance != null && false)
 						{
-							AI_Casual_Chats.Instance?.PassReminder(closestReminder);
+							AI_Casual_Chats.Instance?.PassReminder(ClosestReminder);
 						}
 						else
 						{
-							ToastNotificationHelper.DisplayNotification(Path.Combine(AI_Casual_Chats.GetFolderAIData(), AIConfig.GetInstance().CasualChat_Icon_AI), closestReminder.Notification_Content, Windows.UI.Notifications.ToastTemplateType.ToastImageAndText01);
+							ToastNotificationHelper.DisplayNotification(Path.Combine(AI_Casual_Chats.GetFolderAIData(), AIConfig.GetInstance().CasualChat_Icon_AI), ClosestReminder.Notification_Content, Windows.UI.Notifications.ToastTemplateType.ToastImageAndText01);
 						}
-						closestReminder.Notified = true;
-						closestReminder = null;
+						MainForm.Instance.UpdateReminderIcon();
+						ClosestReminder.Notified = true;
+						ClosestReminder = null;
 						m_AllChecked = false;
 						Save();
 					}
@@ -143,10 +152,34 @@ namespace SSC
 			lock (Entities)
 			{
 				Entities.Add(new ReminderEntities(utcTime, text));
+				Entities = Entities.OrderBy(x => x.UTCTime).ToList();
 				Save();
 				m_AllChecked = false;
-				closestReminder = null;
+				ClosestReminder = null;
 			}
+		}
+
+		internal bool Remove(ReminderEntities entity)
+		{
+			bool result = Entities.Remove(entity);
+			if (result)
+			{
+				if (ClosestReminder == entity)
+				{
+					ClosestReminder = null;
+					m_AllChecked = false;
+				}
+				Save();
+			}
+			return result;
+		}
+
+		internal void Rebuild()
+		{
+			this.ClosestReminder = null;
+			m_AllChecked = false;
+			Entities = Entities.OrderBy(x => x.UTCTime).ToList();
+			Save();
 		}
 	}
 }

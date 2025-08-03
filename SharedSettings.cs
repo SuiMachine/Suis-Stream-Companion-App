@@ -13,64 +13,6 @@ using static SuiBotAI.Components.Other.Gemini.GeminiSafetySettingsCategory;
 namespace SSC
 {
 	[Serializable]
-	public class ColorStruct
-	{
-		//Form background
-		[XmlElement]
-		public ColorWrapper FormBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper FormTextColor { get; set; }
-
-		//MenuStripBar
-		[XmlElement]
-		public ColorWrapper MenuStripBarBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper MenuStripBarText { get; set; }
-
-		//MenuStripColors
-		[XmlElement]
-		public ColorWrapper MenuStripBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper MenuStripText { get; set; }
-		[XmlElement]
-		public ColorWrapper MenuStripBackgroundSelected { get; set; }
-
-		//LineColors
-		[XmlElement]
-		public ColorWrapper LineColorBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorGeneric { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorIrcCommand { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorModeration { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorSoundPlayback { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorWebSocket { get; set; }
-
-		public ColorStruct()
-		{
-			FormBackground = Color.WhiteSmoke;
-			FormTextColor = Color.Black;
-
-			MenuStripBarBackground = Color.WhiteSmoke;
-			MenuStripBarText = Color.Black;
-
-			MenuStripBackground = Color.WhiteSmoke;
-			MenuStripText = Color.Black;
-			MenuStripBackgroundSelected = Color.SkyBlue;
-
-			LineColorBackground = Color.GhostWhite;
-			LineColorGeneric = Color.Black;
-			LineColorIrcCommand = Color.DarkGreen;
-			LineColorModeration = Color.DarkBlue;
-			LineColorSoundPlayback = Color.DarkOrange;
-			LineColorWebSocket = Color.DarkMagenta;
-		}
-	}
-
-	[Serializable]
 	public class PrivateSettings
 	{
 		private static string GetConfigPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "Config.xml");
@@ -84,8 +26,6 @@ namespace SSC
 		}
 
 		#region Properties
-		[XmlElement] public ColorStruct Colors { get; set; }
-
 		[XmlElement] public bool Debug_mode { get; set; }
 		[XmlElement] public bool Autostart { get; set; }
 		[XmlElement] public float Volume { get; set; }
@@ -107,7 +47,6 @@ namespace SSC
 			Autostart = false;
 			Volume = 0.5f;
 			Delay = 15;
-			this.Colors = new ColorStruct();
 
 			UserAuth = "";
 			BotAuth = "";

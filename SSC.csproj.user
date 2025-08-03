@@ -31,6 +31,12 @@
     <Compile Update="OtherForms\Notes\AddEditNotes.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="OtherForms\ReminderEditForms\ReminderUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="OtherForms\ReminderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideAddForm.cs">
       <SubType>Form</SubType>
     </Compile>
