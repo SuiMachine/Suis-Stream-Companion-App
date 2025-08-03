@@ -392,6 +392,10 @@ namespace SSC
 					if (response.text != null)
 					{
 						sb.AppendLine(response.text);
+						if (aiConfig.CasualChat_TTS)
+						{
+							TTS.GetInstance().StripMarkdownAndEnqueue(response.text);
+						}
 
 						while (content.generationConfig.TokenCount > aiConfig.TokenLimit_Streamer)
 						{
@@ -688,9 +692,9 @@ namespace SSC
 				}
 				else
 				{
-					if(element.finishReason == "UNEXPECTED_TOOL_CALL")
+					if (element.finishReason == "UNEXPECTED_TOOL_CALL")
 					{
-						throw new NullReferenceException("Element was null!");
+						throw new UnexpectedToolCallException();
 					}
 					else
 						throw new NullReferenceException("Element was null!");

@@ -63,6 +63,7 @@ namespace SSC.AI_Integration
 		{
 			CB_UseStreamDefinition.Checked = AIConfig.GetInstance().CasualChat_StreamDefinition;
 			CB_PrivateChat.Checked = AIConfig.GetInstance().CasualChat_PrivateConversation;
+			CB_TTS.Checked = AIConfig.GetInstance().CasualChat_TTS;
 			if (!CB_PrivateChat.Checked)
 				ai.OnStreamerContentUpdated += RefreshHistory;
 
@@ -128,7 +129,7 @@ namespace SSC.AI_Integration
 		{
 			if (this.InvokeRequired)
 			{
-				this.Invoke(new Action(() => { RefreshHistory(); }));
+				this.Invoke(new Action(RefreshHistory));
 				return;
 			}
 
@@ -170,7 +171,6 @@ namespace SSC.AI_Integration
 			messagesToDisplay.Reverse();
 			SetBrowserData(messagesToDisplay);
 		}
-
 
 		private void SetBrowserData(List<GeminiMessage> messagesToDisplay)
 		{
@@ -348,14 +348,26 @@ namespace SSC.AI_Integration
 			}
 		}
 
+		private void C_TTS_CheckedChanged(object sender, EventArgs e)
+		{
+			if (Initializing)
+				return;
+			AIConfig.GetInstance().CasualChat_TTS = CB_TTS.Checked;
+			AIConfig.GetInstance().SaveSettings();
+		}
+
 		private void CB_UseStreamDefinition_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Initializing)
+				return;
 			AIConfig.GetInstance().CasualChat_StreamDefinition = CB_UseStreamDefinition.Checked;
 			AIConfig.GetInstance().SaveSettings();
 		}
 
 		private void CB_PrivateChat_CheckedChanged(object sender, EventArgs e)
 		{
+			if (Initializing)
+				return;
 			AIConfig.GetInstance().CasualChat_PrivateConversation = CB_PrivateChat.Checked;
 			RefreshHistory();
 			if (CB_PrivateChat.Checked)
