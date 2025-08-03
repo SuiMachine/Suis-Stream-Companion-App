@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AssemblyName>SuisStreamCompanion</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>sound_player_icon_bundled.ico</ApplicationIcon>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>Debug\</OutputPath>
@@ -15,6 +16,9 @@
     <OutputPath>Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="CefSharp.Common" Version="138.0.170" />
+    <PackageReference Include="CefSharp.WinForms.NETCore" Version="138.0.170" />
+    <PackageReference Include="MarkdownSharp" Version="2.0.5" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NAudio.Asio" Version="2.2.1" />
@@ -34,6 +38,7 @@
     <Content Include="sound_player_icon_bundled.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SpeedrunComSharp\src\SpeedrunComSharp\SpeedrunComSharp.csproj" />
     <ProjectReference Include="..\SuiBot-AI\SuiBot-AI.csproj" />
     <ProjectReference Include="..\SuiBot-TwitchSocket\SuiBot-TwitchSocket.csproj" />
   </ItemGroup>
@@ -41,8 +46,21 @@
     <Folder Include="MixItUpBridge\Requests\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="SpeedrunComSharp">
-      <HintPath>..\__liberies\SpeedrunComSharp-master\artifacts\bin\SpeedrunComSharp\release\SpeedrunComSharp.dll</HintPath>
-    </Reference>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="CSS\style.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

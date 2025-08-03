@@ -11,6 +11,27 @@ namespace SSC.Chat
 {
 	public class ChannelInstance : IChannelInstance
 	{
+		public class BasicChatMessage
+		{
+			public string MessageID;
+			public string Chatter_User_ID;
+			public string Chatter_Login;
+			public string Chatter_Name;
+			public string MessageContent;
+
+			public static explicit operator BasicChatMessage(ES_ChatMessage fullMessage)
+			{
+				return new BasicChatMessage()
+				{
+					MessageID = fullMessage.message_id,
+					Chatter_User_ID = fullMessage.chatter_user_id,
+					Chatter_Login = fullMessage.chatter_user_login,
+					Chatter_Name = fullMessage.chatter_user_name,
+					MessageContent = fullMessage.message.text,
+				};
+			}
+		}
+
 		private readonly MainForm parent;
 		public bool ConnectedStatus = true;
 		static readonly string IgnoredUsers = "ignored_users.txt";
@@ -20,7 +41,7 @@ namespace SSC.Chat
 		#endregion
 
 		public List<string> IgnoreList = new List<string>();
-		public string[] Subscribers = new string[0];
+		public Queue<BasicChatMessage> LastMessages { get; private set; } = new Queue<BasicChatMessage>();
 		public string ChannelID { get; set; }
 		public string Channel { get; set; }
 
@@ -214,6 +235,18 @@ namespace SSC.Chat
 		internal void UserBan(string broadcaster_id, string chatter_id, string response)
 		{
 			m_ChatBot?.HelixAPI_Bot.RequestBan(broadcaster_id, chatter_id, response);
+		}
+
+		internal void LogMessage(ES_ChatMessage chatMessage)
+		{
+			if(chatMessage.message?.text != null)
+			{
+				LastMessages.Enqueue((BasicChatMessage)chatMessage);
+				while (LastMessages.Count > 100)
+				{
+					_ = LastMessages.Dequeue();
+				}
+			}
 		}
 	}
 }

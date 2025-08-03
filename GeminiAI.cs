@@ -28,6 +28,7 @@ namespace SSC
 		public Dictionary<string, DateTime> Cooldowns = new Dictionary<string, DateTime>();
 		private Tuple<ES_AdBreakBeginNotification, GeminiContent> m_TemporaryMemoryForAdNotification;
 		private List<string> AvailableEmotes;
+		internal Action OnStreamerContentUpdated;
 
 		internal bool IsConfigured()
 		{
@@ -78,6 +79,26 @@ namespace SSC
 			IsRegistered = false;
 		}
 
+		private GeminiTools GetStreamerTools()
+		{
+			return new GeminiTools(new SpeedrunWRCall(),
+				new SpeedrunPBCall(),
+				new OpenWeatherCall(),
+				new PlaySoundCall(),
+				new CurrentDateTimeCall(),
+				new GetChatHistoryCall(),
+				new GetMessageCountAICall(),
+				new AddANoteAICall(),
+				new EditANoteAICall(),
+				new RemoveANoteAICall(),
+				new GetAllNotesAICall(),
+				new AddReminderAICall(),
+				new DisplaySystemNotificationCall(),
+				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDsForNameCalls(),
+				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDDataCalls()
+				);
+		}
+
 		public void PointsRedeem(ES_ChannelPointRedeemRequest request)
 		{
 			if (request.state != RedemptionStates.UNFULFILLED)
@@ -94,7 +115,7 @@ namespace SSC
 			});
 		}
 
-		private async Task GetResponse(ES_ChannelPointRedeemRequest request)
+		internal async Task GetResponse(ES_ChannelPointRedeemRequest request)
 		{
 			ChatBot bot = MainForm.Instance.TwitchBot;
 
@@ -125,11 +146,7 @@ namespace SSC
 					content.generationConfig.temperature = aiConfig.Temperature_Streamer;
 					content.tools = new List<GeminiTools>()
 					{
-						new GeminiTools(new SpeedrunWRCall(),
-						new SpeedrunPBCall(),
-						new OpenWeatherCall(),
-						new PlaySoundCall(),
-						new CurrentDateTimeCall())
+						GetStreamerTools()
 					};
 				}
 				else
@@ -191,7 +208,7 @@ namespace SSC
 				}
 				content.StorePath = path;
 				var full_input = AIMessageUtils.AppendDateTimePrefix(request.user_input);
-				var result = await m_Processor.GetAIResponse(content, instructions, full_input);
+				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(full_input, Role.user));
 
 				if (result == null)
 				{
@@ -251,7 +268,7 @@ namespace SSC
 							if (converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
 							{
 								var callableCast = (FunctionCallSSC)converted;
-								callableCast.Perform(channelInstance, (ES_ChatMessage)request, content);
+								await callableCast.Perform(channelInstance, (ES_ChatMessage)request, content);
 							}
 						}
 					}
@@ -270,68 +287,146 @@ namespace SSC
 			}
 		}
 
-		internal void GetSecondaryAnswer(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content, string appendContent, Role role)
+		internal async Task GetSecondaryAnswer(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content, GeminiMessage messageToAppend)
 		{
+			if (channelInstance == null)
+			{
+				await GetPrivateAnswer(content, messageToAppend, true);
+				return;
+			}
+
 			ChatBot bot = MainForm.Instance.TwitchBot;
 
-			Task.Run(async () =>
+			try
 			{
-				try
+				var result = await m_Processor.GetAIResponse(content, content.systemInstruction, messageToAppend);
+				if (result == null)
 				{
-					var result = await m_Processor.GetAIResponse(content, content.systemInstruction, appendContent, role);
-					if (result == null)
+					bot?.ChannelInstance.SendChatMessage($"{message.chatter_user_name} - Failed to get secondary response. :(");
+					return;
+				}
+				else
+				{
+					content.generationConfig.TokenCount = result.usageMetadata.totalTokenCount;
+					var candidate = result?.candidates.LastOrDefault();
+					if (candidate != null)
 					{
-						bot?.ChannelInstance.SendChatMessage($"{message.chatter_user_name} - Failed to get secondary response. :(");
-						return;
-					}
-					else
-					{
-						content.generationConfig.TokenCount = result.usageMetadata.totalTokenCount;
-						var candidate = result?.candidates.LastOrDefault();
-						if (candidate != null)
+						content.contents.Add(candidate.content);
+						foreach (var part in candidate.content.parts)
 						{
-							content.contents.Add(candidate.content);
-							foreach (var part in candidate.content.parts)
+							var text = part.text;
+							if (text != null)
 							{
-								var text = part.text;
-								if (text != null)
-								{
-									SuiBotAIProcessor.CleanupResponse(ref text);
+								SuiBotAIProcessor.CleanupResponse(ref text);
 
-									channelInstance?.SendChatMessage($"{message.chatter_user_name}: {text}");
-									if (!string.IsNullOrEmpty(content.StorePath))
-										XML_Utils.Save(content.StorePath, content);
-								}
-
-								var func = part.functionCall;
-								if (func != null)
-								{
-									var type = content.tools[0].Calls[func.name];
-									if (type == null)
-										return;
-									var converted = func.args.ToObject(type);
-									if (converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
-									{
-										var callableCast = (FunctionCallSSC)converted;
-										callableCast.Perform(channelInstance, message, content);
-									}
-								}
+								channelInstance?.SendChatMessage($"{message.chatter_user_name}: {text}");
+								if (!string.IsNullOrEmpty(content.StorePath))
+									XML_Utils.Save(content.StorePath, content);
 							}
 
+							var func = part.functionCall;
+							if (func != null)
+							{
+								var type = content.tools[0].Calls[func.name];
+								if (type == null)
+									return;
+								var converted = func.args.ToObject(type);
+								if (converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
+								{
+									var callableCast = (FunctionCallSSC)converted;
+									await callableCast.Perform(channelInstance, message, content);
+								}
+							}
+						}
+
+					}
+				}
+			}
+			catch (SafetyFilterTrippedException ex)
+			{
+				MainForm.Instance.TwitchBot.ChannelInstance.SendChatMessage($"Failed to get a response. Safety filter tripped!");
+				MainForm.Instance.ThreadSafeAddPreviewText($"Safety was tripped {ex}", LineType.GeminiAI);
+			}
+			catch (Exception ex)
+			{
+				MainForm.Instance.TwitchBot.ChannelInstance.SendChatMessage($"Failed to get a response. Something was written in log. Help! :(");
+				MainForm.Instance.ThreadSafeAddPreviewText($"There was an error trying to do AI: {ex}", LineType.GeminiAI);
+			}
+		}
+
+		internal async Task GetPrivateAnswer(GeminiContent content, GeminiMessage messageToAppend, bool recursive)
+		{
+			//Data is carried via content
+			AIConfig aiConfig = AIConfig.GetInstance();
+			GeminiMessage instructions = aiConfig.GetInstruction("", true, true);
+
+			if (!recursive)
+			{
+				int tokenLimit = aiConfig.TokenLimit_Streamer;
+				content.safetySettings = aiConfig.GetSafetySettingsStreamer();
+				if (content.generationConfig == null)
+					content.generationConfig = new GeminiContent.GenerationConfig();
+				content.generationConfig.temperature = aiConfig.Temperature_Streamer;
+				content.tools = new List<GeminiTools>()
+				{
+					GetStreamerTools()
+				};
+			}
+
+			var result = await m_Processor.GetAIResponse(content, instructions, messageToAppend);
+
+			if (result == null)
+				throw new Exception("Error getting a response");
+			else
+			{
+				content.generationConfig.TokenCount = result.usageMetadata.totalTokenCount;
+
+				var lastResponse = result.candidates.Last().content;
+				content.contents.Add(lastResponse);
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 0; i < lastResponse.parts.Length; i++)
+				{
+					var response = lastResponse.parts[i];
+
+					if (response.text != null)
+					{
+						sb.AppendLine(response.text);
+
+						while (content.generationConfig.TokenCount > aiConfig.TokenLimit_Streamer)
+						{
+							if (content.contents.Count > 2)
+							{
+								//This isn't weird - we want to make sure we start from user message
+								if (content.contents[0].role == Role.user)
+								{
+									content.contents.RemoveAt(0);
+								}
+
+								if (content.contents[0].role == Role.model)
+								{
+									content.contents.RemoveAt(0);
+								}
+							}
+						}
+
+						XML_Utils.Save(content.StorePath, content);
+					}
+
+					if (response.functionCall != null)
+					{
+						var type = content.tools[0].Calls[response.functionCall.name];
+						if (type == null)
+							throw new Exception("Unhandled function call");
+						var converted = response.functionCall.args.ToObject(type);
+						if (converted.GetType().IsSubclassOf(typeof(FunctionCallSSC)))
+						{
+							var callableCast = (FunctionCallSSC)converted;
+							await callableCast.Perform(null, null, content);
 						}
 					}
 				}
-				catch (SafetyFilterTrippedException ex)
-				{
-					MainForm.Instance.TwitchBot.ChannelInstance.SendChatMessage($"Failed to get a response. Safety filter tripped!");
-					MainForm.Instance.ThreadSafeAddPreviewText($"Safety was tripped {ex}", LineType.GeminiAI);
-				}
-				catch (Exception ex)
-				{
-					MainForm.Instance.TwitchBot.ChannelInstance.SendChatMessage($"Failed to get a response. Something was written in log. Help! :(");
-					MainForm.Instance.ThreadSafeAddPreviewText($"There was an error trying to do AI: {ex}", LineType.GeminiAI);
-				}
-			});
+			}
 		}
 
 		private void GetResponseAdBreakStarted(ES_AdBreakBeginNotification adInfo)
@@ -360,7 +455,7 @@ namespace SSC
 				GeminiMessage instructions = aiConfig.GetCharacterInstruction();
 
 				m_TemporaryMemoryForAdNotification = null;
-				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_AdsBegin.Replace("{time}", (adInfo.duration_seconds / 60f).ToString(CultureInfo.GetCultureInfo("en-US"))));
+				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_AdsBegin.Replace("{time}", (adInfo.duration_seconds / 60f).ToString(CultureInfo.GetCultureInfo("en-US"))), Role.user));
 				if (result == null)
 					return;
 
@@ -412,7 +507,7 @@ namespace SSC
 				GeminiMessage instructions = aiConfig.GetCharacterInstruction();
 
 				m_TemporaryMemoryForAdNotification = null;
-				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_AdsFinished.Replace("{next_ads}", nextAdsIn.ToString()));
+				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_AdsFinished.Replace("{next_ads}", nextAdsIn.ToString()), Role.user));
 				if (result == null)
 					return;
 
@@ -451,7 +546,7 @@ namespace SSC
 				GeminiMessage instructions = aiConfig.GetCharacterInstruction();
 
 				m_TemporaryMemoryForAdNotification = null;
-				var result = await m_Processor.GetAIResponse(content, instructions, aiConfig.Events.Instruction_NotifyPrerolls);
+				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_NotifyPrerolls, Role.user));
 				if (result == null)
 					return;
 
@@ -507,7 +602,7 @@ namespace SSC
 				if (raid.viewers >= 10)
 					sb.AppendLine($"They raided with {userInfo.view_count} viewers.");
 
-				var result = await m_Processor.GetAIResponse(content, instructions, sb.ToString());
+				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(sb.ToString(), Role.user));
 				if (result == null)
 					return;
 
@@ -520,6 +615,91 @@ namespace SSC
 					bot?.ChannelInstance?.SendChatMessage(text);
 				}
 			});
+		}
+
+		public async Task<GeminiContent> ProcessSummary(GeminiContent privateMessages, int minimum_amount_of_content)
+		{
+			string summaryHeader = "[This is a summary]:";
+			var aiConfig = AIConfig.GetInstance();
+			if (privateMessages.contents.Count < minimum_amount_of_content)
+				return privateMessages;
+
+			GeminiContent content = new GeminiContent
+			{
+				contents = new List<GeminiMessage>(),
+				safetySettings = aiConfig.GetSafetySettingsNone(),
+				tools = null,
+				generationConfig = new GeminiContent.GenerationConfig(),
+			};
+
+			GeminiMessage instructions = new GeminiMessage()
+			{
+				role = Role.user,
+				parts = new GeminiResponseMessagePart[]
+				{
+					new GeminiResponseMessagePart() { text = "" }
+				}
+			};
+
+			int summaryStartPoint = minimum_amount_of_content / 2;
+			while (summaryStartPoint < privateMessages.contents.Count)
+			{
+				if (privateMessages.contents[summaryStartPoint].parts.Any(x => x.text != null && x.text.StartsWith(summaryHeader)))
+				{
+					summaryStartPoint++;
+					continue;
+				}
+				else
+					break;
+			}
+
+			if (summaryStartPoint == privateMessages.contents.Count)
+				return privateMessages;
+
+			int summaryCount = minimum_amount_of_content / 2;
+			int summaryEndPoint = summaryStartPoint + summaryCount;
+			if (summaryEndPoint >= privateMessages.contents.Count)
+				summaryEndPoint = privateMessages.contents.Count;
+			if (summaryStartPoint == summaryEndPoint)
+				return privateMessages;
+
+			for (int i = summaryStartPoint; i < summaryEndPoint; i++)
+			{
+				content.contents.Add(privateMessages.contents[i]);
+			}
+
+			var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage("Summarize conversation until this point. **Do not use any other conversation text - It should be just a summary! Do not call any of the functions!**", Role.user));
+			if (result == null)
+				return privateMessages;
+
+			privateMessages.contents.RemoveRange(summaryStartPoint, summaryEndPoint - summaryStartPoint);
+			foreach (var element in result.candidates)
+			{
+				if (element.content != null)
+				{
+					foreach (var part in element.content.parts)
+					{
+						if (part.text != null)
+						{
+							part.text = summaryHeader + "\r\n" + part.text;
+							break;
+						}
+					}
+				}
+				else
+				{
+					if(element.finishReason == "UNEXPECTED_TOOL_CALL")
+					{
+						throw new NullReferenceException("Element was null!");
+					}
+					else
+						throw new NullReferenceException("Element was null!");
+				}
+			}
+			privateMessages.contents.Insert(summaryStartPoint, result.candidates[0].content);
+
+			XML_Utils.Save(privateMessages.StorePath, privateMessages);
+			return privateMessages;
 		}
 	}
 }

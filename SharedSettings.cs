@@ -13,64 +13,6 @@ using static SuiBotAI.Components.Other.Gemini.GeminiSafetySettingsCategory;
 namespace SSC
 {
 	[Serializable]
-	public class ColorStruct
-	{
-		//Form background
-		[XmlElement]
-		public ColorWrapper FormBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper FormTextColor { get; set; }
-
-		//MenuStripBar
-		[XmlElement]
-		public ColorWrapper MenuStripBarBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper MenuStripBarText { get; set; }
-
-		//MenuStripColors
-		[XmlElement]
-		public ColorWrapper MenuStripBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper MenuStripText { get; set; }
-		[XmlElement]
-		public ColorWrapper MenuStripBackgroundSelected { get; set; }
-
-		//LineColors
-		[XmlElement]
-		public ColorWrapper LineColorBackground { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorGeneric { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorIrcCommand { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorModeration { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorSoundPlayback { get; set; }
-		[XmlElement]
-		public ColorWrapper LineColorWebSocket { get; set; }
-
-		public ColorStruct()
-		{
-			FormBackground = Color.WhiteSmoke;
-			FormTextColor = Color.Black;
-
-			MenuStripBarBackground = Color.WhiteSmoke;
-			MenuStripBarText = Color.Black;
-
-			MenuStripBackground = Color.WhiteSmoke;
-			MenuStripText = Color.Black;
-			MenuStripBackgroundSelected = Color.SkyBlue;
-
-			LineColorBackground = Color.GhostWhite;
-			LineColorGeneric = Color.Black;
-			LineColorIrcCommand = Color.DarkGreen;
-			LineColorModeration = Color.DarkBlue;
-			LineColorSoundPlayback = Color.DarkOrange;
-			LineColorWebSocket = Color.DarkMagenta;
-		}
-	}
-
-	[Serializable]
 	public class PrivateSettings
 	{
 		private static string GetConfigPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "Config.xml");
@@ -84,8 +26,6 @@ namespace SSC
 		}
 
 		#region Properties
-		[XmlElement] public ColorStruct Colors { get; set; }
-
 		[XmlElement] public bool Debug_mode { get; set; }
 		[XmlElement] public bool Autostart { get; set; }
 		[XmlElement] public float Volume { get; set; }
@@ -97,6 +37,7 @@ namespace SSC
 		[XmlElement] public int WebSocketsServerPort { get; set; }
 		[XmlElement] public string MixItUpWebookURL { get; set; }
 		[XmlElement] public string UniversalRewardID { get; set; }
+		[XmlElement] public string LastNotesFile { get; set; }
 		#endregion
 
 		public PrivateSettings()
@@ -106,13 +47,13 @@ namespace SSC
 			Autostart = false;
 			Volume = 0.5f;
 			Delay = 15;
-			this.Colors = new ColorStruct();
 
 			UserAuth = "";
 			BotAuth = "";
 			RunWebSocketsServer = false;
 			WebSocketsServerPort = 8005;
 			UniversalRewardID = "";
+			LastNotesFile = "";
 		}
 
 		#region Load/Save
@@ -328,6 +269,10 @@ namespace SSC
 
 		public string Model { get; set; } = "models/gemini-2.5-flash-preview-05-20";
 		public string TwitchAwardID { get; set; } = "";
+		public bool CasualChat_PrivateConversation { get; set; } = false;
+		public bool CasualChat_StreamDefinition { get; set; } = false;
+		public string CasualChat_Icon_User { get; set; } = "";
+		public string CasualChat_Icon_AI { get; set; } = "";
 		public EventSettings Events = new EventSettings();
 
 		public void SaveSettings() => XML_Utils.Save(GetConfigPath(), this);
@@ -353,6 +298,18 @@ namespace SSC
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", FilterSet_User.Sexually_Explicit),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", FilterSet_User.Dangerous_Content),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_User.Civic_Integrity),
+			};
+		}
+
+		public GeminiSafetySettingsCategory[] GetSafetySettingsNone()
+		{
+			return new GeminiSafetySettingsCategory[]
+			{
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_HARASSMENT", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", AISafetySettingsValues.BLOCK_NONE),
+				new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", AISafetySettingsValues.BLOCK_NONE),
 			};
 		}
 

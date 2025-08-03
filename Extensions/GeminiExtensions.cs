@@ -12,7 +12,9 @@ namespace SSC.Extensions
 
 			if (attachIsLive)
 			{
-				ChannelInstance channelInstance = MainForm.Instance.TwitchBot.ChannelInstance;
+				ChannelInstance channelInstance = MainForm.Instance.TwitchBot?.ChannelInstance;
+				if (channelInstance == null)
+					return;
 
 				if (channelInstance.StreamStatus?.IsOnline ?? false)
 				{

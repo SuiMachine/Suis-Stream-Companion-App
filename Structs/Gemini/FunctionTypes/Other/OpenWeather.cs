@@ -131,68 +131,65 @@ namespace SSC.Structs.Gemini.FunctionTypes.Other
 		[FunctionCallParameter(true)]
 		public bool is_weather_forecast = false;
 
-		public override void Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
 		{
 			var weatherKey = (string)AIConfig.GetInstance().WeatherAPIKey;
 			if (string.IsNullOrEmpty(weatherKey))
 				return;
 
-			Task.Run(async () =>
-			{
-				string finalCity = city;
-				if (!string.IsNullOrEmpty(country_code))
-					finalCity = $"{city},{country_code}";
+			string finalCity = city;
+			if (!string.IsNullOrEmpty(country_code))
+				finalCity = $"{city},{country_code}";
 
-				var result = await HttpWebRequestHandlers.PerformGetAsync(BASE_URI, "geo/1.0/direct", $"?q={finalCity}&appid={weatherKey}", new Dictionary<string, string>());
+			var result = await HttpWebRequestHandlers.PerformGetAsync(BASE_URI, "geo/1.0/direct", $"?q={finalCity}&appid={weatherKey}", new Dictionary<string, string>());
+			if (string.IsNullOrEmpty(result))
+			{
+				await MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Couldn't find geocoding for provided location."));
+				return;
+			}
+
+			var elements = JsonConvert.DeserializeObject<Geocoding[]>(result);
+			if (elements.Length == 0)
+			{
+				return;
+			}
+
+			var first = elements[0];
+			var culture = CultureInfo.GetCultureInfo("en-US");
+			bool useMetric = units == "metric";
+
+			if (is_weather_forecast)
+			{
+				result = await HttpWebRequestHandlers.PerformGetAsync(BASE_URI, "data/2.5/forecast", $"?lat={first.lat.Value.ToString(culture)}&lon={first.lon.Value.ToString(culture)}&appid={weatherKey}&units={units}", new Dictionary<string, string>());
 				if (string.IsNullOrEmpty(result))
 				{
-					MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, "Couldn't find geocoding for provided location.", Role.tool);
+					await MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Failed to obtain weather for specified location"));
 					return;
 				}
 
-				var elements = JsonConvert.DeserializeObject<Geocoding[]>(result);
-				if (elements.Length == 0)
+				StringBuilder sb = new StringBuilder();
+				var data = JsonConvert.DeserializeObject<WeatherForecast>(result);
+
+				foreach (var element in data.list)
 				{
+					sb.AppendLine(element.GetDescription(useMetric, data.city.timezone));
+					sb.AppendLine();
+				}
+
+				await MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), sb.ToString()));
+			}
+			else
+			{
+				result = await HttpWebRequestHandlers.PerformGetAsync(BASE_URI, "data/2.5/weather", $"?lat={first.lat.Value.ToString(culture)}&lon={first.lon.Value.ToString(culture)}&appid={weatherKey}&units={units}", new Dictionary<string, string>());
+				if (string.IsNullOrEmpty(result))
+				{
+					await MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Failed to obtain weather for specified location"));
 					return;
 				}
 
-				var first = elements[0];
-				var culture = CultureInfo.GetCultureInfo("en-US");
-				bool useMetric = units == "metric";
-
-				if (is_weather_forecast)
-				{
-					result = await HttpWebRequestHandlers.PerformGetAsync(BASE_URI, "data/2.5/forecast", $"?lat={first.lat.Value.ToString(culture)}&lon={first.lon.Value.ToString(culture)}&appid={weatherKey}&units={units}", new Dictionary<string, string>());
-					if (string.IsNullOrEmpty(result))
-					{
-						MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, "Failed to obtain weather for specified location", Role.tool);
-						return;
-					}
-
-					StringBuilder sb = new StringBuilder();
-					var data = JsonConvert.DeserializeObject<WeatherForecast>(result);
-
-					foreach (var element in data.list)
-					{
-						sb.AppendLine(element.GetDescription(useMetric, data.city.timezone));
-						sb.AppendLine();
-					}
-
-					MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, sb.ToString(), Role.tool);
-				}
-				else
-				{
-					result = await HttpWebRequestHandlers.PerformGetAsync(BASE_URI, "data/2.5/weather", $"?lat={first.lat.Value.ToString(culture)}&lon={first.lon.Value.ToString(culture)}&appid={weatherKey}&units={units}", new Dictionary<string, string>());
-					if (string.IsNullOrEmpty(result))
-					{
-						MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, "Failed to obtain weather for specified location", Role.tool);
-						return;
-					}
-
-					var data = JsonConvert.DeserializeObject<Weather>(result);
-					MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, data.GetDescription(useMetric, data.timezone.HasValue ? data.timezone.Value : 0), Role.tool);
-				}
-			});
+				var data = JsonConvert.DeserializeObject<Weather>(result);
+				await MainForm.Instance.AI?.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), data.GetDescription(useMetric, data.timezone.HasValue ? data.timezone.Value : 0)));
+			}
 		}
 
 		public override string FunctionName() => "weather";

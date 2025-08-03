@@ -5,9 +5,7 @@ using SuiBot_TwitchSocket.API.EventSub;
 using SuiBot_TwitchSocket.API.EventSub.Subscription.Responses;
 using SuiBot_TwitchSocket.Interfaces;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
-using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
 
 namespace SSC.Chat
 {
@@ -183,6 +181,7 @@ namespace SSC.Chat
 
 		public void TwitchSocket_ChatMessage(ES_ChatMessage chatMessage)
 		{
+			ChannelInstance.LogMessage(chatMessage);
 			if (!chatMessage.message.text.StartsWith(m_PrefixChar.ToString()) || ChannelInstance.IgnoreList.Contains(chatMessage.chatter_user_login))
 			{
 				//literally nothing else happens in your code if this is false
@@ -207,7 +206,7 @@ namespace SSC.Chat
 					if (text.StartsWith("cooldown "))
 					{
 						var split = text.Split(' ');
-						text = split[split.Length - 1];
+						text = split[^1];
 						if (int.TryParse(text, out int delayValue))
 						{
 							if (delayValue < 0)
@@ -236,7 +235,7 @@ namespace SSC.Chat
 
 		public void TwitchSocket_SuspiciousMessageReceived(ES_Suspicious_UserMessage suspiciousMessage) { }
 
-		public void TwitchSocket_ChannelPointsRedeem(ES_ChannelPointRedeemRequest redeemInfo)
+		public void TwitchSocket_ChannelPointsRedeem(ES_ChannelPoints.ES_ChannelPointRedeemRequest redeemInfo)
 		{
 			if (redeemInfo.broadcaster_user_id == ChannelInstance.ChannelID)
 				m_Parent.TwitchEvents.OnChannelPointsRedeem?.Invoke(redeemInfo);
@@ -293,7 +292,6 @@ namespace SSC.Chat
 
 
 			MainForm.Instance?.TwitchEvents?.OnAdBreakFinished?.Invoke(infoAboutAd, prerollsActivation / 60);
-
 		}
 
 		public void TwitchSocket_ChannelRaid(ES_ChannelRaid raidInfo)
@@ -302,6 +300,17 @@ namespace SSC.Chat
 				return;
 
 			MainForm.Instance?.TwitchEvents?.OnChannelRaid?.Invoke(raidInfo);
+		}
+		public void TwitchSocket_SharedChatBegin(ES_SharedChatBegin sharedChatBegin)
+		{
+		}
+
+		public void TwitchSocket_SharedChatUpdate(ES_SharedChatUpdate sharedChatUpdate)
+		{
+		}
+
+		public void TwitchSocket_SharedChatEnd(ES_SharedChatEnd sharedChatEnd)
+		{
 		}
 		#endregion
 	}
