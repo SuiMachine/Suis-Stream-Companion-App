@@ -16,9 +16,8 @@
     <OutputPath>Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CefSharp.Common" Version="138.0.170" />
-    <PackageReference Include="CefSharp.WinForms.NETCore" Version="138.0.170" />
-    <PackageReference Include="KokoroSharp.CPU" Version="0.6.2" />
+    <PackageReference Include="CefSharp.Common" Version="138.0.340" />
+    <PackageReference Include="CefSharp.WinForms.NETCore" Version="138.0.340" />
     <PackageReference Include="MarkdownSharp" Version="2.0.5" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
@@ -29,8 +28,9 @@
     <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
     <PackageReference Include="NAudio.WinForms" Version="2.2.1" />
     <PackageReference Include="NAudio.WinMM" Version="2.2.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4-beta1" />
     <PackageReference Include="NVorbis" Version="0.10.5" />
+    <PackageReference Include="PiperSharp" Version="1.0.6" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
     <PackageReference Include="System.Security.AccessControl" Version="6.0.1" />
@@ -63,5 +63,11 @@
     <None Update="CSS\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="chromiumembeddedframework.runtime.win-arm64" Version="138.0.34" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="chromiumembeddedframework.runtime.win-x64" Version="138.0.34" />
   </ItemGroup>
 </Project>

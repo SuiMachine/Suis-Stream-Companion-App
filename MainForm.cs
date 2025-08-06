@@ -67,6 +67,7 @@ namespace SSC
 				webSockets.Start();
 
 			UpdateReminderIcon();
+			TTS.GetInstance().Enqueue("This is a test message");
 		}
 
 		private void StartBot()

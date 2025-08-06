@@ -1,18 +1,22 @@
-﻿using KokoroSharp;
-using KokoroSharp.Core;
+﻿using NAudio.Wave;
+using PiperSharp;
+using PiperSharp.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SSC
 {
 	public class TTS
 	{
-		private KokoroTTS processor;
-		private KokoroVoice voice;
+
 		private static TTS m_tts = null;
 		private Task SpeechTask;
 		private volatile Queue<string> MessageQueue = new Queue<string>();
+		private Task DownloadingTask;
+		private PiperWaveProvider piperModel;
 
 		public static TTS GetInstance()
 		{
@@ -24,21 +28,60 @@ namespace SSC
 
 		private TTS()
 		{
-			processor = KokoroTTS.LoadModel();
-			voice = KokoroVoiceManager.GetVoice("af_bella");
+			const string ModelKey = "en_US-amy-medium";
+
+			var cwd = Directory.GetCurrentDirectory();
+			string ModelPath = Path.Combine(cwd, "CurrentModel");
+			DownloadingTask = Task.Run(async () =>
+			{
+				//Based on example code
+				if (!File.Exists(PiperDownloader.DefaultPiperExecutableLocation))
+				{
+					await PiperDownloader.DownloadPiper().ExtractPiper(PiperDownloader.DefaultLocation);
+				}
+
+				var modelPath = Path.Join(PiperDownloader.DefaultModelLocation, ModelKey);
+				VoiceModel? model = null;
+				if (Directory.Exists(modelPath))
+					model = await VoiceModel.LoadModelByKey(ModelKey);
+				else
+					model = await PiperDownloader.DownloadModelByKey(ModelKey);
+
+				var playbackThread = new Thread(PlaybackThread);
+				piperModel = new PiperWaveProvider(new PiperConfiguration()
+				{
+					Model = model,
+					UseCuda = false
+				});
+				piperModel.Start();
+				playbackThread.Start(piperModel);
+			});
+		}
+
+		public void PlaybackThread(object? obj)
+		{
+			var provider = (PiperWaveProvider)obj!;
+			using (var outputDevice = new WaveOutEvent())
+			{
+				outputDevice.Init(provider);
+				outputDevice.Play();
+				while (outputDevice.PlaybackState == PlaybackState.Playing)
+				{
+					Thread.Sleep(1000);
+				}
+			}
 		}
 
 		public void StripMarkdownAndEnqueue(string message)
 		{
 			message = message.Replace("<3", "");
-			message = message.Replace(",", "");
-			message = message.Replace("\"", "");		
-			message = message.Replace("Sia", "[Sia](/ssɪɪa/)");
+			//message = message.Replace(",", "");
+			//message = message.Replace("\"", "");		
 
 
 
-			Regex reg = new Regex("[\\*].+?[\\*]");
-			message = reg.Replace(message, "");
+			//Regex reg = new Regex("[\\*].+?[\\*]");
+			//message = reg.Replace(message, "");
 
 			Enqueue(message);
 		}
@@ -51,33 +94,10 @@ namespace SSC
 			{
 				SpeechTask = Task.Run(async () =>
 				{
-					while(MessageQueue.Count > 0)
-					{
-						var msg = MessageQueue.Dequeue();
-						var handle = processor.SpeakFast(msg, voice, new KokoroSharp.Processing.KokoroTTSPipelineConfig()
-						{
-							PreprocessText = true,
-							SecondsOfPauseBetweenProperSegments = new KokoroSharp.Processing.PauseAfterSegmentStrategy(CommaPause: 0.09f, PeriodPause: 0.4f, ExclamationMarkPause: 0.5f, OthersPause: 0.3f),
-							Speed = 1.1f
-						});
-						bool cancelled = false;
-						bool completed = false;
-						handle.OnSpeechCompleted += (b) =>
-						{
-							completed = true;
-						};
-						handle.OnSpeechCanceled += (b) =>
-						{
-							cancelled = true;
-						};
+					while (!DownloadingTask?.IsCompleted ?? true)
+						await Task.Delay(1000);
 
-						while (!completed)
-						{
-							if (cancelled)
-								return;
-							await Task.Delay(250);
-						}
-					}
+					await piperModel.InferPlayback(message);
 				});
 			}
 		}
