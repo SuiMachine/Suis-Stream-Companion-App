@@ -129,7 +129,11 @@ namespace SSC.SettingsForms
 		private void B_GetLoginData_Click(object sender, EventArgs e)
 		{
 			var url = HelixAPI.GenerateAuthenticationURL(ChatBot.SSC_CLIENT_ID, "https://suimachine.github.io/twitchauthy/", SCOPES);
-			Process.Start(url);
+			Process.Start(new ProcessStartInfo()
+			{
+				FileName = url,
+				UseShellExecute = true
+			});
 		}
 
 		private void B_GetLoginDataManual_Click(object sender, EventArgs e)
