@@ -60,7 +60,7 @@ namespace SSC.Structs
 
 		public class NotesEntity
 		{
-			[XmlAttribute] public Guid UID { get; set; } = new Guid();
+			[XmlAttribute] public Guid UID { get; set; } = Guid.NewGuid();
 			[XmlAttribute] public bool Completed { get; set; } = false;
 			[XmlText] public string Content { get; set; } = "";
 		}

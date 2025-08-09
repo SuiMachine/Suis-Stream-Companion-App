@@ -65,7 +65,7 @@ namespace SSC.Structs.Gemini.FunctionTypes
 			{
 				Notes.GetInstance().CurrentNotes.Add(new Notes.NotesEntity()
 				{
-					UID = new Guid(),
+					UID = Guid.NewGuid(),
 					Completed = false,
 					Content = Note_Content
 				});
