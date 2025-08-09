@@ -11,14 +11,34 @@ using Whisper.net.Logger;
 
 namespace SSC
 {
-	public static class Testingu
+	public class SpeechRecognition : IDisposable
 	{
-		public static async Task DoTest()
+		public bool Disposed { get; private set; } = false;
+		private Task Initialization;
+		private WhisperProcessor m_Processor;
+		private WhisperFactory m_Factory;
+		private IDisposable m_Logger;
+
+		private static SpeechRecognition m_Instance;
+		public static SpeechRecognition GetInstance()
+		{
+			if(m_Instance == null)
+			{
+				m_Instance = new SpeechRecognition();
+			}
+			return m_Instance;
+		}
+
+		private SpeechRecognition()
+		{
+			Initialization = Task.Run(Initialize);
+		}
+
+		public async Task Initialize()
 		{
 			// We declare three variables which we will use later, ggmlType, modelFileName and inputFileName
 			var ggmlType = GgmlType.Base;
 			var modelFileName = "ggml-base.bin";
-			var wavFileName = "untitled.wav";
 
 			// This section detects whether the "ggml-base.bin" file exists in our project disk. If it doesn't, it downloads it from the internet
 			if (!File.Exists(modelFileName))
@@ -27,36 +47,64 @@ namespace SSC
 			}
 
 			// Optional logging from the native library
-			using var whisperLogger = LogProvider.AddConsoleLogging(WhisperLogLevel.Debug);
+			m_Logger = LogProvider.AddConsoleLogging(WhisperLogLevel.Debug);
 
 			// This section creates the whisperFactory object which is used to create the processor object.
-			using var whisperFactory = WhisperFactory.FromPath("ggml-base.bin", new WhisperFactoryOptions()
+			m_Factory = WhisperFactory.FromPath("ggml-base.bin", new WhisperFactoryOptions()
 			{
 				UseGpu = false
 			});
 
 			// This section creates the processor object which is used to process the audio file, it uses language `auto` to detect the language of the audio file.
 			// It also sets the segment event handler, which is called every time a new segment is detected.
-			using var processor = whisperFactory.CreateBuilder()
+			m_Processor = m_Factory.CreateBuilder()
 				.WithLanguage("auto")
 				.WithSegmentEventHandler((segment) =>
 				{
+					MainForm.Instance?.ProcessSpeechInput(segment);
 					// Do whetever you want with your segment here.
 					Debug.WriteLine($"{segment.Start}->{segment.End}: {segment.Text}");
 				})
 				.Build();
-
-			// This section processes the audio file and prints the results (start time, end time and text) to the console.
-			using var fileStream = File.OpenRead(wavFileName);
-			processor.Process(fileStream);
 		}
 
-		private static async Task DownloadModel(string fileName, GgmlType ggmlType)
+		public async Task<string> RecognizeSpeech(Stream contents)
 		{
-			Console.WriteLine($"Downloading Model {fileName}");
+			while(true)
+			{
+				if(!Initialization.IsCompleted)
+				{
+					if (Initialization.IsCanceled)
+						return null;
+				}
+
+				contents.Position = 0;
+				StringBuilder sb = new StringBuilder();
+
+				await foreach(var result in m_Processor.ProcessAsync(contents))
+				{
+					Console.WriteLine($"{result.Start}->{result.End}: {result.Text}");
+					sb.AppendLine(result.Text);
+				}
+				return sb.ToString();
+			}
+		}
+
+
+		private async Task DownloadModel(string fileName, GgmlType ggmlType)
+		{
+			Debug.WriteLine($"Downloading Model {fileName}");
 			using var modelStream = await WhisperGgmlDownloader.Default.GetGgmlModelAsync(ggmlType);
 			using var fileWriter = File.OpenWrite(fileName);
 			await modelStream.CopyToAsync(fileWriter);
+		}
+
+		public void Dispose()
+		{
+			m_Processor?.Dispose();
+			m_Factory?.Dispose();
+			m_Logger?.Dispose();
+			this.Disposed = true;
 		}
 	}
 }
