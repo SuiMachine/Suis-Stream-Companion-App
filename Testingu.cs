@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Whisper.net;
+using Whisper.net.Ggml;
+using Whisper.net.Logger;
+
+namespace SSC
+{
+	public static class Testingu
+	{
+		public static async Task DoTest()
+		{
+			// We declare three variables which we will use later, ggmlType, modelFileName and inputFileName
+			var ggmlType = GgmlType.Base;
+			var modelFileName = "ggml-base.bin";
+			var wavFileName = "untitled.wav";
+
+			// This section detects whether the "ggml-base.bin" file exists in our project disk. If it doesn't, it downloads it from the internet
+			if (!File.Exists(modelFileName))
+			{
+				await DownloadModel(modelFileName, ggmlType);
+			}
+
+			// Optional logging from the native library
+			using var whisperLogger = LogProvider.AddConsoleLogging(WhisperLogLevel.Debug);
+
+			// This section creates the whisperFactory object which is used to create the processor object.
+			using var whisperFactory = WhisperFactory.FromPath("ggml-base.bin", new WhisperFactoryOptions()
+			{
+				UseGpu = false
+			});
+
+			// This section creates the processor object which is used to process the audio file, it uses language `auto` to detect the language of the audio file.
+			// It also sets the segment event handler, which is called every time a new segment is detected.
+			using var processor = whisperFactory.CreateBuilder()
+				.WithLanguage("auto")
+				.WithSegmentEventHandler((segment) =>
+				{
+					// Do whetever you want with your segment here.
+					Debug.WriteLine($"{segment.Start}->{segment.End}: {segment.Text}");
+				})
+				.Build();
+
+			// This section processes the audio file and prints the results (start time, end time and text) to the console.
+			using var fileStream = File.OpenRead(wavFileName);
+			processor.Process(fileStream);
+		}
+
+		private static async Task DownloadModel(string fileName, GgmlType ggmlType)
+		{
+			Console.WriteLine($"Downloading Model {fileName}");
+			using var modelStream = await WhisperGgmlDownloader.Default.GetGgmlModelAsync(ggmlType);
+			using var fileWriter = File.OpenWrite(fileName);
+			await modelStream.CopyToAsync(fileWriter);
+		}
+	}
+}
