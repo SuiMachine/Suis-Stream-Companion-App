@@ -6,6 +6,7 @@ using SuiBotAI;
 using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -382,31 +383,37 @@ namespace SSC.AI_Integration
 			recording = !recording;
 			if (recording)
 			{
-				var waveFormat = new WaveFormat(16000, 1);
+				var waveFormat = new WaveFormat(16000, 16, 1);
 				Task.Run(async () =>
 				{
+					BlockSend = true;
+
 					using var memStream = new MemoryStream();
 					using var waveStream = new WaveFileWriter(memStream, waveFormat);
-					using (var waveIn = new WaveInEvent())
+					using var waveIn = new WaveInEvent();
+					waveIn.WaveFormat = waveFormat;
+					waveIn.DataAvailable += (s, e) =>
 					{
-						waveIn.WaveFormat = waveFormat;
-						waveIn.DataAvailable += (s, e) =>
-						{
-							waveStream.Write(e.Buffer, 0, e.BytesRecorded);
-						};
+						waveStream.Write(e.Buffer, 0, e.BytesRecorded);
+						waveStream.Flush();
+					};
 
-						waveIn.StartRecording();
-						while (recording)
-							await Task.Delay(15);
+					waveIn.StartRecording();
+					while (recording)
+						await Task.Delay(15);
 
-						waveIn.StopRecording();
-					}
-					;
+					waveIn.StopRecording();
 					await Task.Delay(15);
 
 					memStream.Position = 0;
 					var bytes = memStream.ToArray();
-					await ai.GetPrivateAnswer(privateMessages, GeminiMessage.CreateInlineData("audio/wav", bytes), false);
+					var result = await SpeechRecognition.GetInstance().RecognizeSpeech(memStream);
+					BlockSend = false;
+					result = $"This is a voice transcript: {result}";
+					await SendMessage(result);
+
+					BlockSend = false;
+
 				});
 			}
 		}

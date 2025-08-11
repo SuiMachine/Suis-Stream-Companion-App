@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Whisper.net;
@@ -72,7 +70,7 @@ namespace SSC
 		{
 			while(true)
 			{
-				if(!Initialization.IsCompleted)
+				while(!Initialization.IsCompleted)
 				{
 					if (Initialization.IsCanceled)
 						return null;
@@ -83,7 +81,7 @@ namespace SSC
 
 				await foreach(var result in m_Processor.ProcessAsync(contents))
 				{
-					Console.WriteLine($"{result.Start}->{result.End}: {result.Text}");
+					Debug.WriteLine($"{result.Start}->{result.End}: {result.Text}");
 					sb.AppendLine(result.Text);
 				}
 				return sb.ToString();
