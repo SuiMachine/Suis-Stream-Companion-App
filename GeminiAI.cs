@@ -464,7 +464,10 @@ namespace SSC
 				m_TemporaryMemoryForAdNotification = null;
 				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_AdsBegin.Replace("{time}", (adInfo.duration_seconds / 60f).ToString(CultureInfo.GetCultureInfo("en-US"))), Role.user));
 				if (result == null)
+				{
+					bot?.ChannelInstance?.SendChatMessage("Failed to get a response from AI (Ad break started)");
 					return;
+				}
 
 				var candidate = result.candidates.Last();
 
@@ -516,7 +519,10 @@ namespace SSC
 				m_TemporaryMemoryForAdNotification = null;
 				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_AdsFinished.Replace("{next_ads}", nextAdsIn.ToString()), Role.user));
 				if (result == null)
+				{
+					bot?.ChannelInstance?.SendChatMessage("Failed to get a response from AI (Ad break finished)");
 					return;
+				}
 
 				var candidate = result.candidates.Last();
 
@@ -555,7 +561,10 @@ namespace SSC
 				m_TemporaryMemoryForAdNotification = null;
 				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_NotifyPrerolls, Role.user));
 				if (result == null)
+				{
+					bot?.ChannelInstance?.SendChatMessage("Failed to get a response from AI (Preroll ads are now active!)");
 					return;
+				}
 
 				var candidate = result.candidates.Last();
 
