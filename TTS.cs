@@ -32,13 +32,12 @@ namespace SSC
 		{
 			message = message.Replace("<3", "");
 			message = message.Replace(",", "");
-			message = message.Replace("\"", "");		
-			message = message.Replace("Sia", "[Sia](/ssɪɪa/)");
+			message = message.Replace("\"", "");
+			message = message.Replace("*", "");
+			message = message.Replace("Sia", "[Sia](/ssɪɪa/)"); //This should be I think split into words and replaced as words.
 
-
-
-			Regex reg = new Regex("[\\*].+?[\\*]");
-			message = reg.Replace(message, "");
+			//Regex reg = new Regex("[\\*].+?[\\*]");
+			//message = reg.Replace(message, "");
 
 			Enqueue(message);
 		}
@@ -47,11 +46,11 @@ namespace SSC
 		{
 			MessageQueue.Enqueue(message);
 
-			if(SpeechTask?.IsCompleted ?? true)
+			if (SpeechTask?.IsCompleted ?? true)
 			{
 				SpeechTask = Task.Run(async () =>
 				{
-					while(MessageQueue.Count > 0)
+					while (MessageQueue.Count > 0)
 					{
 						var msg = MessageQueue.Dequeue();
 						var handle = processor.SpeakFast(msg, voice, new KokoroSharp.Processing.KokoroTTSPipelineConfig()
