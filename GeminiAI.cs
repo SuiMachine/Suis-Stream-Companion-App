@@ -670,8 +670,22 @@ namespace SSC
 			if (summaryStartPoint == summaryEndPoint)
 				return privateMessages;
 
+			bool isFirstMessage = false;
 			for (int i = summaryStartPoint; i < summaryEndPoint; i++)
 			{
+				if (!isFirstMessage)
+				{
+					GeminiMessage msg = privateMessages.contents[i];
+					foreach (var m in msg.parts)
+					{
+						if (m.text != null)
+						{
+							content.contents.Add(privateMessages.contents[i]);
+							isFirstMessage = false;
+						}
+					}
+				}
+				else
 				content.contents.Add(privateMessages.contents[i]);
 			}
 
