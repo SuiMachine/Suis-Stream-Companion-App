@@ -686,7 +686,7 @@ namespace SSC
 					}
 				}
 				else
-				content.contents.Add(privateMessages.contents[i]);
+					content.contents.Add(privateMessages.contents[i]);
 			}
 
 			var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage("Summarize conversation until this point. **Do not use any other conversation text - It should be just a summary! Do not call any of the functions!**", Role.user));
