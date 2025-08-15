@@ -7,6 +7,7 @@ using SuiBot_TwitchSocket.API.EventSub;
 using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Notifications;
@@ -249,6 +250,113 @@ namespace SSC.Structs.Gemini.FunctionTypes
 			ReminderForm.Instance?.ReloadList();
 
 			await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"Added a reminder on {parsedDateTime.ToString("yyy-MM-dd", globalizationOverride)} {parsedDateTime:HH:mm:ss}Z"));
+		}
+	}
+
+	public class GetRemindersAICall : FunctionCallSSC
+	{
+		public override string FunctionName() => "GetReminders";
+
+		public override string FunctionDescription() => "Gets all current reminders in JSON format.";
+
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
+		{
+			var l = JsonConvert.SerializeObject(Reminders.GetInstance().GetAllReminders(), Formatting.Indented);
+			await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), l));
+		}
+	}
+
+	public class EditAReminderAICall : FunctionCallSSC
+	{
+		[FunctionCallParameter(true)]
+		public string UID;
+		[FunctionCallParameter(false)]
+		public bool? Notified;
+		[FunctionCallParameter(false)]
+		public string Content;
+		[FunctionCallParameter(false)]
+		public string DateTime_UTC;
+
+		public override string FunctionName() => "EditAReminder";
+
+		public override string FunctionDescription() => $"Edits a reminder. {nameof(UID)}) of a reminder has to be provided. The rest should only be changes.";
+
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
+		{
+			if (string.IsNullOrEmpty(UID))
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{nameof(UID)} can not be null (can be obtained by getting a list of reminders)"));
+				return;
+			}
+
+			if (!Guid.TryParse(UID, out var parsedUId))
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{nameof(UID)} has incorrect format and it couldn't be parsed."));
+				return;
+			}
+
+			var find = Reminders.GetInstance().GetAllReminders().FirstOrDefault(x => x.UID == parsedUId);
+			if (find == null)
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"Failed to find a reminder with given UID"));
+				return;
+			}
+
+			if (DateTime_UTC != null)
+			{
+				if (!DateTime.TryParse(DateTime_UTC, out DateTime parsedDateTime))
+				{
+					await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"Failed to parse a new date time."));
+					return;
+				}
+
+				find.UTCTime = parsedDateTime;
+			}
+
+			if (Notified.HasValue)
+				find.Notified = Notified.Value;
+
+			if (Content != null)
+				find.Notification_Content = Content;
+
+			Reminders.GetInstance().Rebuild();
+			await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"Updated a reminder."));
+		}
+	}
+
+	public class RemoveReminderAICall : FunctionCallSSC
+	{
+		[FunctionCallParameter(true)]
+		public string UID;
+
+		public override string FunctionName() => "RemoveReminder";
+
+		public override string FunctionDescription() => $"Removes / deletes a reminder. {nameof(UID)}) of a reminder has to be provided. It can be obtained by executing GetReminders function.";
+
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
+		{
+			if (string.IsNullOrEmpty(UID))
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{nameof(UID)} can not be null (can be obtained by getting a list of reminders)"));
+				return;
+			}
+
+			if (!Guid.TryParse(UID, out var parsedUId))
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), $"{nameof(UID)} has incorrect format and it couldn't be parsed."));
+				return;
+			}
+
+			if (Reminders.GetInstance().Remove(parsedUId))
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Removed a reminder"));
+				ReminderForm.Instance?.ReloadList();
+
+			}
+			else
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Couldn't find a reminder with given UID"));
+			}
 		}
 	}
 

@@ -93,6 +93,9 @@ namespace SSC
 				new RemoveANoteAICall(),
 				new GetAllNotesAICall(),
 				new AddReminderAICall(),
+				new EditAReminderAICall(),
+				new GetRemindersAICall(),
+				new RemoveReminderAICall(),
 				new DisplaySystemNotificationCall(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDsForNameCalls(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDDataCalls()
