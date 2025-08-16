@@ -237,7 +237,10 @@ namespace SSC.SoundDatabaseEditor
 			}
 
 			System.IO.File.WriteAllText("Tags.txt", sb.ToString());
-			System.Diagnostics.Process.Start("Tags.txt");
+			System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("Tags.txt")
+			{
+				UseShellExecute = true
+			});
 		}
 	}
 

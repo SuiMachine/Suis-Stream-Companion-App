@@ -7,6 +7,7 @@ using System.ComponentModel;
 using SSC.AI_Integration;
 using System.IO;
 using SSC.OtherForms;
+using Whisper.net;
 
 namespace SSC
 {
@@ -388,6 +389,10 @@ namespace SSC
 			{
 				NotesForm.Instance.Focus();
 			}
+		}
+
+		internal void ProcessSpeechInput(SegmentData segment)
+		{
 		}
 	}
 }

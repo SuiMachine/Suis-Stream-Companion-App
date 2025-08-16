@@ -93,6 +93,9 @@ namespace SSC
 				new RemoveANoteAICall(),
 				new GetAllNotesAICall(),
 				new AddReminderAICall(),
+				new EditAReminderAICall(),
+				new GetRemindersAICall(),
+				new RemoveReminderAICall(),
 				new DisplaySystemNotificationCall(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDsForNameCalls(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDDataCalls()
@@ -461,7 +464,10 @@ namespace SSC
 				m_TemporaryMemoryForAdNotification = null;
 				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_AdsBegin.Replace("{time}", (adInfo.duration_seconds / 60f).ToString(CultureInfo.GetCultureInfo("en-US"))), Role.user));
 				if (result == null)
+				{
+					bot?.ChannelInstance?.SendChatMessage("Failed to get a response from AI (Ad break started)");
 					return;
+				}
 
 				var candidate = result.candidates.Last();
 
@@ -513,7 +519,10 @@ namespace SSC
 				m_TemporaryMemoryForAdNotification = null;
 				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_AdsFinished.Replace("{next_ads}", nextAdsIn.ToString()), Role.user));
 				if (result == null)
+				{
+					bot?.ChannelInstance?.SendChatMessage("Failed to get a response from AI (Ad break finished)");
 					return;
+				}
 
 				var candidate = result.candidates.Last();
 
@@ -552,7 +561,10 @@ namespace SSC
 				m_TemporaryMemoryForAdNotification = null;
 				var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage(aiConfig.Events.Instruction_NotifyPrerolls, Role.user));
 				if (result == null)
+				{
+					bot?.ChannelInstance?.SendChatMessage("Failed to get a response from AI (Preroll ads are now active!)");
 					return;
+				}
 
 				var candidate = result.candidates.Last();
 
@@ -667,9 +679,23 @@ namespace SSC
 			if (summaryStartPoint == summaryEndPoint)
 				return privateMessages;
 
+			bool isFirstMessage = false;
 			for (int i = summaryStartPoint; i < summaryEndPoint; i++)
 			{
-				content.contents.Add(privateMessages.contents[i]);
+				if (!isFirstMessage)
+				{
+					GeminiMessage msg = privateMessages.contents[i];
+					foreach (var m in msg.parts)
+					{
+						if (m.text != null)
+						{
+							content.contents.Add(privateMessages.contents[i]);
+							isFirstMessage = false;
+						}
+					}
+				}
+				else
+					content.contents.Add(privateMessages.contents[i]);
 			}
 
 			var result = await m_Processor.GetAIResponse(content, instructions, GeminiMessage.CreateMessage("Summarize conversation until this point. **Do not use any other conversation text - It should be just a summary! Do not call any of the functions!**", Role.user));

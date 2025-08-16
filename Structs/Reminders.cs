@@ -140,7 +140,7 @@ namespace SSC
 			}
 		}
 
-		private void Save()
+		internal void Save()
 		{
 			XML_Utils.Save(DefaultNotesPath(), Entities);
 		}
@@ -174,12 +174,30 @@ namespace SSC
 			return result;
 		}
 
+		internal bool Remove(Guid uid)
+		{
+			var element = Entities.FirstOrDefault(x => x.UID == uid);
+			if (element == null)
+				return false;
+
+			if (Entities.Remove(element))
+			{
+				Save();
+				return true;
+			}
+			else
+				return false;
+		}
+
 		internal void Rebuild()
 		{
 			this.ClosestReminder = null;
 			m_AllChecked = false;
 			Entities = Entities.OrderBy(x => x.UTCTime).ToList();
 			Save();
+			MainForm.Instance.UpdateReminderIcon();
 		}
+
+		internal List<ReminderEntities> GetAllReminders() => Entities;
 	}
 }
