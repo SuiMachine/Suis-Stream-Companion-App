@@ -70,7 +70,7 @@
 			tableLayoutPanel1.RowCount = 3;
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
 			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 128F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 129F));
 			tableLayoutPanel1.Size = new System.Drawing.Size(624, 450);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
@@ -81,12 +81,12 @@
 			tableLayoutPanel2.Controls.Add(tableLayoutPanel3, 0, 1);
 			tableLayoutPanel2.Controls.Add(listView_Attachements, 0, 0);
 			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			tableLayoutPanel2.Location = new System.Drawing.Point(3, 325);
+			tableLayoutPanel2.Location = new System.Drawing.Point(3, 324);
 			tableLayoutPanel2.Name = "tableLayoutPanel2";
 			tableLayoutPanel2.RowCount = 2;
-			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanel2.Size = new System.Drawing.Size(618, 122);
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel2.Size = new System.Drawing.Size(618, 123);
 			tableLayoutPanel2.TabIndex = 1;
 			// 
 			// tableLayoutPanel3
@@ -99,7 +99,7 @@
 			tableLayoutPanel3.Controls.Add(label1, 0, 0);
 			tableLayoutPanel3.Controls.Add(RB_MessageToSend, 1, 0);
 			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			tableLayoutPanel3.Location = new System.Drawing.Point(3, 87);
+			tableLayoutPanel3.Location = new System.Drawing.Point(3, 88);
 			tableLayoutPanel3.Name = "tableLayoutPanel3";
 			tableLayoutPanel3.RowCount = 1;
 			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -142,7 +142,7 @@
 			listView_Attachements.Dock = System.Windows.Forms.DockStyle.Fill;
 			listView_Attachements.Location = new System.Drawing.Point(3, 3);
 			listView_Attachements.Name = "listView_Attachements";
-			listView_Attachements.Size = new System.Drawing.Size(612, 78);
+			listView_Attachements.Size = new System.Drawing.Size(612, 79);
 			listView_Attachements.TabIndex = 1;
 			listView_Attachements.UseCompatibleStateImageBehavior = false;
 			// 
@@ -217,7 +217,7 @@
 			panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			panel2.Location = new System.Drawing.Point(3, 36);
 			panel2.Name = "panel2";
-			panel2.Size = new System.Drawing.Size(618, 283);
+			panel2.Size = new System.Drawing.Size(618, 282);
 			panel2.TabIndex = 4;
 			// 
 			// menuStrip1

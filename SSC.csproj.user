@@ -2,6 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
+    <_LastSelectedProfileId>E:\Projekty\Suis-Stream-Companion-App\Properties\PublishProfiles\Win64.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="AI_Integration\AI_StreamEvents.cs">

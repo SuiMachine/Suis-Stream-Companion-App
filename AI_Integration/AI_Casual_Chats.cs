@@ -24,8 +24,6 @@ namespace SSC.AI_Integration
 
 		public static string GetFolderAIData() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_Data");
 		public static string GetCSSFolder() => Path.Combine(Directory.GetCurrentDirectory(), "CSS");
-
-
 		private static string GetFilePathPrivateConversation() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "PrivateConversation.xml");
 
 		private bool Initializing;
@@ -95,6 +93,7 @@ namespace SSC.AI_Integration
 			});
 			settings.CefCommandLineArgs.Add("allow-file-access-from-files");
 			settings.CefCommandLineArgs.Add("allow-universal-access-from-files");
+			settings.RootCachePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SSC", "Cache");
 			if (!Cef.IsInitialized ?? true)
 				Cef.Initialize(settings);
 			browser = new ChromiumWebBrowser();
