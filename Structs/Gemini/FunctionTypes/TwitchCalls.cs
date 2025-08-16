@@ -22,7 +22,7 @@ namespace SSC.Structs.Gemini.FunctionTypes
 				return;
 			}
 
-			var response = await MainForm.Instance.TwitchBot.HelixAPI_Bot.GetChatters(MainForm.Instance.TwitchBot.HelixAPI_User.User_Id, MainForm.Instance.TwitchBot.HelixAPI_Bot.User_Id);
+			SuiBot_TwitchSocket.API.Helix.Responses.Response_GetChatters response = await channelInstance.GetChatters();
 			if (response == null)
 			{
 				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Failed to get the list of chatters."));

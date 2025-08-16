@@ -242,5 +242,7 @@ namespace SSC.Chat
 		}
 
 		internal async Task<Response_GetUserInfo> GetUserInfo(string user_id) => await m_ChatBot?.HelixAPI_Bot.GetUserInfoByUserID(user_id);
+
+		internal async Task<Response_GetChatters> GetChatters() => await m_ChatBot?.HelixAPI_Bot.GetChatters(ChannelID);
 	}
 }
