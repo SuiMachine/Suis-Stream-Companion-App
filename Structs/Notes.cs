@@ -22,7 +22,7 @@ namespace SSC.Structs
 
 		public void Open(string file)
 		{
-			if (!File.Exists(file))
+			if (File.Exists(file))
 			{
 				CurrentFile = file;
 				CurrentNotes = XML_Utils.Load(CurrentFile, new List<NotesEntity>());
