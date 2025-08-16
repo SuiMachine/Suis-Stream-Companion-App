@@ -217,25 +217,17 @@ namespace SSC.Chat
 			m_ChatBot?.HelixAPI_Bot.GetStatus(this);
 		}
 
-		internal void UserTimeout(ES_ChatMessage message, uint duration_in_seconds, string text_response)
-		{
-			m_ChatBot?.HelixAPI_Bot.RequestTimeout(message, duration_in_seconds, text_response);
-		}
+		internal void UserTimeout(ES_ChatMessage message, uint duration_in_seconds, string text_response) => m_ChatBot?.HelixAPI_Bot.RequestTimeout(message, duration_in_seconds, text_response);
 
-		internal void UserTimeout(string broadcaster_id, string chatter_id, uint duration_in_seconds, string text_response)
-		{
-			m_ChatBot?.HelixAPI_Bot.RequestTimeout(broadcaster_id, chatter_id, duration_in_seconds, text_response);
-		}
+		internal void UserTimeout(string broadcaster_id, string chatter_id, uint duration_in_seconds, string text_response) => m_ChatBot?.HelixAPI_Bot.RequestTimeout(broadcaster_id, chatter_id, duration_in_seconds, text_response);
 
-		internal void UserBan(ES_ChatMessage message, string response)
-		{
-			m_ChatBot?.HelixAPI_Bot.RequestBan(message, response);
-		}
+		internal void SudoUserTimeout(string chatter_id, uint duration_in_seconds, string text_response) => m_ChatBot?.HelixAPI_User.RequestTimeout(m_ChatBot.HelixAPI_User.User_Id, chatter_id, duration_in_seconds, text_response);
 
-		internal void UserBan(string broadcaster_id, string chatter_id, string response)
-		{
-			m_ChatBot?.HelixAPI_Bot.RequestBan(broadcaster_id, chatter_id, response);
-		}
+		internal void UserBan(ES_ChatMessage message, string response) => m_ChatBot?.HelixAPI_Bot.RequestBan(message, response);
+
+		internal void UserBan(string broadcaster_id, string chatter_id, string response) => m_ChatBot?.HelixAPI_Bot.RequestBan(broadcaster_id, chatter_id, response);
+
+		internal void SudoUserBan(string chatter_id, string response) => m_ChatBot?.HelixAPI_User.RequestBan(m_ChatBot.HelixAPI_User.User_Id, chatter_id, response);
 
 		internal void LogMessage(ES_ChatMessage chatMessage)
 		{
@@ -248,5 +240,7 @@ namespace SSC.Chat
 				}
 			}
 		}
+
+		internal async Task<Response_GetUserInfo> GetUserInfo(string user_id) => await m_ChatBot?.HelixAPI_Bot.GetUserInfoByUserID(user_id);
 	}
 }
