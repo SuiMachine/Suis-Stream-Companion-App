@@ -20,6 +20,7 @@ namespace SSC.SettingsForms
 			"channel:read:predictions",
 			"channel:manage:predictions",
 			"channel:read:redemptions",
+			"channel:manage:broadcast",
 			"channel:manage:redemptions",
 			"channel:read:subscriptions",
 			"channel:read:goals",

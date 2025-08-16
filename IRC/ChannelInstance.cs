@@ -244,5 +244,22 @@ namespace SSC.Chat
 		internal async Task<Response_GetUserInfo> GetUserInfo(string user_id) => await m_ChatBot?.HelixAPI_Bot.GetUserInfoByUserID(user_id);
 
 		internal async Task<Response_GetChatters> GetChatters() => await m_ChatBot?.HelixAPI_Bot.GetChatters(ChannelID);
+
+		internal async Task<bool> ModifyChannelDescription(string game_id, string title)
+		{
+			if (m_ChatBot?.HelixAPI_User == null)
+				return false;
+
+			var game = await m_ChatBot.HelixAPI_User.GetGamesByID(game_id);
+			if (game.Length == 0)
+				game_id = null;
+
+			var result = await m_ChatBot.HelixAPI_User.ModifyChannelInformation(new SuiBot_TwitchSocket.API.Helix.Request.Request_ModifyChannelInformation()
+			{
+				game_id = game_id,
+				title = title
+			});
+			return result;
+		}
 	}
 }

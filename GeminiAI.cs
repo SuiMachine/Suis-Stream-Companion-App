@@ -100,6 +100,7 @@ namespace SSC
 				new TimeOutSpecificUserCall(),
 				new BanSpecificUserCall(),
 				new GetChatUsersCall(),
+				new SetChannelDescription(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDsForNameCalls(),
 				new Structs.Gemini.FunctionTypes.Steam.SteamGetAppIDDataCalls()
 				);

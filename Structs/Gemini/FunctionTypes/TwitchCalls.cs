@@ -176,4 +176,36 @@ namespace SSC.Structs.Gemini.FunctionTypes
 			}
 		}
 	}
+
+	[Serializable]
+	public class SetChannelDescription : FunctionCallSSC
+	{
+		[FunctionCallParameter(false)]
+		public string game_id = null;
+		[FunctionCallParameter(false)]
+		public string title = null;
+
+		public override string FunctionName() => "SetChannelDescription";
+		public override string FunctionDescription() => "Sets a Twitch channel description. Both parameters are optional.";
+
+		public override async Task Perform(ChannelInstance channelInstance, ES_ChatMessage message, GeminiContent content)
+		{
+			channelInstance ??= MainForm.Instance.TwitchBot?.ChannelInstance;
+			if (channelInstance == null || !channelInstance.ConnectedStatus)
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "You are currently not connected to Twitch."));
+				return;
+			}
+
+			var result = await channelInstance.ModifyChannelDescription(game_id, title);
+			if (result)
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Updated channel description."));
+			}
+			else
+			{
+				await MainForm.Instance.AI.GetSecondaryAnswer(channelInstance, message, content, GeminiMessage.CreateFunctionCallResponse(FunctionName(), "Failed to update channel description"));
+			}
+		}
+	}
 }
