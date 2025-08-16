@@ -27,7 +27,7 @@ namespace SSC.AI_Integration
 
 		public void Rebuild()
 		{
-			if(this.InvokeRequired)
+			if (this.InvokeRequired)
 			{
 				this.Invoke(Rebuild);
 				return;
@@ -75,6 +75,8 @@ namespace SSC.AI_Integration
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (chkList_Notes.SelectedIndex < 0)
+				return;
 			this.notesUsed.CurrentNotes.RemoveAt(chkList_Notes.SelectedIndex);
 			this.notesUsed.Save();
 			this.Rebuild();
