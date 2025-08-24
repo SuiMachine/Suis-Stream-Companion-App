@@ -1,4 +1,5 @@
-﻿using SSC.Chat;
+﻿using SSC.AI_Integration;
+using SSC.Chat;
 using SSC.Structs.Gemini;
 using SSC.Structs.Gemini.FunctionTypes;
 using SSC.Structs.Gemini.FunctionTypes.Other;
@@ -279,6 +280,12 @@ namespace SSC
 							}
 						}
 					}
+
+					var summaryAbove = AIConfig.GetInstance().AutoSummaryAbove;
+					if (summaryAbove > 10)
+					{
+						content = await ProcessSummary(content, summaryAbove);
+					}
 				}
 			}
 			catch (SafetyFilterTrippedException ex)
@@ -345,7 +352,6 @@ namespace SSC
 								}
 							}
 						}
-
 					}
 				}
 			}
@@ -401,6 +407,7 @@ namespace SSC
 						sb.AppendLine(response.text);
 						if (aiConfig.CasualChat_TTS)
 						{
+							AI_Casual_Chats.Instance?.RefreshHistory();
 							TTS.GetInstance().StripMarkdownAndEnqueue(response.text);
 						}
 
@@ -435,6 +442,16 @@ namespace SSC
 							var callableCast = (FunctionCallSSC)converted;
 							await callableCast.Perform(null, null, content);
 						}
+					}
+				}
+
+				if(!recursive)
+				{
+					var summaryAbove = AIConfig.GetInstance().AutoSummaryAbove;
+					if (summaryAbove > 10)
+					{
+						content = await ProcessSummary(content, summaryAbove);
+						AI_Casual_Chats.Instance?.RefreshHistory();
 					}
 				}
 			}
@@ -637,7 +654,7 @@ namespace SSC
 			});
 		}
 
-		public async Task<GeminiContent> ProcessSummary(GeminiContent privateMessages, int minimum_amount_of_content)
+		public async Task<GeminiContent> ProcessSummary(GeminiContent privateMessages, int minimum_amount_of_content, int summary_size = 25)
 		{
 			string summaryHeader = "[This is a summary]:";
 			var aiConfig = AIConfig.GetInstance();
@@ -661,7 +678,7 @@ namespace SSC
 				}
 			};
 
-			int summaryStartPoint = minimum_amount_of_content / 2;
+			int summaryStartPoint = 0;
 			while (summaryStartPoint < privateMessages.contents.Count)
 			{
 				if (privateMessages.contents[summaryStartPoint].parts.Any(x => x.text != null && x.text.StartsWith(summaryHeader)))
@@ -676,7 +693,7 @@ namespace SSC
 			if (summaryStartPoint == privateMessages.contents.Count)
 				return privateMessages;
 
-			int summaryCount = minimum_amount_of_content / 2;
+			int summaryCount = summary_size;
 			int summaryEndPoint = summaryStartPoint + summaryCount;
 			if (summaryEndPoint >= privateMessages.contents.Count)
 				summaryEndPoint = privateMessages.contents.Count;

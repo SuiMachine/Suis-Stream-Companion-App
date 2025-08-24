@@ -28,840 +28,920 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.TBar_StreamerHarassment = new System.Windows.Forms.TrackBar();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-			this.Num_UserResponseTemperature = new System.Windows.Forms.NumericUpDown();
-			this.label11 = new System.Windows.Forms.Label();
-			this.Num_UserTokenLimit = new System.Windows.Forms.NumericUpDown();
-			this.label10 = new System.Windows.Forms.Label();
-			this.TBar_UserCivicIntegrity = new System.Windows.Forms.TrackBar();
-			this.label2 = new System.Windows.Forms.Label();
-			this.TBar_UserDangerousContent = new System.Windows.Forms.TrackBar();
-			this.label3 = new System.Windows.Forms.Label();
-			this.TBar_UserSexuallyExplicit = new System.Windows.Forms.TrackBar();
-			this.label4 = new System.Windows.Forms.Label();
-			this.TBar_UserHate = new System.Windows.Forms.TrackBar();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.TBar_UserHarassment = new System.Windows.Forms.TrackBar();
-			this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-			this.label7 = new System.Windows.Forms.Label();
-			this.RB_InstructionUser = new System.Windows.Forms.RichTextBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.Num_StreamerTemperature = new System.Windows.Forms.NumericUpDown();
-			this.label12 = new System.Windows.Forms.Label();
-			this.TBar_StreamerCivicIntegrity = new System.Windows.Forms.TrackBar();
-			this.L_Civic_Integrity = new System.Windows.Forms.Label();
-			this.TBar_StreamerDangerousContent = new System.Windows.Forms.TrackBar();
-			this.L_Filter_Dangerous_Content = new System.Windows.Forms.Label();
-			this.TBar_StreamerSexuallyExplicit = new System.Windows.Forms.TrackBar();
-			this.L_Filter_Sexually_Explicit = new System.Windows.Forms.Label();
-			this.TBar_StreamerHate = new System.Windows.Forms.TrackBar();
-			this.L_Filter_Hate = new System.Windows.Forms.Label();
-			this.L_Filter_Harassment = new System.Windows.Forms.Label();
-			this.Num_StreamerTokenLimit = new System.Windows.Forms.NumericUpDown();
-			this.label9 = new System.Windows.Forms.Label();
-			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.RB_InstructionStreamer = new System.Windows.Forms.RichTextBox();
-			this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
-			this.B_Cancel = new System.Windows.Forms.Button();
-			this.B_Save = new System.Windows.Forms.Button();
-			this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-			this.B_Show_UserOverrides = new System.Windows.Forms.Button();
-			this.label8 = new System.Windows.Forms.Label();
-			this.TB_API_Key = new System.Windows.Forms.TextBox();
-			this.B_CreateReward = new System.Windows.Forms.Button();
-			this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-			this.TB_Username = new System.Windows.Forms.TextBox();
-			this.label13 = new System.Windows.Forms.Label();
-			this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
-			this.label14 = new System.Windows.Forms.Label();
-			this.RB_CharacterDefinition = new System.Windows.Forms.RichTextBox();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerHarassment)).BeginInit();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			this.tableLayoutPanel6.SuspendLayout();
-			this.tableLayoutPanel7.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.Num_UserResponseTemperature)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.Num_UserTokenLimit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserCivicIntegrity)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserDangerousContent)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserSexuallyExplicit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserHate)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserHarassment)).BeginInit();
-			this.tableLayoutPanel8.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			this.tableLayoutPanel5.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.Num_StreamerTemperature)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerCivicIntegrity)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerDangerousContent)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerSexuallyExplicit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerHate)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.Num_StreamerTokenLimit)).BeginInit();
-			this.tableLayoutPanel4.SuspendLayout();
-			this.tableLayoutPanel9.SuspendLayout();
-			this.tableLayoutPanel10.SuspendLayout();
-			this.tableLayoutPanel11.SuspendLayout();
-			this.tableLayoutPanel12.SuspendLayout();
-			this.tableLayoutPanel13.SuspendLayout();
-			this.SuspendLayout();
+			TBar_StreamerHarassment = new System.Windows.Forms.TrackBar();
+			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			groupBox2 = new System.Windows.Forms.GroupBox();
+			tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+			Num_UserResponseTemperature = new System.Windows.Forms.NumericUpDown();
+			label11 = new System.Windows.Forms.Label();
+			Num_UserTokenLimit = new System.Windows.Forms.NumericUpDown();
+			label10 = new System.Windows.Forms.Label();
+			TBar_UserCivicIntegrity = new System.Windows.Forms.TrackBar();
+			label2 = new System.Windows.Forms.Label();
+			TBar_UserDangerousContent = new System.Windows.Forms.TrackBar();
+			label3 = new System.Windows.Forms.Label();
+			TBar_UserSexuallyExplicit = new System.Windows.Forms.TrackBar();
+			label4 = new System.Windows.Forms.Label();
+			TBar_UserHate = new System.Windows.Forms.TrackBar();
+			label5 = new System.Windows.Forms.Label();
+			label6 = new System.Windows.Forms.Label();
+			TBar_UserHarassment = new System.Windows.Forms.TrackBar();
+			tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+			label7 = new System.Windows.Forms.Label();
+			RB_InstructionUser = new System.Windows.Forms.RichTextBox();
+			groupBox1 = new System.Windows.Forms.GroupBox();
+			tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			Num_StreamerTemperature = new System.Windows.Forms.NumericUpDown();
+			label12 = new System.Windows.Forms.Label();
+			TBar_StreamerCivicIntegrity = new System.Windows.Forms.TrackBar();
+			L_Civic_Integrity = new System.Windows.Forms.Label();
+			TBar_StreamerDangerousContent = new System.Windows.Forms.TrackBar();
+			L_Filter_Dangerous_Content = new System.Windows.Forms.Label();
+			TBar_StreamerSexuallyExplicit = new System.Windows.Forms.TrackBar();
+			L_Filter_Sexually_Explicit = new System.Windows.Forms.Label();
+			TBar_StreamerHate = new System.Windows.Forms.TrackBar();
+			L_Filter_Hate = new System.Windows.Forms.Label();
+			L_Filter_Harassment = new System.Windows.Forms.Label();
+			Num_StreamerTokenLimit = new System.Windows.Forms.NumericUpDown();
+			label9 = new System.Windows.Forms.Label();
+			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			label1 = new System.Windows.Forms.Label();
+			RB_InstructionStreamer = new System.Windows.Forms.RichTextBox();
+			tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
+			B_Cancel = new System.Windows.Forms.Button();
+			B_Save = new System.Windows.Forms.Button();
+			tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+			B_Show_UserOverrides = new System.Windows.Forms.Button();
+			label8 = new System.Windows.Forms.Label();
+			TB_API_Key = new System.Windows.Forms.TextBox();
+			B_CreateReward = new System.Windows.Forms.Button();
+			tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+			TB_Username = new System.Windows.Forms.TextBox();
+			label13 = new System.Windows.Forms.Label();
+			tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
+			RB_CharacterDefinition = new System.Windows.Forms.RichTextBox();
+			label14 = new System.Windows.Forms.Label();
+			tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+			Num_AutoSummary = new System.Windows.Forms.NumericUpDown();
+			label15 = new System.Windows.Forms.Label();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerHarassment).BeginInit();
+			tableLayoutPanel1.SuspendLayout();
+			tableLayoutPanel3.SuspendLayout();
+			groupBox2.SuspendLayout();
+			tableLayoutPanel6.SuspendLayout();
+			tableLayoutPanel7.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)Num_UserResponseTemperature).BeginInit();
+			((System.ComponentModel.ISupportInitialize)Num_UserTokenLimit).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserCivicIntegrity).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserDangerousContent).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserSexuallyExplicit).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserHate).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserHarassment).BeginInit();
+			tableLayoutPanel8.SuspendLayout();
+			groupBox1.SuspendLayout();
+			tableLayoutPanel5.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)Num_StreamerTemperature).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerCivicIntegrity).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerDangerousContent).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerSexuallyExplicit).BeginInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerHate).BeginInit();
+			((System.ComponentModel.ISupportInitialize)Num_StreamerTokenLimit).BeginInit();
+			tableLayoutPanel4.SuspendLayout();
+			tableLayoutPanel9.SuspendLayout();
+			tableLayoutPanel10.SuspendLayout();
+			tableLayoutPanel11.SuspendLayout();
+			tableLayoutPanel12.SuspendLayout();
+			tableLayoutPanel13.SuspendLayout();
+			tableLayoutPanel14.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)Num_AutoSummary).BeginInit();
+			SuspendLayout();
 			// 
 			// TBar_StreamerHarassment
 			// 
-			this.TBar_StreamerHarassment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_StreamerHarassment.LargeChange = 1;
-			this.TBar_StreamerHarassment.Location = new System.Drawing.Point(189, 3);
-			this.TBar_StreamerHarassment.Maximum = 3;
-			this.TBar_StreamerHarassment.Name = "TBar_StreamerHarassment";
-			this.TBar_StreamerHarassment.Size = new System.Drawing.Size(187, 26);
-			this.TBar_StreamerHarassment.TabIndex = 0;
+			TBar_StreamerHarassment.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_StreamerHarassment.LargeChange = 1;
+			TBar_StreamerHarassment.Location = new System.Drawing.Point(221, 3);
+			TBar_StreamerHarassment.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_StreamerHarassment.Maximum = 3;
+			TBar_StreamerHarassment.Name = "TBar_StreamerHarassment";
+			TBar_StreamerHarassment.Size = new System.Drawing.Size(217, 31);
+			TBar_StreamerHarassment.TabIndex = 0;
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 1;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel9, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel10, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel13, 0, 0);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 4;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 230F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 78F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 897);
-			this.tableLayoutPanel1.TabIndex = 1;
+			tableLayoutPanel1.ColumnCount = 1;
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 0, 1);
+			tableLayoutPanel1.Controls.Add(tableLayoutPanel9, 0, 3);
+			tableLayoutPanel1.Controls.Add(tableLayoutPanel10, 0, 2);
+			tableLayoutPanel1.Controls.Add(tableLayoutPanel13, 0, 0);
+			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.RowCount = 4;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 265F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+			tableLayoutPanel1.Size = new System.Drawing.Size(933, 1035);
+			tableLayoutPanel1.TabIndex = 1;
 			// 
 			// tableLayoutPanel3
 			// 
-			this.tableLayoutPanel3.ColumnCount = 2;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.Controls.Add(this.groupBox2, 1, 0);
-			this.tableLayoutPanel3.Controls.Add(this.groupBox1, 0, 0);
-			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 233);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 1;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(794, 544);
-			this.tableLayoutPanel3.TabIndex = 2;
+			tableLayoutPanel3.ColumnCount = 2;
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel3.Controls.Add(groupBox2, 1, 0);
+			tableLayoutPanel3.Controls.Add(groupBox1, 0, 0);
+			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel3.Location = new System.Drawing.Point(4, 268);
+			tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel3.Name = "tableLayoutPanel3";
+			tableLayoutPanel3.RowCount = 1;
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel3.Size = new System.Drawing.Size(925, 629);
+			tableLayoutPanel3.TabIndex = 2;
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.tableLayoutPanel6);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(400, 3);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(391, 538);
-			this.groupBox2.TabIndex = 2;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Chat user";
+			groupBox2.Controls.Add(tableLayoutPanel6);
+			groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			groupBox2.Location = new System.Drawing.Point(466, 3);
+			groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBox2.Name = "groupBox2";
+			groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBox2.Size = new System.Drawing.Size(455, 623);
+			groupBox2.TabIndex = 2;
+			groupBox2.TabStop = false;
+			groupBox2.Text = "Chat user";
 			// 
 			// tableLayoutPanel6
 			// 
-			this.tableLayoutPanel6.ColumnCount = 1;
-			this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 0, 1);
-			this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel8, 0, 0);
-			this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-			this.tableLayoutPanel6.RowCount = 2;
-			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 233F));
-			this.tableLayoutPanel6.Size = new System.Drawing.Size(385, 519);
-			this.tableLayoutPanel6.TabIndex = 0;
+			tableLayoutPanel6.ColumnCount = 1;
+			tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel6.Controls.Add(tableLayoutPanel7, 0, 1);
+			tableLayoutPanel6.Controls.Add(tableLayoutPanel8, 0, 0);
+			tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel6.Location = new System.Drawing.Point(4, 19);
+			tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel6.Name = "tableLayoutPanel6";
+			tableLayoutPanel6.RowCount = 2;
+			tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 269F));
+			tableLayoutPanel6.Size = new System.Drawing.Size(447, 601);
+			tableLayoutPanel6.TabIndex = 0;
 			// 
 			// tableLayoutPanel7
 			// 
-			this.tableLayoutPanel7.ColumnCount = 2;
-			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186F));
-			this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
-			this.tableLayoutPanel7.Controls.Add(this.Num_UserResponseTemperature, 1, 6);
-			this.tableLayoutPanel7.Controls.Add(this.label11, 0, 6);
-			this.tableLayoutPanel7.Controls.Add(this.Num_UserTokenLimit, 1, 5);
-			this.tableLayoutPanel7.Controls.Add(this.label10, 0, 5);
-			this.tableLayoutPanel7.Controls.Add(this.TBar_UserCivicIntegrity, 1, 4);
-			this.tableLayoutPanel7.Controls.Add(this.label2, 0, 4);
-			this.tableLayoutPanel7.Controls.Add(this.TBar_UserDangerousContent, 1, 3);
-			this.tableLayoutPanel7.Controls.Add(this.label3, 0, 3);
-			this.tableLayoutPanel7.Controls.Add(this.TBar_UserSexuallyExplicit, 1, 2);
-			this.tableLayoutPanel7.Controls.Add(this.label4, 0, 2);
-			this.tableLayoutPanel7.Controls.Add(this.TBar_UserHate, 1, 1);
-			this.tableLayoutPanel7.Controls.Add(this.label5, 0, 1);
-			this.tableLayoutPanel7.Controls.Add(this.label6, 0, 0);
-			this.tableLayoutPanel7.Controls.Add(this.TBar_UserHarassment, 1, 0);
-			this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 289);
-			this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-			this.tableLayoutPanel7.RowCount = 7;
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel7.Size = new System.Drawing.Size(379, 227);
-			this.tableLayoutPanel7.TabIndex = 0;
+			tableLayoutPanel7.ColumnCount = 2;
+			tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 217F));
+			tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
+			tableLayoutPanel7.Controls.Add(Num_UserResponseTemperature, 1, 6);
+			tableLayoutPanel7.Controls.Add(label11, 0, 6);
+			tableLayoutPanel7.Controls.Add(Num_UserTokenLimit, 1, 5);
+			tableLayoutPanel7.Controls.Add(label10, 0, 5);
+			tableLayoutPanel7.Controls.Add(TBar_UserCivicIntegrity, 1, 4);
+			tableLayoutPanel7.Controls.Add(label2, 0, 4);
+			tableLayoutPanel7.Controls.Add(TBar_UserDangerousContent, 1, 3);
+			tableLayoutPanel7.Controls.Add(label3, 0, 3);
+			tableLayoutPanel7.Controls.Add(TBar_UserSexuallyExplicit, 1, 2);
+			tableLayoutPanel7.Controls.Add(label4, 0, 2);
+			tableLayoutPanel7.Controls.Add(TBar_UserHate, 1, 1);
+			tableLayoutPanel7.Controls.Add(label5, 0, 1);
+			tableLayoutPanel7.Controls.Add(label6, 0, 0);
+			tableLayoutPanel7.Controls.Add(TBar_UserHarassment, 1, 0);
+			tableLayoutPanel7.Location = new System.Drawing.Point(4, 335);
+			tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel7.Name = "tableLayoutPanel7";
+			tableLayoutPanel7.RowCount = 7;
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel7.Size = new System.Drawing.Size(439, 262);
+			tableLayoutPanel7.TabIndex = 0;
 			// 
 			// Num_UserResponseTemperature
 			// 
-			this.Num_UserResponseTemperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.Num_UserResponseTemperature.DecimalPlaces = 2;
-			this.Num_UserResponseTemperature.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-			this.Num_UserResponseTemperature.Location = new System.Drawing.Point(189, 199);
-			this.Num_UserResponseTemperature.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-			this.Num_UserResponseTemperature.Name = "Num_UserResponseTemperature";
-			this.Num_UserResponseTemperature.Size = new System.Drawing.Size(187, 20);
-			this.Num_UserResponseTemperature.TabIndex = 14;
+			Num_UserResponseTemperature.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			Num_UserResponseTemperature.DecimalPlaces = 2;
+			Num_UserResponseTemperature.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
+			Num_UserResponseTemperature.Location = new System.Drawing.Point(221, 230);
+			Num_UserResponseTemperature.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			Num_UserResponseTemperature.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
+			Num_UserResponseTemperature.Name = "Num_UserResponseTemperature";
+			Num_UserResponseTemperature.Size = new System.Drawing.Size(217, 23);
+			Num_UserResponseTemperature.TabIndex = 14;
 			// 
 			// label11
 			// 
-			this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(3, 203);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(180, 13);
-			this.label11.TabIndex = 13;
-			this.label11.Text = "Response temperature:";
+			label11.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label11.AutoSize = true;
+			label11.Location = new System.Drawing.Point(4, 234);
+			label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label11.Name = "label11";
+			label11.Size = new System.Drawing.Size(209, 15);
+			label11.TabIndex = 13;
+			label11.Text = "Response temperature:";
 			// 
 			// Num_UserTokenLimit
 			// 
-			this.Num_UserTokenLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.Num_UserTokenLimit.Location = new System.Drawing.Point(189, 166);
-			this.Num_UserTokenLimit.Maximum = new decimal(new int[] {
-            1048576,
-            0,
-            0,
-            0});
-			this.Num_UserTokenLimit.Name = "Num_UserTokenLimit";
-			this.Num_UserTokenLimit.Size = new System.Drawing.Size(187, 20);
-			this.Num_UserTokenLimit.TabIndex = 12;
+			Num_UserTokenLimit.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			Num_UserTokenLimit.Location = new System.Drawing.Point(221, 192);
+			Num_UserTokenLimit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			Num_UserTokenLimit.Maximum = new decimal(new int[] { 1048576, 0, 0, 0 });
+			Num_UserTokenLimit.Name = "Num_UserTokenLimit";
+			Num_UserTokenLimit.Size = new System.Drawing.Size(217, 23);
+			Num_UserTokenLimit.TabIndex = 12;
 			// 
 			// label10
 			// 
-			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 169);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(180, 13);
-			this.label10.TabIndex = 11;
-			this.label10.Text = "User\'s token limit:";
+			label10.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label10.AutoSize = true;
+			label10.Location = new System.Drawing.Point(4, 196);
+			label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label10.Name = "label10";
+			label10.Size = new System.Drawing.Size(209, 15);
+			label10.TabIndex = 11;
+			label10.Text = "User's token limit:";
 			// 
 			// TBar_UserCivicIntegrity
 			// 
-			this.TBar_UserCivicIntegrity.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_UserCivicIntegrity.LargeChange = 1;
-			this.TBar_UserCivicIntegrity.Location = new System.Drawing.Point(189, 131);
-			this.TBar_UserCivicIntegrity.Maximum = 3;
-			this.TBar_UserCivicIntegrity.Name = "TBar_UserCivicIntegrity";
-			this.TBar_UserCivicIntegrity.Size = new System.Drawing.Size(187, 26);
-			this.TBar_UserCivicIntegrity.TabIndex = 8;
+			TBar_UserCivicIntegrity.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_UserCivicIntegrity.LargeChange = 1;
+			TBar_UserCivicIntegrity.Location = new System.Drawing.Point(221, 151);
+			TBar_UserCivicIntegrity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_UserCivicIntegrity.Maximum = 3;
+			TBar_UserCivicIntegrity.Name = "TBar_UserCivicIntegrity";
+			TBar_UserCivicIntegrity.Size = new System.Drawing.Size(217, 31);
+			TBar_UserCivicIntegrity.TabIndex = 8;
 			// 
 			// label2
 			// 
-			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 137);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(70, 13);
-			this.label2.TabIndex = 7;
-			this.label2.Text = "Civic Integrity";
+			label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label2.AutoSize = true;
+			label2.Location = new System.Drawing.Point(4, 159);
+			label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(80, 15);
+			label2.TabIndex = 7;
+			label2.Text = "Civic Integrity";
 			// 
 			// TBar_UserDangerousContent
 			// 
-			this.TBar_UserDangerousContent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_UserDangerousContent.LargeChange = 1;
-			this.TBar_UserDangerousContent.Location = new System.Drawing.Point(189, 99);
-			this.TBar_UserDangerousContent.Maximum = 3;
-			this.TBar_UserDangerousContent.Name = "TBar_UserDangerousContent";
-			this.TBar_UserDangerousContent.Size = new System.Drawing.Size(187, 26);
-			this.TBar_UserDangerousContent.TabIndex = 6;
+			TBar_UserDangerousContent.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_UserDangerousContent.LargeChange = 1;
+			TBar_UserDangerousContent.Location = new System.Drawing.Point(221, 114);
+			TBar_UserDangerousContent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_UserDangerousContent.Maximum = 3;
+			TBar_UserDangerousContent.Name = "TBar_UserDangerousContent";
+			TBar_UserDangerousContent.Size = new System.Drawing.Size(217, 31);
+			TBar_UserDangerousContent.TabIndex = 6;
 			// 
 			// label3
 			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 105);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(99, 13);
-			this.label3.TabIndex = 5;
-			this.label3.Text = "Dangerous Content";
+			label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label3.AutoSize = true;
+			label3.Location = new System.Drawing.Point(4, 122);
+			label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(110, 15);
+			label3.TabIndex = 5;
+			label3.Text = "Dangerous Content";
 			// 
 			// TBar_UserSexuallyExplicit
 			// 
-			this.TBar_UserSexuallyExplicit.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_UserSexuallyExplicit.LargeChange = 1;
-			this.TBar_UserSexuallyExplicit.Location = new System.Drawing.Point(189, 67);
-			this.TBar_UserSexuallyExplicit.Maximum = 3;
-			this.TBar_UserSexuallyExplicit.Name = "TBar_UserSexuallyExplicit";
-			this.TBar_UserSexuallyExplicit.Size = new System.Drawing.Size(187, 26);
-			this.TBar_UserSexuallyExplicit.TabIndex = 4;
+			TBar_UserSexuallyExplicit.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_UserSexuallyExplicit.LargeChange = 1;
+			TBar_UserSexuallyExplicit.Location = new System.Drawing.Point(221, 77);
+			TBar_UserSexuallyExplicit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_UserSexuallyExplicit.Maximum = 3;
+			TBar_UserSexuallyExplicit.Name = "TBar_UserSexuallyExplicit";
+			TBar_UserSexuallyExplicit.Size = new System.Drawing.Size(217, 31);
+			TBar_UserSexuallyExplicit.TabIndex = 4;
 			// 
 			// label4
 			// 
-			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(3, 73);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(82, 13);
-			this.label4.TabIndex = 3;
-			this.label4.Text = "Sexually Explicit";
+			label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label4.AutoSize = true;
+			label4.Location = new System.Drawing.Point(4, 85);
+			label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label4.Name = "label4";
+			label4.Size = new System.Drawing.Size(91, 15);
+			label4.TabIndex = 3;
+			label4.Text = "Sexually Explicit";
 			// 
 			// TBar_UserHate
 			// 
-			this.TBar_UserHate.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_UserHate.LargeChange = 1;
-			this.TBar_UserHate.Location = new System.Drawing.Point(189, 35);
-			this.TBar_UserHate.Maximum = 3;
-			this.TBar_UserHate.Name = "TBar_UserHate";
-			this.TBar_UserHate.Size = new System.Drawing.Size(187, 26);
-			this.TBar_UserHate.TabIndex = 2;
+			TBar_UserHate.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_UserHate.LargeChange = 1;
+			TBar_UserHate.Location = new System.Drawing.Point(221, 40);
+			TBar_UserHate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_UserHate.Maximum = 3;
+			TBar_UserHate.Name = "TBar_UserHate";
+			TBar_UserHate.Size = new System.Drawing.Size(217, 31);
+			TBar_UserHate.TabIndex = 2;
 			// 
 			// label5
 			// 
-			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(3, 41);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(30, 13);
-			this.label5.TabIndex = 1;
-			this.label5.Text = "Hate";
+			label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label5.AutoSize = true;
+			label5.Location = new System.Drawing.Point(4, 48);
+			label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label5.Name = "label5";
+			label5.Size = new System.Drawing.Size(32, 15);
+			label5.TabIndex = 1;
+			label5.Text = "Hate";
 			// 
 			// label6
 			// 
-			this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(3, 9);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(63, 13);
-			this.label6.TabIndex = 0;
-			this.label6.Text = "Harassment";
+			label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label6.AutoSize = true;
+			label6.Location = new System.Drawing.Point(4, 11);
+			label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label6.Name = "label6";
+			label6.Size = new System.Drawing.Size(70, 15);
+			label6.TabIndex = 0;
+			label6.Text = "Harassment";
 			// 
 			// TBar_UserHarassment
 			// 
-			this.TBar_UserHarassment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_UserHarassment.LargeChange = 1;
-			this.TBar_UserHarassment.Location = new System.Drawing.Point(189, 3);
-			this.TBar_UserHarassment.Maximum = 3;
-			this.TBar_UserHarassment.Name = "TBar_UserHarassment";
-			this.TBar_UserHarassment.Size = new System.Drawing.Size(187, 26);
-			this.TBar_UserHarassment.TabIndex = 0;
+			TBar_UserHarassment.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_UserHarassment.LargeChange = 1;
+			TBar_UserHarassment.Location = new System.Drawing.Point(221, 3);
+			TBar_UserHarassment.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_UserHarassment.Maximum = 3;
+			TBar_UserHarassment.Name = "TBar_UserHarassment";
+			TBar_UserHarassment.Size = new System.Drawing.Size(217, 31);
+			TBar_UserHarassment.TabIndex = 0;
 			// 
 			// tableLayoutPanel8
 			// 
-			this.tableLayoutPanel8.ColumnCount = 1;
-			this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel8.Controls.Add(this.label7, 0, 0);
-			this.tableLayoutPanel8.Controls.Add(this.RB_InstructionUser, 0, 1);
-			this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-			this.tableLayoutPanel8.RowCount = 2;
-			this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel8.Size = new System.Drawing.Size(379, 280);
-			this.tableLayoutPanel8.TabIndex = 2;
+			tableLayoutPanel8.ColumnCount = 1;
+			tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel8.Controls.Add(label7, 0, 0);
+			tableLayoutPanel8.Controls.Add(RB_InstructionUser, 0, 1);
+			tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel8.Location = new System.Drawing.Point(4, 3);
+			tableLayoutPanel8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel8.Name = "tableLayoutPanel8";
+			tableLayoutPanel8.RowCount = 2;
+			tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel8.Size = new System.Drawing.Size(439, 326);
+			tableLayoutPanel8.TabIndex = 2;
 			// 
 			// label7
 			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(3, 0);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(106, 13);
-			this.label7.TabIndex = 0;
-			this.label7.Text = "Additional istructions:";
+			label7.AutoSize = true;
+			label7.Location = new System.Drawing.Point(4, 0);
+			label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label7.Name = "label7";
+			label7.Size = new System.Drawing.Size(123, 15);
+			label7.TabIndex = 0;
+			label7.Text = "Additional istructions:";
 			// 
 			// RB_InstructionUser
 			// 
-			this.RB_InstructionUser.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RB_InstructionUser.Location = new System.Drawing.Point(3, 23);
-			this.RB_InstructionUser.Name = "RB_InstructionUser";
-			this.RB_InstructionUser.Size = new System.Drawing.Size(373, 254);
-			this.RB_InstructionUser.TabIndex = 1;
-			this.RB_InstructionUser.Text = "";
+			RB_InstructionUser.Dock = System.Windows.Forms.DockStyle.Fill;
+			RB_InstructionUser.Location = new System.Drawing.Point(4, 26);
+			RB_InstructionUser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			RB_InstructionUser.Name = "RB_InstructionUser";
+			RB_InstructionUser.Size = new System.Drawing.Size(431, 297);
+			RB_InstructionUser.TabIndex = 1;
+			RB_InstructionUser.Text = "";
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.tableLayoutPanel5);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox1.Location = new System.Drawing.Point(3, 3);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(391, 538);
-			this.groupBox1.TabIndex = 1;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Streamer";
+			groupBox1.Controls.Add(tableLayoutPanel5);
+			groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			groupBox1.Location = new System.Drawing.Point(4, 3);
+			groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBox1.Size = new System.Drawing.Size(454, 623);
+			groupBox1.TabIndex = 1;
+			groupBox1.TabStop = false;
+			groupBox1.Text = "Streamer";
 			// 
 			// tableLayoutPanel5
 			// 
-			this.tableLayoutPanel5.ColumnCount = 1;
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel2, 0, 1);
-			this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel4, 0, 0);
-			this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-			this.tableLayoutPanel5.RowCount = 2;
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 233F));
-			this.tableLayoutPanel5.Size = new System.Drawing.Size(385, 519);
-			this.tableLayoutPanel5.TabIndex = 0;
+			tableLayoutPanel5.ColumnCount = 1;
+			tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel5.Controls.Add(tableLayoutPanel2, 0, 1);
+			tableLayoutPanel5.Controls.Add(tableLayoutPanel4, 0, 0);
+			tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel5.Location = new System.Drawing.Point(4, 19);
+			tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel5.Name = "tableLayoutPanel5";
+			tableLayoutPanel5.RowCount = 2;
+			tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 269F));
+			tableLayoutPanel5.Size = new System.Drawing.Size(446, 601);
+			tableLayoutPanel5.TabIndex = 0;
 			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.ColumnCount = 2;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
-			this.tableLayoutPanel2.Controls.Add(this.Num_StreamerTemperature, 1, 6);
-			this.tableLayoutPanel2.Controls.Add(this.label12, 0, 6);
-			this.tableLayoutPanel2.Controls.Add(this.TBar_StreamerCivicIntegrity, 1, 4);
-			this.tableLayoutPanel2.Controls.Add(this.L_Civic_Integrity, 0, 4);
-			this.tableLayoutPanel2.Controls.Add(this.TBar_StreamerDangerousContent, 1, 3);
-			this.tableLayoutPanel2.Controls.Add(this.L_Filter_Dangerous_Content, 0, 3);
-			this.tableLayoutPanel2.Controls.Add(this.TBar_StreamerSexuallyExplicit, 1, 2);
-			this.tableLayoutPanel2.Controls.Add(this.L_Filter_Sexually_Explicit, 0, 2);
-			this.tableLayoutPanel2.Controls.Add(this.TBar_StreamerHate, 1, 1);
-			this.tableLayoutPanel2.Controls.Add(this.L_Filter_Hate, 0, 1);
-			this.tableLayoutPanel2.Controls.Add(this.L_Filter_Harassment, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.TBar_StreamerHarassment, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.Num_StreamerTokenLimit, 1, 5);
-			this.tableLayoutPanel2.Controls.Add(this.label9, 0, 5);
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 289);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 7;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(379, 227);
-			this.tableLayoutPanel2.TabIndex = 0;
+			tableLayoutPanel2.ColumnCount = 2;
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 217F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 225F));
+			tableLayoutPanel2.Controls.Add(Num_StreamerTemperature, 1, 6);
+			tableLayoutPanel2.Controls.Add(label12, 0, 6);
+			tableLayoutPanel2.Controls.Add(TBar_StreamerCivicIntegrity, 1, 4);
+			tableLayoutPanel2.Controls.Add(L_Civic_Integrity, 0, 4);
+			tableLayoutPanel2.Controls.Add(TBar_StreamerDangerousContent, 1, 3);
+			tableLayoutPanel2.Controls.Add(L_Filter_Dangerous_Content, 0, 3);
+			tableLayoutPanel2.Controls.Add(TBar_StreamerSexuallyExplicit, 1, 2);
+			tableLayoutPanel2.Controls.Add(L_Filter_Sexually_Explicit, 0, 2);
+			tableLayoutPanel2.Controls.Add(TBar_StreamerHate, 1, 1);
+			tableLayoutPanel2.Controls.Add(L_Filter_Hate, 0, 1);
+			tableLayoutPanel2.Controls.Add(L_Filter_Harassment, 0, 0);
+			tableLayoutPanel2.Controls.Add(TBar_StreamerHarassment, 1, 0);
+			tableLayoutPanel2.Controls.Add(Num_StreamerTokenLimit, 1, 5);
+			tableLayoutPanel2.Controls.Add(label9, 0, 5);
+			tableLayoutPanel2.Location = new System.Drawing.Point(4, 335);
+			tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel2.Name = "tableLayoutPanel2";
+			tableLayoutPanel2.RowCount = 7;
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			tableLayoutPanel2.Size = new System.Drawing.Size(438, 262);
+			tableLayoutPanel2.TabIndex = 0;
 			// 
 			// Num_StreamerTemperature
 			// 
-			this.Num_StreamerTemperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.Num_StreamerTemperature.DecimalPlaces = 2;
-			this.Num_StreamerTemperature.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-			this.Num_StreamerTemperature.Location = new System.Drawing.Point(189, 199);
-			this.Num_StreamerTemperature.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-			this.Num_StreamerTemperature.Name = "Num_StreamerTemperature";
-			this.Num_StreamerTemperature.Size = new System.Drawing.Size(187, 20);
-			this.Num_StreamerTemperature.TabIndex = 15;
+			Num_StreamerTemperature.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			Num_StreamerTemperature.DecimalPlaces = 2;
+			Num_StreamerTemperature.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
+			Num_StreamerTemperature.Location = new System.Drawing.Point(221, 230);
+			Num_StreamerTemperature.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			Num_StreamerTemperature.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
+			Num_StreamerTemperature.Name = "Num_StreamerTemperature";
+			Num_StreamerTemperature.Size = new System.Drawing.Size(217, 23);
+			Num_StreamerTemperature.TabIndex = 15;
 			// 
 			// label12
 			// 
-			this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(3, 203);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(180, 13);
-			this.label12.TabIndex = 14;
-			this.label12.Text = "Response temperature:";
+			label12.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label12.AutoSize = true;
+			label12.Location = new System.Drawing.Point(4, 234);
+			label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label12.Name = "label12";
+			label12.Size = new System.Drawing.Size(209, 15);
+			label12.TabIndex = 14;
+			label12.Text = "Response temperature:";
 			// 
 			// TBar_StreamerCivicIntegrity
 			// 
-			this.TBar_StreamerCivicIntegrity.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_StreamerCivicIntegrity.LargeChange = 1;
-			this.TBar_StreamerCivicIntegrity.Location = new System.Drawing.Point(189, 131);
-			this.TBar_StreamerCivicIntegrity.Maximum = 3;
-			this.TBar_StreamerCivicIntegrity.Name = "TBar_StreamerCivicIntegrity";
-			this.TBar_StreamerCivicIntegrity.Size = new System.Drawing.Size(187, 26);
-			this.TBar_StreamerCivicIntegrity.TabIndex = 8;
+			TBar_StreamerCivicIntegrity.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_StreamerCivicIntegrity.LargeChange = 1;
+			TBar_StreamerCivicIntegrity.Location = new System.Drawing.Point(221, 151);
+			TBar_StreamerCivicIntegrity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_StreamerCivicIntegrity.Maximum = 3;
+			TBar_StreamerCivicIntegrity.Name = "TBar_StreamerCivicIntegrity";
+			TBar_StreamerCivicIntegrity.Size = new System.Drawing.Size(217, 31);
+			TBar_StreamerCivicIntegrity.TabIndex = 8;
 			// 
 			// L_Civic_Integrity
 			// 
-			this.L_Civic_Integrity.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.L_Civic_Integrity.AutoSize = true;
-			this.L_Civic_Integrity.Location = new System.Drawing.Point(3, 137);
-			this.L_Civic_Integrity.Name = "L_Civic_Integrity";
-			this.L_Civic_Integrity.Size = new System.Drawing.Size(70, 13);
-			this.L_Civic_Integrity.TabIndex = 7;
-			this.L_Civic_Integrity.Text = "Civic Integrity";
+			L_Civic_Integrity.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			L_Civic_Integrity.AutoSize = true;
+			L_Civic_Integrity.Location = new System.Drawing.Point(4, 159);
+			L_Civic_Integrity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			L_Civic_Integrity.Name = "L_Civic_Integrity";
+			L_Civic_Integrity.Size = new System.Drawing.Size(80, 15);
+			L_Civic_Integrity.TabIndex = 7;
+			L_Civic_Integrity.Text = "Civic Integrity";
 			// 
 			// TBar_StreamerDangerousContent
 			// 
-			this.TBar_StreamerDangerousContent.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_StreamerDangerousContent.LargeChange = 1;
-			this.TBar_StreamerDangerousContent.Location = new System.Drawing.Point(189, 99);
-			this.TBar_StreamerDangerousContent.Maximum = 3;
-			this.TBar_StreamerDangerousContent.Name = "TBar_StreamerDangerousContent";
-			this.TBar_StreamerDangerousContent.Size = new System.Drawing.Size(187, 26);
-			this.TBar_StreamerDangerousContent.TabIndex = 6;
+			TBar_StreamerDangerousContent.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_StreamerDangerousContent.LargeChange = 1;
+			TBar_StreamerDangerousContent.Location = new System.Drawing.Point(221, 114);
+			TBar_StreamerDangerousContent.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_StreamerDangerousContent.Maximum = 3;
+			TBar_StreamerDangerousContent.Name = "TBar_StreamerDangerousContent";
+			TBar_StreamerDangerousContent.Size = new System.Drawing.Size(217, 31);
+			TBar_StreamerDangerousContent.TabIndex = 6;
 			// 
 			// L_Filter_Dangerous_Content
 			// 
-			this.L_Filter_Dangerous_Content.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.L_Filter_Dangerous_Content.AutoSize = true;
-			this.L_Filter_Dangerous_Content.Location = new System.Drawing.Point(3, 105);
-			this.L_Filter_Dangerous_Content.Name = "L_Filter_Dangerous_Content";
-			this.L_Filter_Dangerous_Content.Size = new System.Drawing.Size(99, 13);
-			this.L_Filter_Dangerous_Content.TabIndex = 5;
-			this.L_Filter_Dangerous_Content.Text = "Dangerous Content";
+			L_Filter_Dangerous_Content.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			L_Filter_Dangerous_Content.AutoSize = true;
+			L_Filter_Dangerous_Content.Location = new System.Drawing.Point(4, 122);
+			L_Filter_Dangerous_Content.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			L_Filter_Dangerous_Content.Name = "L_Filter_Dangerous_Content";
+			L_Filter_Dangerous_Content.Size = new System.Drawing.Size(110, 15);
+			L_Filter_Dangerous_Content.TabIndex = 5;
+			L_Filter_Dangerous_Content.Text = "Dangerous Content";
 			// 
 			// TBar_StreamerSexuallyExplicit
 			// 
-			this.TBar_StreamerSexuallyExplicit.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_StreamerSexuallyExplicit.LargeChange = 1;
-			this.TBar_StreamerSexuallyExplicit.Location = new System.Drawing.Point(189, 67);
-			this.TBar_StreamerSexuallyExplicit.Maximum = 3;
-			this.TBar_StreamerSexuallyExplicit.Name = "TBar_StreamerSexuallyExplicit";
-			this.TBar_StreamerSexuallyExplicit.Size = new System.Drawing.Size(187, 26);
-			this.TBar_StreamerSexuallyExplicit.TabIndex = 4;
+			TBar_StreamerSexuallyExplicit.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_StreamerSexuallyExplicit.LargeChange = 1;
+			TBar_StreamerSexuallyExplicit.Location = new System.Drawing.Point(221, 77);
+			TBar_StreamerSexuallyExplicit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_StreamerSexuallyExplicit.Maximum = 3;
+			TBar_StreamerSexuallyExplicit.Name = "TBar_StreamerSexuallyExplicit";
+			TBar_StreamerSexuallyExplicit.Size = new System.Drawing.Size(217, 31);
+			TBar_StreamerSexuallyExplicit.TabIndex = 4;
 			// 
 			// L_Filter_Sexually_Explicit
 			// 
-			this.L_Filter_Sexually_Explicit.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.L_Filter_Sexually_Explicit.AutoSize = true;
-			this.L_Filter_Sexually_Explicit.Location = new System.Drawing.Point(3, 73);
-			this.L_Filter_Sexually_Explicit.Name = "L_Filter_Sexually_Explicit";
-			this.L_Filter_Sexually_Explicit.Size = new System.Drawing.Size(82, 13);
-			this.L_Filter_Sexually_Explicit.TabIndex = 3;
-			this.L_Filter_Sexually_Explicit.Text = "Sexually Explicit";
+			L_Filter_Sexually_Explicit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			L_Filter_Sexually_Explicit.AutoSize = true;
+			L_Filter_Sexually_Explicit.Location = new System.Drawing.Point(4, 85);
+			L_Filter_Sexually_Explicit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			L_Filter_Sexually_Explicit.Name = "L_Filter_Sexually_Explicit";
+			L_Filter_Sexually_Explicit.Size = new System.Drawing.Size(91, 15);
+			L_Filter_Sexually_Explicit.TabIndex = 3;
+			L_Filter_Sexually_Explicit.Text = "Sexually Explicit";
 			// 
 			// TBar_StreamerHate
 			// 
-			this.TBar_StreamerHate.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TBar_StreamerHate.LargeChange = 1;
-			this.TBar_StreamerHate.Location = new System.Drawing.Point(189, 35);
-			this.TBar_StreamerHate.Maximum = 3;
-			this.TBar_StreamerHate.Name = "TBar_StreamerHate";
-			this.TBar_StreamerHate.Size = new System.Drawing.Size(187, 26);
-			this.TBar_StreamerHate.TabIndex = 2;
+			TBar_StreamerHate.Dock = System.Windows.Forms.DockStyle.Fill;
+			TBar_StreamerHate.LargeChange = 1;
+			TBar_StreamerHate.Location = new System.Drawing.Point(221, 40);
+			TBar_StreamerHate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TBar_StreamerHate.Maximum = 3;
+			TBar_StreamerHate.Name = "TBar_StreamerHate";
+			TBar_StreamerHate.Size = new System.Drawing.Size(217, 31);
+			TBar_StreamerHate.TabIndex = 2;
 			// 
 			// L_Filter_Hate
 			// 
-			this.L_Filter_Hate.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.L_Filter_Hate.AutoSize = true;
-			this.L_Filter_Hate.Location = new System.Drawing.Point(3, 41);
-			this.L_Filter_Hate.Name = "L_Filter_Hate";
-			this.L_Filter_Hate.Size = new System.Drawing.Size(30, 13);
-			this.L_Filter_Hate.TabIndex = 1;
-			this.L_Filter_Hate.Text = "Hate";
+			L_Filter_Hate.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			L_Filter_Hate.AutoSize = true;
+			L_Filter_Hate.Location = new System.Drawing.Point(4, 48);
+			L_Filter_Hate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			L_Filter_Hate.Name = "L_Filter_Hate";
+			L_Filter_Hate.Size = new System.Drawing.Size(32, 15);
+			L_Filter_Hate.TabIndex = 1;
+			L_Filter_Hate.Text = "Hate";
 			// 
 			// L_Filter_Harassment
 			// 
-			this.L_Filter_Harassment.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.L_Filter_Harassment.AutoSize = true;
-			this.L_Filter_Harassment.Location = new System.Drawing.Point(3, 9);
-			this.L_Filter_Harassment.Name = "L_Filter_Harassment";
-			this.L_Filter_Harassment.Size = new System.Drawing.Size(63, 13);
-			this.L_Filter_Harassment.TabIndex = 0;
-			this.L_Filter_Harassment.Text = "Harassment";
+			L_Filter_Harassment.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			L_Filter_Harassment.AutoSize = true;
+			L_Filter_Harassment.Location = new System.Drawing.Point(4, 11);
+			L_Filter_Harassment.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			L_Filter_Harassment.Name = "L_Filter_Harassment";
+			L_Filter_Harassment.Size = new System.Drawing.Size(70, 15);
+			L_Filter_Harassment.TabIndex = 0;
+			L_Filter_Harassment.Text = "Harassment";
 			// 
 			// Num_StreamerTokenLimit
 			// 
-			this.Num_StreamerTokenLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.Num_StreamerTokenLimit.Location = new System.Drawing.Point(189, 166);
-			this.Num_StreamerTokenLimit.Maximum = new decimal(new int[] {
-            1048576,
-            0,
-            0,
-            0});
-			this.Num_StreamerTokenLimit.Name = "Num_StreamerTokenLimit";
-			this.Num_StreamerTokenLimit.Size = new System.Drawing.Size(187, 20);
-			this.Num_StreamerTokenLimit.TabIndex = 9;
+			Num_StreamerTokenLimit.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			Num_StreamerTokenLimit.Location = new System.Drawing.Point(221, 192);
+			Num_StreamerTokenLimit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			Num_StreamerTokenLimit.Maximum = new decimal(new int[] { 1048576, 0, 0, 0 });
+			Num_StreamerTokenLimit.Name = "Num_StreamerTokenLimit";
+			Num_StreamerTokenLimit.Size = new System.Drawing.Size(217, 23);
+			Num_StreamerTokenLimit.TabIndex = 9;
 			// 
 			// label9
 			// 
-			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(3, 169);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(180, 13);
-			this.label9.TabIndex = 10;
-			this.label9.Text = "Streamer\'s token limit:";
+			label9.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label9.AutoSize = true;
+			label9.Location = new System.Drawing.Point(4, 196);
+			label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label9.Name = "label9";
+			label9.Size = new System.Drawing.Size(209, 15);
+			label9.TabIndex = 10;
+			label9.Text = "Streamer's token limit:";
 			// 
 			// tableLayoutPanel4
 			// 
-			this.tableLayoutPanel4.ColumnCount = 1;
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
-			this.tableLayoutPanel4.Controls.Add(this.RB_InstructionStreamer, 0, 1);
-			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-			this.tableLayoutPanel4.RowCount = 2;
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(379, 280);
-			this.tableLayoutPanel4.TabIndex = 2;
+			tableLayoutPanel4.ColumnCount = 1;
+			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel4.Controls.Add(label1, 0, 0);
+			tableLayoutPanel4.Controls.Add(RB_InstructionStreamer, 0, 1);
+			tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel4.Location = new System.Drawing.Point(4, 3);
+			tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel4.Name = "tableLayoutPanel4";
+			tableLayoutPanel4.RowCount = 2;
+			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel4.Size = new System.Drawing.Size(438, 326);
+			tableLayoutPanel4.TabIndex = 2;
 			// 
 			// label1
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(106, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Additional istructions:";
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(4, 0);
+			label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(123, 15);
+			label1.TabIndex = 0;
+			label1.Text = "Additional istructions:";
 			// 
 			// RB_InstructionStreamer
 			// 
-			this.RB_InstructionStreamer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RB_InstructionStreamer.Location = new System.Drawing.Point(3, 23);
-			this.RB_InstructionStreamer.Name = "RB_InstructionStreamer";
-			this.RB_InstructionStreamer.Size = new System.Drawing.Size(373, 254);
-			this.RB_InstructionStreamer.TabIndex = 1;
-			this.RB_InstructionStreamer.Text = "";
+			RB_InstructionStreamer.Dock = System.Windows.Forms.DockStyle.Fill;
+			RB_InstructionStreamer.Location = new System.Drawing.Point(4, 26);
+			RB_InstructionStreamer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			RB_InstructionStreamer.Name = "RB_InstructionStreamer";
+			RB_InstructionStreamer.Size = new System.Drawing.Size(430, 297);
+			RB_InstructionStreamer.TabIndex = 1;
+			RB_InstructionStreamer.Text = "";
 			// 
 			// tableLayoutPanel9
 			// 
-			this.tableLayoutPanel9.ColumnCount = 2;
-			this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel9.Controls.Add(this.B_Cancel, 1, 0);
-			this.tableLayoutPanel9.Controls.Add(this.B_Save, 0, 0);
-			this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Right;
-			this.tableLayoutPanel9.Location = new System.Drawing.Point(597, 861);
-			this.tableLayoutPanel9.Name = "tableLayoutPanel9";
-			this.tableLayoutPanel9.RowCount = 1;
-			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel9.Size = new System.Drawing.Size(200, 33);
-			this.tableLayoutPanel9.TabIndex = 3;
+			tableLayoutPanel9.ColumnCount = 4;
+			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 274F));
+			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+			tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
+			tableLayoutPanel9.Controls.Add(B_Cancel, 3, 0);
+			tableLayoutPanel9.Controls.Add(B_Save, 2, 0);
+			tableLayoutPanel9.Controls.Add(tableLayoutPanel14, 0, 0);
+			tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel9.Location = new System.Drawing.Point(4, 993);
+			tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel9.Name = "tableLayoutPanel9";
+			tableLayoutPanel9.RowCount = 1;
+			tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel9.Size = new System.Drawing.Size(925, 39);
+			tableLayoutPanel9.TabIndex = 3;
 			// 
 			// B_Cancel
 			// 
-			this.B_Cancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.B_Cancel.Location = new System.Drawing.Point(112, 5);
-			this.B_Cancel.Name = "B_Cancel";
-			this.B_Cancel.Size = new System.Drawing.Size(75, 23);
-			this.B_Cancel.TabIndex = 1;
-			this.B_Cancel.Text = "Discard";
-			this.B_Cancel.UseVisualStyleBackColor = true;
-			this.B_Cancel.Click += new System.EventHandler(this.B_Cancel_Click);
+			B_Cancel.Anchor = System.Windows.Forms.AnchorStyles.None;
+			B_Cancel.Location = new System.Drawing.Point(833, 6);
+			B_Cancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			B_Cancel.Name = "B_Cancel";
+			B_Cancel.Size = new System.Drawing.Size(88, 27);
+			B_Cancel.TabIndex = 1;
+			B_Cancel.Text = "Discard";
+			B_Cancel.UseVisualStyleBackColor = true;
+			B_Cancel.Click += B_Cancel_Click;
 			// 
 			// B_Save
 			// 
-			this.B_Save.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.B_Save.Location = new System.Drawing.Point(12, 5);
-			this.B_Save.Name = "B_Save";
-			this.B_Save.Size = new System.Drawing.Size(75, 23);
-			this.B_Save.TabIndex = 0;
-			this.B_Save.Text = "Save";
-			this.B_Save.UseVisualStyleBackColor = true;
-			this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
+			B_Save.Anchor = System.Windows.Forms.AnchorStyles.None;
+			B_Save.Location = new System.Drawing.Point(737, 6);
+			B_Save.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			B_Save.Name = "B_Save";
+			B_Save.Size = new System.Drawing.Size(88, 27);
+			B_Save.TabIndex = 0;
+			B_Save.Text = "Save";
+			B_Save.UseVisualStyleBackColor = true;
+			B_Save.Click += B_Save_Click;
 			// 
 			// tableLayoutPanel10
 			// 
-			this.tableLayoutPanel10.ColumnCount = 1;
-			this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel11, 0, 0);
-			this.tableLayoutPanel10.Controls.Add(this.tableLayoutPanel12, 0, 1);
-			this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel10.Location = new System.Drawing.Point(3, 783);
-			this.tableLayoutPanel10.Name = "tableLayoutPanel10";
-			this.tableLayoutPanel10.RowCount = 2;
-			this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel10.Size = new System.Drawing.Size(794, 72);
-			this.tableLayoutPanel10.TabIndex = 5;
+			tableLayoutPanel10.ColumnCount = 1;
+			tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			tableLayoutPanel10.Controls.Add(tableLayoutPanel11, 0, 0);
+			tableLayoutPanel10.Controls.Add(tableLayoutPanel12, 0, 1);
+			tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel10.Location = new System.Drawing.Point(4, 903);
+			tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel10.Name = "tableLayoutPanel10";
+			tableLayoutPanel10.RowCount = 2;
+			tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel10.Size = new System.Drawing.Size(925, 84);
+			tableLayoutPanel10.TabIndex = 5;
 			// 
 			// tableLayoutPanel11
 			// 
-			this.tableLayoutPanel11.ColumnCount = 4;
-			this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-			this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167F));
-			this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
-			this.tableLayoutPanel11.Controls.Add(this.B_Show_UserOverrides, 3, 0);
-			this.tableLayoutPanel11.Controls.Add(this.label8, 0, 0);
-			this.tableLayoutPanel11.Controls.Add(this.TB_API_Key, 1, 0);
-			this.tableLayoutPanel11.Controls.Add(this.B_CreateReward, 2, 0);
-			this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel11.Name = "tableLayoutPanel11";
-			this.tableLayoutPanel11.RowCount = 1;
-			this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel11.Size = new System.Drawing.Size(788, 30);
-			this.tableLayoutPanel11.TabIndex = 4;
+			tableLayoutPanel11.ColumnCount = 4;
+			tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 195F));
+			tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 126F));
+			tableLayoutPanel11.Controls.Add(B_Show_UserOverrides, 3, 0);
+			tableLayoutPanel11.Controls.Add(label8, 0, 0);
+			tableLayoutPanel11.Controls.Add(TB_API_Key, 1, 0);
+			tableLayoutPanel11.Controls.Add(B_CreateReward, 2, 0);
+			tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel11.Location = new System.Drawing.Point(4, 3);
+			tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel11.Name = "tableLayoutPanel11";
+			tableLayoutPanel11.RowCount = 1;
+			tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel11.Size = new System.Drawing.Size(917, 36);
+			tableLayoutPanel11.TabIndex = 4;
 			// 
 			// B_Show_UserOverrides
 			// 
-			this.B_Show_UserOverrides.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.B_Show_UserOverrides.Location = new System.Drawing.Point(683, 3);
-			this.B_Show_UserOverrides.Name = "B_Show_UserOverrides";
-			this.B_Show_UserOverrides.Size = new System.Drawing.Size(102, 23);
-			this.B_Show_UserOverrides.TabIndex = 3;
-			this.B_Show_UserOverrides.Text = "User overrides";
-			this.B_Show_UserOverrides.UseVisualStyleBackColor = true;
-			this.B_Show_UserOverrides.Click += new System.EventHandler(this.B_Show_UserOverrides_Click);
+			B_Show_UserOverrides.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			B_Show_UserOverrides.Location = new System.Drawing.Point(795, 4);
+			B_Show_UserOverrides.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			B_Show_UserOverrides.Name = "B_Show_UserOverrides";
+			B_Show_UserOverrides.Size = new System.Drawing.Size(118, 27);
+			B_Show_UserOverrides.TabIndex = 3;
+			B_Show_UserOverrides.Text = "User overrides";
+			B_Show_UserOverrides.UseVisualStyleBackColor = true;
+			B_Show_UserOverrides.Click += B_Show_UserOverrides_Click;
 			// 
 			// label8
 			// 
-			this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(3, 8);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(47, 13);
-			this.label8.TabIndex = 0;
-			this.label8.Text = "API key:";
+			label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label8.AutoSize = true;
+			label8.Location = new System.Drawing.Point(4, 10);
+			label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label8.Name = "label8";
+			label8.Size = new System.Drawing.Size(49, 15);
+			label8.TabIndex = 0;
+			label8.Text = "API key:";
 			// 
 			// TB_API_Key
 			// 
-			this.TB_API_Key.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.TB_API_Key.Location = new System.Drawing.Point(72, 5);
-			this.TB_API_Key.Name = "TB_API_Key";
-			this.TB_API_Key.Size = new System.Drawing.Size(438, 20);
-			this.TB_API_Key.TabIndex = 1;
-			this.TB_API_Key.UseSystemPasswordChar = true;
+			TB_API_Key.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			TB_API_Key.Location = new System.Drawing.Point(84, 6);
+			TB_API_Key.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TB_API_Key.Name = "TB_API_Key";
+			TB_API_Key.Size = new System.Drawing.Size(508, 23);
+			TB_API_Key.TabIndex = 1;
+			TB_API_Key.UseSystemPasswordChar = true;
 			// 
 			// B_CreateReward
 			// 
-			this.B_CreateReward.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.B_CreateReward.Location = new System.Drawing.Point(516, 3);
-			this.B_CreateReward.Name = "B_CreateReward";
-			this.B_CreateReward.Size = new System.Drawing.Size(161, 23);
-			this.B_CreateReward.TabIndex = 2;
-			this.B_CreateReward.Text = "Create Reward";
-			this.B_CreateReward.UseVisualStyleBackColor = true;
-			this.B_CreateReward.Click += new System.EventHandler(this.B_CreateReward_Click);
+			B_CreateReward.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			B_CreateReward.Location = new System.Drawing.Point(600, 4);
+			B_CreateReward.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			B_CreateReward.Name = "B_CreateReward";
+			B_CreateReward.Size = new System.Drawing.Size(187, 27);
+			B_CreateReward.TabIndex = 2;
+			B_CreateReward.Text = "Create Reward";
+			B_CreateReward.UseVisualStyleBackColor = true;
+			B_CreateReward.Click += B_CreateReward_Click;
 			// 
 			// tableLayoutPanel12
 			// 
-			this.tableLayoutPanel12.ColumnCount = 2;
-			this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-			this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel12.Controls.Add(this.TB_Username, 1, 0);
-			this.tableLayoutPanel12.Controls.Add(this.label13, 0, 0);
-			this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel12.Location = new System.Drawing.Point(3, 39);
-			this.tableLayoutPanel12.Name = "tableLayoutPanel12";
-			this.tableLayoutPanel12.RowCount = 1;
-			this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel12.Size = new System.Drawing.Size(788, 30);
-			this.tableLayoutPanel12.TabIndex = 5;
+			tableLayoutPanel12.ColumnCount = 2;
+			tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel12.Controls.Add(TB_Username, 1, 0);
+			tableLayoutPanel12.Controls.Add(label13, 0, 0);
+			tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel12.Location = new System.Drawing.Point(4, 45);
+			tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel12.Name = "tableLayoutPanel12";
+			tableLayoutPanel12.RowCount = 1;
+			tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel12.Size = new System.Drawing.Size(917, 36);
+			tableLayoutPanel12.TabIndex = 5;
 			// 
 			// TB_Username
 			// 
-			this.TB_Username.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.TB_Username.Location = new System.Drawing.Point(72, 5);
-			this.TB_Username.Name = "TB_Username";
-			this.TB_Username.Size = new System.Drawing.Size(713, 20);
-			this.TB_Username.TabIndex = 2;
+			TB_Username.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			TB_Username.Location = new System.Drawing.Point(84, 6);
+			TB_Username.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			TB_Username.Name = "TB_Username";
+			TB_Username.Size = new System.Drawing.Size(829, 23);
+			TB_Username.TabIndex = 2;
 			// 
 			// label13
 			// 
-			this.label13.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(3, 2);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(56, 26);
-			this.label13.TabIndex = 1;
-			this.label13.Text = "Twitch username:";
+			label13.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label13.AutoSize = true;
+			label13.Location = new System.Drawing.Point(4, 3);
+			label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label13.Name = "label13";
+			label13.Size = new System.Drawing.Size(62, 30);
+			label13.TabIndex = 1;
+			label13.Text = "Twitch username:";
 			// 
 			// tableLayoutPanel13
 			// 
-			this.tableLayoutPanel13.ColumnCount = 1;
-			this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel13.Controls.Add(this.RB_CharacterDefinition, 0, 1);
-			this.tableLayoutPanel13.Controls.Add(this.label14, 0, 0);
-			this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel13.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel13.Name = "tableLayoutPanel13";
-			this.tableLayoutPanel13.RowCount = 2;
-			this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 17F));
-			this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel13.Size = new System.Drawing.Size(794, 224);
-			this.tableLayoutPanel13.TabIndex = 6;
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(3, 0);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(101, 13);
-			this.label14.TabIndex = 1;
-			this.label14.Text = "Character definition:";
+			tableLayoutPanel13.ColumnCount = 1;
+			tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			tableLayoutPanel13.Controls.Add(RB_CharacterDefinition, 0, 1);
+			tableLayoutPanel13.Controls.Add(label14, 0, 0);
+			tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel13.Location = new System.Drawing.Point(4, 3);
+			tableLayoutPanel13.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel13.Name = "tableLayoutPanel13";
+			tableLayoutPanel13.RowCount = 2;
+			tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel13.Size = new System.Drawing.Size(925, 259);
+			tableLayoutPanel13.TabIndex = 6;
 			// 
 			// RB_CharacterDefinition
 			// 
-			this.RB_CharacterDefinition.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.RB_CharacterDefinition.Location = new System.Drawing.Point(3, 20);
-			this.RB_CharacterDefinition.Name = "RB_CharacterDefinition";
-			this.RB_CharacterDefinition.Size = new System.Drawing.Size(788, 201);
-			this.RB_CharacterDefinition.TabIndex = 2;
-			this.RB_CharacterDefinition.Text = "";
+			RB_CharacterDefinition.Dock = System.Windows.Forms.DockStyle.Fill;
+			RB_CharacterDefinition.Location = new System.Drawing.Point(4, 23);
+			RB_CharacterDefinition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			RB_CharacterDefinition.Name = "RB_CharacterDefinition";
+			RB_CharacterDefinition.Size = new System.Drawing.Size(917, 233);
+			RB_CharacterDefinition.TabIndex = 2;
+			RB_CharacterDefinition.Text = "";
 			// 
-			// AI_Integration_Form
+			// label14
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 897);
-			this.Controls.Add(this.tableLayoutPanel1);
-			this.Name = "AI_Integration_Form";
-			this.Text = "AI Intergration Form";
-			this.Load += new System.EventHandler(this.AI_Integration_Form_Load);
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerHarassment)).EndInit();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
-			this.tableLayoutPanel6.ResumeLayout(false);
-			this.tableLayoutPanel7.ResumeLayout(false);
-			this.tableLayoutPanel7.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.Num_UserResponseTemperature)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.Num_UserTokenLimit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserCivicIntegrity)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserDangerousContent)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserSexuallyExplicit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserHate)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_UserHarassment)).EndInit();
-			this.tableLayoutPanel8.ResumeLayout(false);
-			this.tableLayoutPanel8.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.tableLayoutPanel5.ResumeLayout(false);
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.Num_StreamerTemperature)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerCivicIntegrity)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerDangerousContent)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerSexuallyExplicit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TBar_StreamerHate)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.Num_StreamerTokenLimit)).EndInit();
-			this.tableLayoutPanel4.ResumeLayout(false);
-			this.tableLayoutPanel4.PerformLayout();
-			this.tableLayoutPanel9.ResumeLayout(false);
-			this.tableLayoutPanel10.ResumeLayout(false);
-			this.tableLayoutPanel11.ResumeLayout(false);
-			this.tableLayoutPanel11.PerformLayout();
-			this.tableLayoutPanel12.ResumeLayout(false);
-			this.tableLayoutPanel12.PerformLayout();
-			this.tableLayoutPanel13.ResumeLayout(false);
-			this.tableLayoutPanel13.PerformLayout();
-			this.ResumeLayout(false);
+			label14.AutoSize = true;
+			label14.Location = new System.Drawing.Point(4, 0);
+			label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label14.Name = "label14";
+			label14.Size = new System.Drawing.Size(115, 15);
+			label14.TabIndex = 1;
+			label14.Text = "Character definition:";
+			// 
+			// tableLayoutPanel14
+			// 
+			tableLayoutPanel14.ColumnCount = 2;
+			tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+			tableLayoutPanel14.Controls.Add(Num_AutoSummary, 1, 0);
+			tableLayoutPanel14.Controls.Add(label15, 0, 0);
+			tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel14.Location = new System.Drawing.Point(3, 3);
+			tableLayoutPanel14.Name = "tableLayoutPanel14";
+			tableLayoutPanel14.RowCount = 1;
+			tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel14.Size = new System.Drawing.Size(268, 33);
+			tableLayoutPanel14.TabIndex = 2;
+			// 
+			// numAutoSummary
+			// 
+			Num_AutoSummary.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			Num_AutoSummary.Location = new System.Drawing.Point(180, 5);
+			Num_AutoSummary.Name = "numAutoSummary";
+			Num_AutoSummary.Size = new System.Drawing.Size(85, 23);
+			Num_AutoSummary.TabIndex = 0;
+			// 
+			// label15
+			// 
+			label15.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label15.AutoSize = true;
+			label15.Location = new System.Drawing.Point(3, 1);
+			label15.Name = "label15";
+			label15.Size = new System.Drawing.Size(171, 30);
+			label15.TabIndex = 1;
+			label15.Text = "Auto summary when user has more messages than:";
+			// 
+			// AskAI_Configuration_Form
+			// 
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(933, 1035);
+			Controls.Add(tableLayoutPanel1);
+			Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			Name = "AskAI_Configuration_Form";
+			Text = "AI Intergration Form";
+			Load += AI_Integration_Form_Load;
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerHarassment).EndInit();
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel3.ResumeLayout(false);
+			groupBox2.ResumeLayout(false);
+			tableLayoutPanel6.ResumeLayout(false);
+			tableLayoutPanel7.ResumeLayout(false);
+			tableLayoutPanel7.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)Num_UserResponseTemperature).EndInit();
+			((System.ComponentModel.ISupportInitialize)Num_UserTokenLimit).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserCivicIntegrity).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserDangerousContent).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserSexuallyExplicit).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserHate).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_UserHarassment).EndInit();
+			tableLayoutPanel8.ResumeLayout(false);
+			tableLayoutPanel8.PerformLayout();
+			groupBox1.ResumeLayout(false);
+			tableLayoutPanel5.ResumeLayout(false);
+			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)Num_StreamerTemperature).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerCivicIntegrity).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerDangerousContent).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerSexuallyExplicit).EndInit();
+			((System.ComponentModel.ISupportInitialize)TBar_StreamerHate).EndInit();
+			((System.ComponentModel.ISupportInitialize)Num_StreamerTokenLimit).EndInit();
+			tableLayoutPanel4.ResumeLayout(false);
+			tableLayoutPanel4.PerformLayout();
+			tableLayoutPanel9.ResumeLayout(false);
+			tableLayoutPanel10.ResumeLayout(false);
+			tableLayoutPanel11.ResumeLayout(false);
+			tableLayoutPanel11.PerformLayout();
+			tableLayoutPanel12.ResumeLayout(false);
+			tableLayoutPanel12.PerformLayout();
+			tableLayoutPanel13.ResumeLayout(false);
+			tableLayoutPanel13.PerformLayout();
+			tableLayoutPanel14.ResumeLayout(false);
+			tableLayoutPanel14.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)Num_AutoSummary).EndInit();
+			ResumeLayout(false);
 
 		}
 
@@ -924,5 +1004,8 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
 		private System.Windows.Forms.RichTextBox RB_CharacterDefinition;
 		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
+		private System.Windows.Forms.NumericUpDown Num_AutoSummary;
+		private System.Windows.Forms.Label label15;
 	}
 }

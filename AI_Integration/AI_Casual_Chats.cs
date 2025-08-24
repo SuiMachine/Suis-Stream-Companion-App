@@ -125,7 +125,7 @@ namespace SSC.AI_Integration
 			}
 		}
 
-		private void RefreshHistory()
+		public void RefreshHistory()
 		{
 			if (this.InvokeRequired)
 			{
@@ -412,7 +412,6 @@ namespace SSC.AI_Integration
 					await SendMessage(result);
 
 					BlockSend = false;
-
 				});
 			}
 		}

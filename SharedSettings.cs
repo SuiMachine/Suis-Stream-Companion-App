@@ -257,6 +257,8 @@ namespace SSC
 		};
 		public string Instruction_User { get; set; } = "The user is {0}\nThe responses are always 200-450 characters long.";
 		public int TokenLimit_User { get; set; } = 8096;
+		public int AutoSummaryAbove { get; set; } = 100;
+
 		public float Temperature_User { get; set; } = 0.85f;
 		public FilterSet FilterSet_User = new FilterSet()
 		{

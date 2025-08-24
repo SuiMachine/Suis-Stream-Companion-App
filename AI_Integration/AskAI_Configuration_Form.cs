@@ -41,6 +41,7 @@ namespace SSC.AI_Integration
 			TBar_UserCivicIntegrity.Value = (int)config.FilterSet_User.Civic_Integrity;
 			Num_UserTokenLimit.Value = config.TokenLimit_User;
 			Num_UserResponseTemperature.Value = (decimal)config.Temperature_User;
+			Num_AutoSummary.Value = config.AutoSummaryAbove;
 		}
 
 		private async void B_CreateReward_Click(object sender, EventArgs e)
@@ -113,6 +114,7 @@ namespace SSC.AI_Integration
 			config.TokenLimit_Streamer = (int)Num_StreamerTokenLimit.Value;
 			config.TokenLimit_User = (int)Num_UserTokenLimit.Value;
 			config.TwitchUsername = TB_Username.Text.Trim();
+			config.AutoSummaryAbove = (int)Num_AutoSummary.Value;
 
 			config.SaveSettings();
 			this.Close();
