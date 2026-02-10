@@ -289,7 +289,7 @@ namespace SSC
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", FilterSet_Streamer.Hate),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", FilterSet_Streamer.Sexually_Explicit),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", FilterSet_Streamer.Dangerous_Content),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_Streamer.Civic_Integrity),
+				//new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_Streamer.Civic_Integrity),
 			};
 		}
 
@@ -301,7 +301,7 @@ namespace SSC
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", FilterSet_User.Hate),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", FilterSet_User.Sexually_Explicit),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", FilterSet_User.Dangerous_Content),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_User.Civic_Integrity),
+				//new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_User.Civic_Integrity),
 			};
 		}
 
@@ -313,7 +313,7 @@ namespace SSC
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", AISafetySettingsValues.BLOCK_NONE),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", AISafetySettingsValues.BLOCK_NONE),
 				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", AISafetySettingsValues.BLOCK_NONE),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", AISafetySettingsValues.BLOCK_NONE),
+				//new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", AISafetySettingsValues.BLOCK_NONE),
 			};
 		}
 

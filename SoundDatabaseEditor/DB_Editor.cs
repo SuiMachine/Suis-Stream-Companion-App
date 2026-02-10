@@ -1,4 +1,5 @@
-﻿using SSC.Chat;
+﻿using CefSharp.DevTools.Browser;
+using SSC.Chat;
 using SSC.Extensions;
 using SSC.SoundStorage;
 using System;
@@ -219,28 +220,60 @@ namespace SSC.SoundDatabaseEditor
 
 		private void B_ExportTags_Click(object sender, EventArgs e)
 		{
-			StringBuilder sb = new StringBuilder();
-			sb.AppendLine("Name | Description | Tags / Phrases (comma separated)");
-			sb.AppendLine("");
+			UniversalMessageBox mb = new UniversalMessageBox("What format to export in:", "Custom", "Markdown", "Cancel");
+			var result = mb.ShowDialog();
+			if (result == DialogResult.Cancel || mb.Option == 3)
+				return;
 
-			foreach (SoundEntry sound in SoundsCopy)
+			if(mb.Option == 2)
 			{
-				if (!string.IsNullOrEmpty(sound.RewardID))
-					continue;
+				StringBuilder sb = new StringBuilder();
+				sb.AppendLine("| Name | Description | Tags / Phrases |");
+				sb.AppendLine("|:-------- |:-------:|:-------|");
+				foreach (SoundEntry sound in SoundsCopy)
+				{
+					if (!string.IsNullOrEmpty(sound.RewardID))
+						continue;
 
-				if (sound.Tags.Length == 0)
-					continue;
+					if (sound.Tags.Length == 0)
+						continue;
 
-				var joinTags = string.Join(", ", sound.Tags);
+					var joinTags = string.Join("<br>", sound.Tags);
 
-				sb.AppendLine($"{sound.RewardName} | {sound.Description} |  {joinTags}");
+					sb.AppendLine($"| **{sound.RewardName}** | **{sound.Description}** |  {joinTags}|");
+				}
+				sb.AppendLine("");
+				System.IO.File.WriteAllText("Tags.txt", sb.ToString());
+				System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("Tags.txt")
+				{
+					UseShellExecute = true
+				});
 			}
-
-			System.IO.File.WriteAllText("Tags.txt", sb.ToString());
-			System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("Tags.txt")
+			else
 			{
-				UseShellExecute = true
-			});
+				StringBuilder sb = new StringBuilder();
+				sb.AppendLine("Name | Description | Tags / Phrases (comma separated)");
+				sb.AppendLine("");
+
+				foreach (SoundEntry sound in SoundsCopy)
+				{
+					if (!string.IsNullOrEmpty(sound.RewardID))
+						continue;
+
+					if (sound.Tags.Length == 0)
+						continue;
+
+					var joinTags = string.Join(", ", sound.Tags);
+
+					sb.AppendLine($"{sound.RewardName} | {sound.Description} |  {joinTags}");
+				}
+
+				System.IO.File.WriteAllText("Tags.txt", sb.ToString());
+				System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("Tags.txt")
+				{
+					UseShellExecute = true
+				});
+			}
 		}
 	}
 
