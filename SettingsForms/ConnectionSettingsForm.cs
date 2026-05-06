@@ -54,7 +54,6 @@ namespace SSC.SettingsForms
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool DebugMode { get; set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int WebsocketPort { get; set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool RunWebsocket { get; set; }
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string MixItUp_WebookURL { get; set; }
 
 
 		public ConnectionSettingsForm(MainForm _parent)
@@ -70,7 +69,6 @@ namespace SSC.SettingsForms
 			this.CB_DebugMode.DataBindings.Add("Checked", this, nameof(DebugMode), false, DataSourceUpdateMode.OnPropertyChanged);
 			this.Num_PortUsed.DataBindings.Add("Value", this, nameof(WebsocketPort), false, DataSourceUpdateMode.OnPropertyChanged);
 			this.CB_Websocket.DataBindings.Add("Checked", this, nameof(RunWebsocket), false, DataSourceUpdateMode.OnPropertyChanged);
-			this.TB_MixItUpWebhook.DataBindings.Add("Text", this, nameof(MixItUp_WebookURL), false, DataSourceUpdateMode.OnPropertyChanged);
 
 			this.UserAuth = settings.UserAuth;
 			this.BotAuth = settings.BotAuth;
@@ -78,7 +76,6 @@ namespace SSC.SettingsForms
 			this.DebugMode = settings.Debug_mode;
 			this.WebsocketPort = settings.WebSocketsServerPort;
 			this.RunWebsocket = settings.RunWebSocketsServer;
-			this.MixItUp_WebookURL = settings.MixItUpWebookURL;
 		}
 
 		private void B_Save_Click(object sender, EventArgs e)

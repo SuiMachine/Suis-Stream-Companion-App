@@ -93,14 +93,8 @@ namespace SSC
 
 					if (ClosestReminder.UTCTime < DateTime.UtcNow)
 					{
-						if (AI_Casual_Chats.Instance != null && false)
-						{
-							AI_Casual_Chats.Instance?.PassReminder(ClosestReminder);
-						}
-						else
-						{
-							ToastNotificationHelper.DisplayNotification(Path.Combine(AI_Casual_Chats.GetFolderAIData(), AIConfig.GetInstance().CasualChat_Icon_AI), ClosestReminder.Notification_Content, Windows.UI.Notifications.ToastTemplateType.ToastImageAndText01);
-						}
+						ToastNotificationHelper.DisplayNotification("", ClosestReminder.Notification_Content, Windows.UI.Notifications.ToastTemplateType.ToastImageAndText01);
+
 						MainForm.Instance.UpdateReminderIcon();
 						ClosestReminder.Notified = true;
 						ClosestReminder = null;

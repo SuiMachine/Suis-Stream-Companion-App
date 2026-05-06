@@ -5,21 +5,6 @@
     <_LastSelectedProfileId>E:\Projekty\Suis-Stream-Companion-App\Properties\PublishProfiles\Win64.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="AI_Integration\AI_StreamEvents.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="AI_Integration\AI_Weather_Setting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="AI_Integration\AskAI_Configuration_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="AI_Integration\AI_Casual_Chats.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="AI_Integration\CasualChatsElements\EditDisplay.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="OtherForms\NotesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -36,15 +21,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="OtherForms\ReminderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideAddForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SettingsForms\AI_Overrides_Forms\UserOverrideSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SettingsForms\ConnectionSettingsForm.cs">

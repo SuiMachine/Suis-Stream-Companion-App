@@ -1,6 +1,5 @@
 ﻿using SSC.Extensions;
 using SSC.Interfaces;
-using SuiBotAI.Components.Other.Gemini;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +7,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using static SuiBotAI.Components.Other.Gemini.GeminiSafetySettingsCategory;
 
 namespace SSC
 {
@@ -35,7 +33,6 @@ namespace SSC
 		[XmlElement] public EncryptedString BotAuth { get; set; }
 		[XmlElement] public bool RunWebSocketsServer { get; set; }
 		[XmlElement] public int WebSocketsServerPort { get; set; }
-		[XmlElement] public string MixItUpWebookURL { get; set; }
 		[XmlElement] public string UniversalRewardID { get; set; }
 		[XmlElement] public string LastNotesFile { get; set; }
 		#endregion
@@ -195,167 +192,6 @@ namespace SSC
 					RewardDescription = this.RewardDescription
 				};
 			}
-		}
-	}
-
-	[Serializable]
-	public class AIConfig
-	{
-		private static AIConfig LoadSettings() => XML_Utils.Load(GetConfigPath(), new AIConfig());
-
-		[Serializable]
-		public class EventSettings
-		{
-			public string Instruction_AdsBegin = "Notify users in the chat that the ads (commercials) have just started and they will least for {time} minutes. The response should be between 50-450 characters long. Stay in character.";
-			public string Instruction_AdsFinished = "Notify users in the chat that the ads (commercials) just finished and that next ones should be in {next_ads} minutes. Stay in character.  The response should be between 50-450 characters long.";
-			public string Instruction_NotifyPrerolls = "Notify users in the chat that pre-roll ads (commercials) are now sadly activated. Stay in character. The response should be between 50-450 characters long.";
-			public string Instruction_Raid = "Thank {user} for the raid. Provide a short description of who they are based and what they were streaming. The response should be between 250-450 characters long. Stay in character. Make sure the response doesn't have racist tones.";
-
-			public bool AdsBeginNotify { get; set; } = false;
-			public bool AdsFinishNotify { get; set; } = false;
-			public bool AdsPrerollsActiveNotify { get; set; } = false;
-			public bool RaidNotify { get; set; } = false;
-		}
-
-		[Serializable]
-		public class FilterSet
-		{
-			public AISafetySettingsValues Harassment { get; set; } = AISafetySettingsValues.BLOCK_ONLY_HIGH;
-			public AISafetySettingsValues Hate { get; set; } = AISafetySettingsValues.BLOCK_ONLY_HIGH;
-			public AISafetySettingsValues Sexually_Explicit { get; set; } = AISafetySettingsValues.BLOCK_ONLY_HIGH;
-			public AISafetySettingsValues Dangerous_Content { get; set; } = AISafetySettingsValues.BLOCK_ONLY_HIGH;
-			public AISafetySettingsValues Civic_Integrity { get; set; } = AISafetySettingsValues.BLOCK_LOW_AND_ABOVE;
-		}
-
-		private static string GetConfigPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_Config.xml");
-		public static string GetAIHistoryPath(string username) => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "AI_History", username + ".xml");
-
-		private static AIConfig m_Instance;
-		public static AIConfig GetInstance()
-		{
-			if (m_Instance == null)
-				m_Instance = LoadSettings();
-
-			return m_Instance;
-		}
-
-		public string TwitchUsername { get; set; } = "";
-		public EncryptedString ApiKey { get; set; } = "";
-		public EncryptedString WeatherAPIKey { get; set; } = "";
-
-		public string Instruction_Character { get; set; } = "Describe your character here";
-		public string Instruction_Streamer { get; set; } = "The responses are always 200-550 characters long.";
-		public int TokenLimit_Streamer { get; set; } = 1_048_576 - 8096 - 512;
-		public float Temperature_Streamer { get; set; } = 1f;
-		public FilterSet FilterSet_Streamer = new FilterSet()
-		{
-			Harassment = AISafetySettingsValues.BLOCK_NONE,
-			Hate = AISafetySettingsValues.BLOCK_NONE,
-			Sexually_Explicit = AISafetySettingsValues.BLOCK_NONE,
-			Dangerous_Content = AISafetySettingsValues.BLOCK_NONE,
-			Civic_Integrity = AISafetySettingsValues.BLOCK_LOW_AND_ABOVE,
-		};
-		public string Instruction_User { get; set; } = "The user is {0}\nThe responses are always 200-450 characters long.";
-		public int TokenLimit_User { get; set; } = 8096;
-		public int AutoSummaryAbove { get; set; } = 100;
-
-		public float Temperature_User { get; set; } = 0.85f;
-		public FilterSet FilterSet_User = new FilterSet()
-		{
-			Harassment = AISafetySettingsValues.BLOCK_MEDIUM_AND_ABOVE,
-			Hate = AISafetySettingsValues.BLOCK_MEDIUM_AND_ABOVE,
-			Sexually_Explicit = AISafetySettingsValues.BLOCK_MEDIUM_AND_ABOVE,
-			Dangerous_Content = AISafetySettingsValues.BLOCK_MEDIUM_AND_ABOVE,
-			Civic_Integrity = AISafetySettingsValues.BLOCK_LOW_AND_ABOVE,
-		};
-
-		public string Model { get; set; } = "models/gemini-2.5-flash-preview-05-20";
-		public string TwitchAwardID { get; set; } = "";
-		public bool CasualChat_PrivateConversation { get; set; } = false;
-		public bool CasualChat_StreamDefinition { get; set; } = false;
-		public string CasualChat_Icon_User { get; set; } = "";
-		public string CasualChat_Icon_AI { get; set; } = "";
-		public bool CasualChat_TTS { get; set; } = true;
-
-		public EventSettings Events = new EventSettings();
-
-		public void SaveSettings() => XML_Utils.Save(GetConfigPath(), this);
-
-		public GeminiSafetySettingsCategory[] GetSafetySettingsStreamer()
-		{
-			return new GeminiSafetySettingsCategory[]
-			{
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_HARASSMENT", FilterSet_Streamer.Harassment),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", FilterSet_Streamer.Hate),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", FilterSet_Streamer.Sexually_Explicit),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", FilterSet_Streamer.Dangerous_Content),
-				//new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_Streamer.Civic_Integrity),
-			};
-		}
-
-		public GeminiSafetySettingsCategory[] GetSafetySettingsGeneral()
-		{
-			return new GeminiSafetySettingsCategory[]
-			{
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_HARASSMENT", FilterSet_User.Harassment),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", FilterSet_User.Hate),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", FilterSet_User.Sexually_Explicit),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", FilterSet_User.Dangerous_Content),
-				//new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", FilterSet_User.Civic_Integrity),
-			};
-		}
-
-		public GeminiSafetySettingsCategory[] GetSafetySettingsNone()
-		{
-			return new GeminiSafetySettingsCategory[]
-			{
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_HARASSMENT", AISafetySettingsValues.BLOCK_NONE),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_HATE_SPEECH", AISafetySettingsValues.BLOCK_NONE),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_SEXUALLY_EXPLICIT", AISafetySettingsValues.BLOCK_NONE),
-				new GeminiSafetySettingsCategory("HARM_CATEGORY_DANGEROUS_CONTENT", AISafetySettingsValues.BLOCK_NONE),
-				//new GeminiSafetySettingsCategory("HARM_CATEGORY_CIVIC_INTEGRITY", AISafetySettingsValues.BLOCK_NONE),
-			};
-		}
-
-		public GeminiMessage GetInstruction(string username, bool isStreamer, bool attachIsLive)
-		{
-			var sb = new StringBuilder();
-
-			sb.AppendLine(Instruction_Character);
-			sb.AppendLine();
-			sb.AppendLine(isStreamer ? Instruction_Streamer : Instruction_User);
-			if (!isStreamer)
-				sb.AppendLine("The user is " + username + ".");
-
-
-			sb.AppendStreamInstructionPostfix(attachIsLive);
-
-			return new GeminiMessage()
-			{
-				role = Role.user,
-				parts = new GeminiResponseMessagePart[]
-				{
-					new GeminiResponseMessagePart()
-					{
-						text = sb.ToString()
-					}
-				}
-			};
-		}
-
-		public GeminiMessage GetCharacterInstruction()
-		{
-			return new GeminiMessage()
-			{
-				role = Role.user,
-				parts = new GeminiResponseMessagePart[]
-				{
-					new GeminiResponseMessagePart()
-					{
-						text = Instruction_Character
-					}
-				}
-			};
 		}
 	}
 }

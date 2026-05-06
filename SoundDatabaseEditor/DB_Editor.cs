@@ -1,5 +1,4 @@
-﻿using CefSharp.DevTools.Browser;
-using SSC.Chat;
+﻿using SSC.Chat;
 using SSC.Extensions;
 using SSC.SoundStorage;
 using System;
@@ -225,7 +224,7 @@ namespace SSC.SoundDatabaseEditor
 			if (result == DialogResult.Cancel || mb.Option == 3)
 				return;
 
-			if(mb.Option == 2)
+			if (mb.Option == 2)
 			{
 				StringBuilder sb = new StringBuilder();
 				sb.AppendLine("| Name | Description | Tags / Phrases |");

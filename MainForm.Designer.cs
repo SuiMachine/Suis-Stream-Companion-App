@@ -36,17 +36,12 @@
 			menuStrip1 = new System.Windows.Forms.MenuStrip();
 			fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			runBotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			openAIChatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			connectOnStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			connectionSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			soundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			soundSettings = new System.Windows.Forms.ToolStripMenuItem();
 			voiceModSettings = new System.Windows.Forms.ToolStripMenuItem();
-			aIIntegrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			askAIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			streamEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			weatherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			notesToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
 			remindersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,7 +99,7 @@
 			// menuStrip1
 			// 
 			menuStrip1.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, soundsToolStripMenuItem, aIIntegrationToolStripMenuItem, otherToolStripMenuItem, notificationToolStripMenuItem });
+			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, soundsToolStripMenuItem, otherToolStripMenuItem, notificationToolStripMenuItem });
 			menuStrip1.Location = new System.Drawing.Point(0, 0);
 			menuStrip1.Name = "menuStrip1";
 			menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
@@ -114,7 +109,7 @@
 			// 
 			// fileToolStripMenuItem
 			// 
-			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { runBotToolStripMenuItem, openAIChatToolStripMenuItem, connectOnStartupToolStripMenuItem, connectionSettingsToolStripMenuItem, exitToolStripMenuItem });
+			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { runBotToolStripMenuItem, connectOnStartupToolStripMenuItem, connectionSettingsToolStripMenuItem, exitToolStripMenuItem });
 			fileToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -129,15 +124,6 @@
 			runBotToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			runBotToolStripMenuItem.Text = "Run Bot";
 			runBotToolStripMenuItem.Click += RunBotToolStripMenuItem_Click;
-			// 
-			// openAIChatToolStripMenuItem
-			// 
-			openAIChatToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-			openAIChatToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
-			openAIChatToolStripMenuItem.Name = "openAIChatToolStripMenuItem";
-			openAIChatToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			openAIChatToolStripMenuItem.Text = "Open AI chat";
-			openAIChatToolStripMenuItem.Click += openAIChatToolStripMenuItem_Click;
 			// 
 			// connectOnStartupToolStripMenuItem
 			// 
@@ -192,41 +178,6 @@
 			voiceModSettings.Size = new System.Drawing.Size(127, 22);
 			voiceModSettings.Text = "VoiceMod";
 			voiceModSettings.Click += VoiceModSettings_Click;
-			// 
-			// aIIntegrationToolStripMenuItem
-			// 
-			aIIntegrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { askAIToolStripMenuItem, streamEventsToolStripMenuItem, weatherToolStripMenuItem });
-			aIIntegrationToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
-			aIIntegrationToolStripMenuItem.Name = "aIIntegrationToolStripMenuItem";
-			aIIntegrationToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
-			aIIntegrationToolStripMenuItem.Text = "&AI integration";
-			// 
-			// askAIToolStripMenuItem
-			// 
-			askAIToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-			askAIToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
-			askAIToolStripMenuItem.Name = "askAIToolStripMenuItem";
-			askAIToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-			askAIToolStripMenuItem.Text = "Ask AI";
-			askAIToolStripMenuItem.Click += ai_askToolStripMenuItem_Click;
-			// 
-			// streamEventsToolStripMenuItem
-			// 
-			streamEventsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-			streamEventsToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
-			streamEventsToolStripMenuItem.Name = "streamEventsToolStripMenuItem";
-			streamEventsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-			streamEventsToolStripMenuItem.Text = "Stream Events";
-			streamEventsToolStripMenuItem.Click += ai_streamEventsToolStripMenuItem_Click;
-			// 
-			// weatherToolStripMenuItem
-			// 
-			weatherToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
-			weatherToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
-			weatherToolStripMenuItem.Name = "weatherToolStripMenuItem";
-			weatherToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-			weatherToolStripMenuItem.Text = "Weather";
-			weatherToolStripMenuItem.Click += weatherToolStripMenuItem_Click;
 			// 
 			// otherToolStripMenuItem
 			// 
@@ -366,11 +317,6 @@
         private System.Windows.Forms.ToolStripMenuItem showProgramToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem voiceModSettings;
-		private System.Windows.Forms.ToolStripMenuItem aIIntegrationToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem askAIToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem streamEventsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem weatherToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem openAIChatToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem notificationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem remindersToolStripMenuItem;

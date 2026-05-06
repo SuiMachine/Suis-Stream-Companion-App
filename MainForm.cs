@@ -1,5 +1,4 @@
 ﻿using SSC.Chat;
-using SSC.MixItUpBridge;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -35,15 +34,12 @@ namespace SSC
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridge TwitchEvents { get; private set; }
 		private char PrefixCharacter = '-';
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundDB SoundDB { get; private set; }
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public GeminiAI AI { get; private set; }
 		WebSocketsListener webSockets;
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public MixItUp MixItUpWebhook { get; private set; }
 
 		public MainForm()
 		{
 			Instance = this;
 			TwitchEvents = new EventBridge();
-			MixItUpWebhook = new MixItUp();
 			InitializeComponent();
 		}
 
@@ -51,7 +47,6 @@ namespace SSC
 		{
 			var settings = PrivateSettings.GetInstance();
 			webSockets = new WebSocketsListener();
-			AI = new GeminiAI();
 			//UpdateColors();
 			connectOnStartupToolStripMenuItem.Checked = settings.Autostart;
 			int valrr = Convert.ToInt32(100 * settings.Volume);
@@ -74,10 +69,6 @@ namespace SSC
 		{
 			TwitchBot = new ChatBot(SoundDB, PrefixCharacter);
 			TwitchBot.Connect();
-			if (AI.IsConfigured())
-			{
-				AI.Register();
-			}
 		}
 
 		#region ThreadSafeFunctions
@@ -228,7 +219,6 @@ namespace SSC
 				settings.Debug_mode = form.DebugMode;
 				settings.WebSocketsServerPort = form.WebsocketPort;
 				settings.RunWebSocketsServer = form.RunWebsocket;
-				settings.MixItUpWebookURL = form.MixItUp_WebookURL;
 				settings.SaveSettings();
 				ReloadBot();
 			}
@@ -254,9 +244,6 @@ namespace SSC
 			}
 
 			TwitchBot = null;
-
-			if (AI != null)
-				AI.Unregister();
 		}
 
 		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -306,41 +293,6 @@ namespace SSC
 			{
 
 			}
-		}
-
-		private void ai_askToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			AskAI_Configuration_Form ai_form = new AskAI_Configuration_Form();
-			var result = ai_form.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-			}
-		}
-
-		private void ai_streamEventsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			AI_StreamEvents ai_form = new AI_StreamEvents();
-			var result = ai_form.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-
-			}
-		}
-
-		private void weatherToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			AI_Weather_Setting weather = new AI_Weather_Setting();
-			var result = weather.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-				//Nothing?
-			}
-		}
-
-		private void openAIChatToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			AI_Casual_Chats chats = new AI_Casual_Chats(AI);
-			chats.Show();
 		}
 
 		public void UpdateReminderIcon()

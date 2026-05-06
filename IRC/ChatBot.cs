@@ -64,7 +64,7 @@ namespace SSC.Chat
 			this.m_PrefixChar = PrefixChar;
 			SndDB = soundDb;
 			SndDB.Register();
-			m_Parent.MixItUpWebhook.Register();
+
 			this?.HelixAPI_Bot.GetStatus(ChannelInstance);
 		}
 
