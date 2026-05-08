@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Serialization;
 
 namespace SSC.SoundStorage
 {
 	[Serializable]
+	[DebuggerDisplay("SoundEntry {RewardName}")]
 	public class SoundEntry
 	{
 		[XmlAttribute]

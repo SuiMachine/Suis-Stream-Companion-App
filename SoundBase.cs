@@ -1,4 +1,5 @@
 ﻿using NAudio.Wave;
+using Raffinert.FuzzySharp;
 using SSC.Chat;
 using SSC.Extensions;
 using SSC.SoundStorage;
@@ -137,14 +138,27 @@ namespace SSC
 			{
 				if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
 				{
-					if (UniversalRewards.TryGetValue(redeem.user_input.SanitizeTags().ToLower(), out SoundEntry universal_sound))
+					SoundEntry bestMatch = null;
+					int bestMatchValue = 0;
+
+					foreach (var entry in UniversalRewards)
+					{
+						int match = Fuzz.PartialRatio(redeem.user_input, entry.Key, Raffinert.FuzzySharp.PreProcess.PreprocessMode.Full);
+						if (match > bestMatchValue)
+						{
+							bestMatchValue = match;
+							bestMatch = entry.Value;
+						}
+					}
+
+					if (bestMatch != null)
 					{
 						//Sound is found, is not played allocate a new player, start playing it, write down when user started playing a sound so he's under cooldown
 						PrivateSettings programSettings = PrivateSettings.GetInstance();
-						NSoundPlayer player = new NSoundPlayer(programSettings.OutputDevice, universal_sound.GetFile(m_RNG), programSettings.Volume * universal_sound.Volume);
+						NSoundPlayer player = new NSoundPlayer(programSettings.OutputDevice, bestMatch.GetFile(m_RNG), programSettings.Volume * bestMatch.Volume);
 						TimeSpan length = player.GetTimeLength() + TimeSpan.FromSeconds(1);
 						m_SoundPlayerStack.Add(player);
-						var additionalDelay = universal_sound.Cooldown - m_Delay;
+						var additionalDelay = bestMatch.Cooldown - m_Delay;
 						if (additionalDelay < 0)
 							additionalDelay = 0;
 

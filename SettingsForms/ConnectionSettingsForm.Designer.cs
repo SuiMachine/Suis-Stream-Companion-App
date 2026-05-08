@@ -50,9 +50,6 @@
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			B_Save = new System.Windows.Forms.Button();
 			B_Cancel = new System.Windows.Forms.Button();
-			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-			TB_MixItUpWebhook = new System.Windows.Forms.TextBox();
-			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel1.SuspendLayout();
 			panel1.SuspendLayout();
 			tableLayoutPanel3.SuspendLayout();
@@ -61,7 +58,6 @@
 			((System.ComponentModel.ISupportInitialize)Num_PortUsed).BeginInit();
 			tableLayoutPanel8.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
-			tableLayoutPanel4.SuspendLayout();
 			SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -70,7 +66,6 @@
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel1.Controls.Add(panel1, 0, 0);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
-			tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 0, 1);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -370,44 +365,6 @@
 			B_Cancel.UseVisualStyleBackColor = true;
 			B_Cancel.Click += B_Cancel_Click;
 			// 
-			// tableLayoutPanel4
-			// 
-			tableLayoutPanel4.ColumnCount = 2;
-			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel4.Controls.Add(TB_MixItUpWebhook, 1, 0);
-			tableLayoutPanel4.Controls.Add(label1, 0, 0);
-			tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			tableLayoutPanel4.Location = new System.Drawing.Point(4, 144);
-			tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tableLayoutPanel4.Name = "tableLayoutPanel4";
-			tableLayoutPanel4.RowCount = 1;
-			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel4.Size = new System.Drawing.Size(648, 37);
-			tableLayoutPanel4.TabIndex = 2;
-			// 
-			// TB_MixItUpWebhook
-			// 
-			TB_MixItUpWebhook.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			TB_MixItUpWebhook.Location = new System.Drawing.Point(152, 7);
-			TB_MixItUpWebhook.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			TB_MixItUpWebhook.Name = "TB_MixItUpWebhook";
-			TB_MixItUpWebhook.Size = new System.Drawing.Size(492, 23);
-			TB_MixItUpWebhook.TabIndex = 7;
-			TB_MixItUpWebhook.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// label1
-			// 
-			label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			label1.AutoSize = true;
-			label1.Location = new System.Drawing.Point(4, 11);
-			label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(140, 15);
-			label1.TabIndex = 4;
-			label1.Text = "MixItUp Webook URL*";
-			label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
 			// ConnectionSettingsForm
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -433,8 +390,6 @@
 			tableLayoutPanel8.ResumeLayout(false);
 			tableLayoutPanel8.PerformLayout();
 			tableLayoutPanel2.ResumeLayout(false);
-			tableLayoutPanel4.ResumeLayout(false);
-			tableLayoutPanel4.PerformLayout();
 			ResumeLayout(false);
 
 		}
@@ -463,8 +418,5 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.NumericUpDown Num_PortUsed;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox TB_MixItUpWebhook;
 	}
 }
