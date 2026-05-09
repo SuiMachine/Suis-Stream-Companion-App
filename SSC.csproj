@@ -71,6 +71,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Forms\VideoRewardsDBEditor\EditDialogues\" />
     <Folder Include="OBS_Controls\" />
   </ItemGroup>
 </Project>

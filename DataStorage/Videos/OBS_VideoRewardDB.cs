@@ -97,7 +97,22 @@ namespace SSC.DataStorage.Videos
 
 			if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
 			{
+				var mainFormOBS = MainForm.Instance.OBS;
+				if(mainFormOBS == null || !mainFormOBS.IsConnected)
+				{
+					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+					return;
+				}
 
+/*				mainFormOBS.SetInputSettings(new InputSettings()
+				{
+					InputKind = "ffmpeg_source",
+					InputName = StorableData.OBS_MultimediaSource,
+					Settings = new Newtonsoft.Json.Linq.JObject()
+					{
+						{ "file", "" }
+					}
+				});*/
 			}
 			else
 				MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);

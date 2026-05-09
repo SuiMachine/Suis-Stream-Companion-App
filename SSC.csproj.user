@@ -11,6 +11,9 @@
     <Compile Update="DialogBoxes\ProgressDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\VideoRewardsDBEditor\Add_Edit_Video.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\VideoRewardsDBEditor\VideoDBEditor.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -9,6 +9,8 @@ namespace SSC.DataStorage.Videos
 		[XmlAttribute]
 		public string RewardName = "";
 		[XmlAttribute]
+		public string Description = "";
+		[XmlAttribute]
 		public int Cooldown = 0;
 		[XmlArrayItem]
 		public string[] Tags = new string[0];

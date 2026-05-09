@@ -205,6 +205,9 @@ namespace SSC
 
 		private void OBS_MediaInputPlaybackEnded(object sender, OBSWebsocketDotNet.Types.Events.MediaInputPlaybackEndedEventArgs e)
 		{
+			if (e.InputName == VideoDB.StorableData.OBS_MultimediaSource)
+			{
+			}
 			this.ThreadSafeAddPreviewText("Media stopped playing", LineType.WebSocket);
 		}
 

@@ -29,8 +29,9 @@
 		private void InitializeComponent()
 		{
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			treeView1 = new System.Windows.Forms.TreeView();
+			videosTreeView = new System.Windows.Forms.TreeView();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			B_CreateReward = new System.Windows.Forms.Button();
 			B_Sort = new System.Windows.Forms.Button();
 			B_Remove = new System.Windows.Forms.Button();
 			B_Add = new System.Windows.Forms.Button();
@@ -53,7 +54,7 @@
 			tableLayoutPanel1.ColumnCount = 1;
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel1.Controls.Add(treeView1, 0, 0);
+			tableLayoutPanel1.Controls.Add(videosTreeView, 0, 0);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
 			tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 0, 1);
 			tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -66,13 +67,13 @@
 			tableLayoutPanel1.Size = new System.Drawing.Size(800, 450);
 			tableLayoutPanel1.TabIndex = 0;
 			// 
-			// treeView1
+			// videosTreeView
 			// 
-			treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			treeView1.Location = new System.Drawing.Point(3, 3);
-			treeView1.Name = "treeView1";
-			treeView1.Size = new System.Drawing.Size(794, 360);
-			treeView1.TabIndex = 0;
+			videosTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			videosTreeView.Location = new System.Drawing.Point(3, 3);
+			videosTreeView.Name = "videosTreeView";
+			videosTreeView.Size = new System.Drawing.Size(794, 360);
+			videosTreeView.TabIndex = 0;
 			// 
 			// tableLayoutPanel2
 			// 
@@ -84,6 +85,7 @@
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+			tableLayoutPanel2.Controls.Add(B_CreateReward, 3, 0);
 			tableLayoutPanel2.Controls.Add(B_Sort, 2, 0);
 			tableLayoutPanel2.Controls.Add(B_Remove, 1, 0);
 			tableLayoutPanel2.Controls.Add(B_Add, 0, 0);
@@ -97,6 +99,17 @@
 			tableLayoutPanel2.Size = new System.Drawing.Size(794, 36);
 			tableLayoutPanel2.TabIndex = 1;
 			// 
+			// B_CreateReward
+			// 
+			B_CreateReward.Anchor = System.Windows.Forms.AnchorStyles.None;
+			B_CreateReward.Location = new System.Drawing.Point(282, 6);
+			B_CreateReward.Name = "B_CreateReward";
+			B_CreateReward.Size = new System.Drawing.Size(109, 23);
+			B_CreateReward.TabIndex = 5;
+			B_CreateReward.Text = "Create a reward";
+			B_CreateReward.UseVisualStyleBackColor = true;
+			B_CreateReward.Click += B_CreateReward_Click;
+			// 
 			// B_Sort
 			// 
 			B_Sort.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -106,6 +119,7 @@
 			B_Sort.TabIndex = 2;
 			B_Sort.Text = "Sort";
 			B_Sort.UseVisualStyleBackColor = true;
+			B_Sort.Click += B_Sort_Click;
 			// 
 			// B_Remove
 			// 
@@ -116,6 +130,7 @@
 			B_Remove.TabIndex = 1;
 			B_Remove.Text = "Remove";
 			B_Remove.UseVisualStyleBackColor = true;
+			B_Remove.Click += B_Remove_Click;
 			// 
 			// B_Add
 			// 
@@ -126,6 +141,7 @@
 			B_Add.TabIndex = 0;
 			B_Add.Text = "Add";
 			B_Add.UseVisualStyleBackColor = true;
+			B_Add.Click += B_Add_Click;
 			// 
 			// B_OK
 			// 
@@ -241,7 +257,7 @@
 			ClientSize = new System.Drawing.Size(800, 450);
 			Controls.Add(tableLayoutPanel1);
 			Name = "VideoDBEditor";
-			Text = "VideoDBEditor";
+			Text = "Video Database Editor";
 			FormClosed += VideoDBEditor_FormClosed;
 			Load += VideoDBEditor_Load;
 			tableLayoutPanel1.ResumeLayout(false);
@@ -254,7 +270,7 @@
 		#endregion
 
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.TreeView treeView1;
+		private System.Windows.Forms.TreeView videosTreeView;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.Button B_Remove;
 		private System.Windows.Forms.Button B_Add;
@@ -268,5 +284,6 @@
 		private System.Windows.Forms.ComboBox CB_MediaPlayer;
 		private System.Windows.Forms.Button B_ConnectToObs;
 		private System.Windows.Forms.Button B_Refresh;
+		private System.Windows.Forms.Button B_CreateReward;
 	}
 }

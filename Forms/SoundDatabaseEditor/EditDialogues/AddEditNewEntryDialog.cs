@@ -12,7 +12,6 @@ namespace SSC.SoundDatabaseEditor.EditDialogues
 	public partial class AddEditNewEntryDialog : Form
 	{
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundEntry ReturnSound { get; set; }
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public static AddEditNewEntryDialog Instance { get; private set; }
 
 		public AddEditNewEntryDialog()
 		{
@@ -36,17 +35,11 @@ namespace SSC.SoundDatabaseEditor.EditDialogues
 			this.Num_Volume.Value = (int)Math.Round(Entry.Volume * 100);
 			this.RB_Tags.Lines = Entry.Tags;
 			Verify();
-			Instance = this;
 		}
 
 		private void AddEditNewEntryDialog_Load(object sender, EventArgs e)
 		{
 			Verify();
-		}
-
-		private void AddEditNewEntryDialog_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			Instance = null;
 		}
 
 		private void B_OK_Click(object sender, EventArgs e)
