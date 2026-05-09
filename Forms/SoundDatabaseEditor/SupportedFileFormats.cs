@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace SSC.SoundDatabaseEditor
+namespace SSC.Forms.SoundDatabaseEditor
 {
 	public static class SupportedFileFormats
 	{

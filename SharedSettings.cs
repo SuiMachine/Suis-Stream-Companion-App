@@ -33,8 +33,11 @@ namespace SSC
 		[XmlElement] public EncryptedString BotAuth { get; set; }
 		[XmlElement] public bool RunWebSocketsServer { get; set; }
 		[XmlElement] public int WebSocketsServerPort { get; set; }
-		[XmlElement] public string UniversalRewardID { get; set; }
+		[XmlElement] public string UniversalSoundRewardID { get; set; }
 		[XmlElement] public string LastNotesFile { get; set; }
+		[XmlElement] public string OBS_Address { get; set; }
+		[XmlElement] public EncryptedString OBS_Password { get; set; }
+
 		#endregion
 
 		public PrivateSettings()
@@ -49,8 +52,10 @@ namespace SSC
 			BotAuth = "";
 			RunWebSocketsServer = false;
 			WebSocketsServerPort = 8005;
-			UniversalRewardID = "";
+			UniversalSoundRewardID = "";
 			LastNotesFile = "";
+			OBS_Address = "ws://127.0.0.1:4455";
+			OBS_Password = "";
 		}
 
 		#region Load/Save

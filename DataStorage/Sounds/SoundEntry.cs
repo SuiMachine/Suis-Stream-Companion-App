@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace SSC.SoundStorage
+namespace SSC.DataStorage
 {
 	[Serializable]
 	[DebuggerDisplay("SoundEntry {RewardName}")]
-	public class SoundEntry
+	public class SoundEntry : ICloneable
 	{
 		[XmlAttribute]
 		public string RewardName;
@@ -40,7 +40,7 @@ namespace SSC.SoundStorage
 
 		public SoundEntry(string Command, string Description, string RewardID, string[] Files, string[] Tags, float Volume, int AmountOfPoints, int Cooldown)
 		{
-			this.RewardName = Command;
+			RewardName = Command;
 			this.Description = Description;
 			this.RewardID = RewardID;
 			this.Files = Files;
@@ -80,17 +80,30 @@ namespace SSC.SoundStorage
 			}
 		}
 
-		public bool GetIsProperEntry() { return (RewardName != null && RewardName != "") && (Files != null && Files.Length > 0); }
+		public bool GetIsProperEntry() { return RewardName != null && RewardName != "" && Files != null && Files.Length > 0; }
 
-		public SoundEntry CreateCopy() => new SoundEntry()
+		public SoundEntry CreateCopy()
 		{
-			RewardID = RewardID,
-			RewardName = RewardName,
-			AmountOfPoints = AmountOfPoints,
-			Cooldown = Cooldown,
-			Description = Description,
-			Files = Files,
-			Volume = Volume,
-		};
+			var obj = new SoundEntry();
+			obj.RewardID = RewardID;
+			obj.RewardName = RewardName;
+			obj.AmountOfPoints = AmountOfPoints;
+			obj.Cooldown = Cooldown;
+			obj.Description = Description;
+			obj.Files = new string[Files.Length];
+			for (int i = 0; i < Files.Length; i++)
+			{
+				obj.Files[i] = Files[i];
+			}
+			obj.Volume = Volume;
+			obj.Tags = new string[Tags.Length];
+			for (int i = 0; i < Tags.Length; i++)
+			{
+				obj.Tags[i] = Tags[i];
+			}
+			return obj;
+		}
+
+		public object Clone() => CreateCopy();
 	}
 }

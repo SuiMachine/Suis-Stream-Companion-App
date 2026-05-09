@@ -1,4 +1,5 @@
-﻿using SSC.Structs;
+﻿using SSC.DataStorage;
+using SSC.Structs;
 using SuiBot_TwitchSocket;
 using SuiBot_TwitchSocket.API;
 using SuiBot_TwitchSocket.API.EventSub;

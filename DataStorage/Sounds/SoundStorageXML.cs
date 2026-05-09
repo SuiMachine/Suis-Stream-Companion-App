@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SSC.DataStorage;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
