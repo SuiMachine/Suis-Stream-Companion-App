@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			components = new System.ComponentModel.Container();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			B_OK = new System.Windows.Forms.Button();
@@ -39,6 +40,9 @@
 			tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			label2 = new System.Windows.Forms.Label();
 			ListBox_Files = new System.Windows.Forms.ListBox();
+			contextMenu_Files = new System.Windows.Forms.ContextMenuStrip(components);
+			addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
 			label3 = new System.Windows.Forms.Label();
 			RB_Tags = new System.Windows.Forms.RichTextBox();
@@ -50,6 +54,7 @@
 			tableLayoutPanel3.SuspendLayout();
 			tableLayoutPanel4.SuspendLayout();
 			tableLayoutPanel5.SuspendLayout();
+			contextMenu_Files.SuspendLayout();
 			tableLayoutPanel6.SuspendLayout();
 			tableLayoutPanel7.SuspendLayout();
 			SuspendLayout();
@@ -157,6 +162,7 @@
 			TB_Name.Name = "TB_Name";
 			TB_Name.Size = new System.Drawing.Size(723, 23);
 			TB_Name.TabIndex = 1;
+			TB_Name.TextChanged += TB_Name_TextChanged;
 			// 
 			// tableLayoutPanel5
 			// 
@@ -184,13 +190,38 @@
 			// 
 			// ListBox_Files
 			// 
+			ListBox_Files.AllowDrop = true;
+			ListBox_Files.ContextMenuStrip = contextMenu_Files;
 			ListBox_Files.Dock = System.Windows.Forms.DockStyle.Fill;
 			ListBox_Files.FormattingEnabled = true;
 			ListBox_Files.ItemHeight = 15;
 			ListBox_Files.Location = new System.Drawing.Point(3, 24);
 			ListBox_Files.Name = "ListBox_Files";
+			ListBox_Files.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			ListBox_Files.Size = new System.Drawing.Size(782, 110);
 			ListBox_Files.TabIndex = 1;
+			ListBox_Files.DragDrop += ListBox_Files_DragDrop;
+			ListBox_Files.DragEnter += ListBox_Files_DragEnter;
+			// 
+			// contextMenu_Files
+			// 
+			contextMenu_Files.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addToolStripMenuItem, removeToolStripMenuItem });
+			contextMenu_Files.Name = "contextMenuStrip1";
+			contextMenu_Files.Size = new System.Drawing.Size(118, 48);
+			// 
+			// addToolStripMenuItem
+			// 
+			addToolStripMenuItem.Name = "addToolStripMenuItem";
+			addToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			addToolStripMenuItem.Text = "Add";
+			addToolStripMenuItem.Click += AddToolStripMenuItem_Click;
+			// 
+			// removeToolStripMenuItem
+			// 
+			removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+			removeToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			removeToolStripMenuItem.Text = "Remove";
+			removeToolStripMenuItem.Click += RemoveToolStripMenuItem_Click;
 			// 
 			// tableLayoutPanel6
 			// 
@@ -225,6 +256,7 @@
 			RB_Tags.Size = new System.Drawing.Size(782, 111);
 			RB_Tags.TabIndex = 1;
 			RB_Tags.Text = "";
+			RB_Tags.TextChanged += RB_Tags_TextChanged;
 			// 
 			// tableLayoutPanel7
 			// 
@@ -258,6 +290,7 @@
 			RB_Description.Size = new System.Drawing.Size(782, 45);
 			RB_Description.TabIndex = 1;
 			RB_Description.Text = "";
+			RB_Description.TextChanged += RB_Description_TextChanged;
 			// 
 			// Add_Edit_Video
 			// 
@@ -266,7 +299,7 @@
 			ClientSize = new System.Drawing.Size(800, 450);
 			Controls.Add(tableLayoutPanel1);
 			Name = "Add_Edit_Video";
-			Text = "Add_Edit_Video";
+			Text = "Add video";
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel2.ResumeLayout(false);
 			tableLayoutPanel3.ResumeLayout(false);
@@ -274,6 +307,7 @@
 			tableLayoutPanel4.PerformLayout();
 			tableLayoutPanel5.ResumeLayout(false);
 			tableLayoutPanel5.PerformLayout();
+			contextMenu_Files.ResumeLayout(false);
 			tableLayoutPanel6.ResumeLayout(false);
 			tableLayoutPanel6.PerformLayout();
 			tableLayoutPanel7.ResumeLayout(false);
@@ -300,5 +334,8 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.RichTextBox RB_Description;
+		private System.Windows.Forms.ContextMenuStrip contextMenu_Files;
+		private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
 	}
 }

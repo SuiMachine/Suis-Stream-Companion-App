@@ -1,10 +1,13 @@
 ﻿using OBSWebsocketDotNet.Types;
+using Raffinert.FuzzySharp;
 using SSC.Chat;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace SSC.DataStorage.Videos
 {
@@ -25,6 +28,7 @@ namespace SSC.DataStorage.Videos
 		private Dictionary<string, DateTime> UserDB;
 		private int m_Delay;
 		private readonly string m_VideoFilesDB_File;
+		public bool VideoIsPlaying { get; private set; } = false;
 
 		public OBS_VideoRewardDB()
 		{
@@ -33,6 +37,7 @@ namespace SSC.DataStorage.Videos
 			m_Delay = PrivateSettings.GetInstance().Delay;
 			m_VideoFilesDB_File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "VideoRewards.xml");
 			StorableData = LoadFromXml();
+			RebuildDictionary();
 		}
 
 		#region Storage
@@ -72,6 +77,23 @@ namespace SSC.DataStorage.Videos
 		public void Register()
 		{
 			MainForm.Instance.TwitchEvents.OnChannelPointsRedeem += PlayVideoIfExists;
+			MainForm.Instance.OBSEvents.OnMediaSourceStoppedPlaying += HandleOnMediaSourceStoppedPlaying;
+
+		}
+
+		public void HandleOnMediaSourceStoppedPlaying(string sourceName)
+		{
+			if (sourceName == StorableData.OBS_MultimediaSource)
+			{
+				var mainFormOBS = MainForm.Instance.OBS;
+
+				var obsInput = mainFormOBS.GetSceneItemList(StorableData.OBS_Scene).Where(x => x.SourceType == SceneItemSourceType.OBS_SOURCE_TYPE_INPUT && x.SourceKind == "ffmpeg_source" && x.SourceName == StorableData.OBS_MultimediaSource).FirstOrDefault();
+				if (obsInput != null)
+				{
+					mainFormOBS.SetSceneItemEnabled(StorableData.OBS_Scene, obsInput.ItemId, false);
+				}
+				VideoIsPlaying = false;
+			}
 		}
 
 		public void PlayVideoIfExists(ES_ChannelPointRedeemRequest redeem)
@@ -83,8 +105,15 @@ namespace SSC.DataStorage.Videos
 			if (string.IsNullOrEmpty(StorableData.TwitchRewardID) || StorableData.TwitchRewardID != redeem.reward.id)
 				return;
 
-			if (ChatBot.AreRedeemsPaused)
+			if (ChatBot.AreRedeemsPaused || VideoIsPlaying)
 			{
+				MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+				return;
+			}
+
+			if (string.IsNullOrEmpty(StorableData.OBS_Scene) || string.IsNullOrEmpty(StorableData.OBS_MultimediaSource))
+			{
+				MainForm.Instance.ThreadSafeAddPreviewText("Multimedia source not defined, please configure it!", LineType.WebSocket);
 				MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
 				return;
 			}
@@ -98,21 +127,86 @@ namespace SSC.DataStorage.Videos
 			if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
 			{
 				var mainFormOBS = MainForm.Instance.OBS;
-				if(mainFormOBS == null || !mainFormOBS.IsConnected)
+				if (mainFormOBS == null || !mainFormOBS.IsConnected)
 				{
 					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
 					return;
 				}
 
-/*				mainFormOBS.SetInputSettings(new InputSettings()
+				var obsInput = mainFormOBS.GetSceneItemList(StorableData.OBS_Scene).Where(x => x.SourceType == SceneItemSourceType.OBS_SOURCE_TYPE_INPUT && x.SourceKind == "ffmpeg_source" && x.SourceName == StorableData.OBS_MultimediaSource).FirstOrDefault();
+				if (obsInput == null)
+				{
+					MainForm.Instance.ThreadSafeAddPreviewText("Multimedia source doesn't seem to exist in the specified scene! Cancelling...", LineType.WebSocket);
+					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+					return;
+				}
+
+				/*				MediaInputStatus status = mainFormOBS.GetMediaInputStatus(obsInput.SourceName);
+								if (status == null)
+								{
+									MainForm.Instance.ThreadSafeAddPreviewText("Can't get media input status! Cancelling...", LineType.WebSocket);
+									MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+									return;
+								}
+
+								switch (status.State)
+								{
+									case MediaState.OBS_MEDIA_STATE_BUFFERING:
+									case MediaState.OBS_MEDIA_STATE_PLAYING:
+									case MediaState.OBS_MEDIA_STATE_OPENING:
+										MainForm.Instance.ThreadSafeAddPreviewText("Current state is busy. Cancelling...", LineType.WebSocket);
+										MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+										return;
+								}*/
+
+
+				int closestMatchRatio = 0;
+				OBS_VideoReward closestMatch = null;
+				foreach (var reward in VideoRewardsDictionary)
+				{
+					int ratio = Fuzz.Ratio(reward.Key, redeem.user_input);
+					if (ratio > closestMatchRatio)
+					{
+						closestMatch = reward.Value;
+						closestMatchRatio = ratio;
+					}
+				}
+
+				if (closestMatch == null)
+				{
+					MainForm.Instance.ThreadSafeAddPreviewText("Closest video match was 0! Cancelling...", LineType.WebSocket);
+					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+					return;
+				}
+
+				var file = closestMatch.GetFile(m_RNG);
+				if (!File.Exists(file))
+				{
+					MainForm.Instance.ThreadSafeAddPreviewText($"File {file} doesn't exist! Cancelling...", LineType.WebSocket);
+					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+					return;
+				}
+
+				//var settings = mainFormOBS.GetInputSettings(StorableData.OBS_MultimediaSource);
+
+				var localFilePath = file.Replace('\\', '/');
+				mainFormOBS.SetInputSettings(new InputSettings()
 				{
 					InputKind = "ffmpeg_source",
 					InputName = StorableData.OBS_MultimediaSource,
 					Settings = new Newtonsoft.Json.Linq.JObject()
 					{
-						{ "file", "" }
+						{ "file", localFilePath },
+						{ "local_file", localFilePath  },
+						{ "looping", false },
+						{ "close_when_inactive", true },
+						{ "restart_on_activate", true }
 					}
-				});*/
+				});
+
+				mainFormOBS.SetSceneItemEnabled(StorableData.OBS_Scene, obsInput.ItemId, true);
+				VideoIsPlaying = true;
+				MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.FULFILLED);
 			}
 			else
 				MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
@@ -139,5 +233,10 @@ namespace SSC.DataStorage.Videos
 			}
 		}
 
+		internal void Close()
+		{
+			MainForm.Instance.TwitchEvents.OnChannelPointsRedeem -= PlayVideoIfExists;
+			MainForm.Instance.OBSEvents.OnMediaSourceStoppedPlaying -= HandleOnMediaSourceStoppedPlaying;
+		}
 	}
 }

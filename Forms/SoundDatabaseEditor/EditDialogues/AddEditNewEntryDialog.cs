@@ -68,8 +68,8 @@ namespace SSC.SoundDatabaseEditor.EditDialogues
 		{
 			OpenFileDialog fileDial = new OpenFileDialog
 			{
-				Filter = SupportedFileFormats.Filter,
-				FilterIndex = SupportedFileFormats.LastIndex,
+				Filter = SupportedAudioFileFormats.Filter,
+				FilterIndex = SupportedAudioFileFormats.LastIndex,
 				Multiselect = true
 			};
 
@@ -134,7 +134,7 @@ namespace SSC.SoundDatabaseEditor.EditDialogues
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
 			{
 				string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-				if (files.All(x => SupportedFileFormats.IsAcceptableAudioFormat(x)))
+				if (files.All(x => SupportedAudioFileFormats.IsAcceptableAudioFormat(x)))
 					e.Effect = DragDropEffects.Copy;
 				else
 					e.Effect = DragDropEffects.None;

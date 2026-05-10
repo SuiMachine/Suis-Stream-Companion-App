@@ -226,8 +226,10 @@ namespace SSC.Forms.VideoRewardsDBEditor
 							MessageBox.Show("A reward was missing and was created - make sure this is OK", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						else
 							MessageBox.Show("Created a reward!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+						MainForm.Instance.VideoDB.StorableData.TwitchRewardID = result.id;
+						MainForm.Instance.VideoDB.SaveDB();
 						rewards.StorableData.TwitchRewardID = result.id;
-						rewards.SaveDB();
 					}
 				}
 

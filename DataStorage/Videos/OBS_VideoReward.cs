@@ -46,6 +46,7 @@ namespace SSC.DataStorage.Videos
 			}
 			obj.RewardName = RewardName;
 			obj.Cooldown = Cooldown;
+			obj.Description = Description;
 
 			return obj;
 		}

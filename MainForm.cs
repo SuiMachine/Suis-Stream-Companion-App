@@ -34,7 +34,8 @@ namespace SSC
 		public delegate void SetVolumeSlider(int value);       //used to safely change the slider position
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public ChatBot TwitchBot { get; private set; }
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridge TwitchEvents { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridgeTwitch TwitchEvents { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridgeOBS OBSEvents { get; private set; }
 		private char PrefixCharacter = '-';
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundDB SoundDB { get; private set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public DataStorage.Videos.OBS_VideoRewardDB VideoDB { get; private set; }
@@ -45,7 +46,8 @@ namespace SSC
 		public MainForm()
 		{
 			Instance = this;
-			TwitchEvents = new EventBridge();
+			TwitchEvents = new EventBridgeTwitch();
+			OBSEvents = new EventBridgeOBS();
 			InitializeComponent();
 		}
 
@@ -74,7 +76,7 @@ namespace SSC
 
 		private void StartBot()
 		{
-			TwitchBot = new ChatBot(SoundDB, PrefixCharacter);
+			TwitchBot = new ChatBot(PrefixCharacter);
 			TwitchBot.Connect();
 			ConnectOBS();
 		}
@@ -88,24 +90,18 @@ namespace SSC
 			if (OBS == null)
 				OBS = new OBSWebsocketDotNet.OBSWebsocket();
 
-			OBS.Connected += OBS_Connected;
-			OBS.Disconnected += OBS_Disconnected;
-			OBS.ExitStarted += OBS_ExitStarted;
-			OBS.MediaInputPlaybackEnded += OBS_MediaInputPlaybackEnded;
-			System.Threading.Tasks.Task.Run(() =>
+			OBSEvents.RegisterEvents(OBS);
+			try
 			{
-				try
-				{
-					OBS.ConnectAsync(settings.OBS_Address, settings.OBS_Password);
-				}
-				catch (Exception ex)
-				{
-					if (displayErrors)
-						MessageBox.Show("Failed to connect to OBS: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					Logger.AddLine("Failed to connect: " + ex.Message);
-					return;
-				}
-			});
+				OBS.ConnectAsync(settings.OBS_Address, settings.OBS_Password);
+			}
+			catch (Exception ex)
+			{
+				if (displayErrors)
+					MessageBox.Show("Failed to connect to OBS: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Logger.AddLine("Failed to connect: " + ex.Message);
+				return;
+			}
 		}
 
 		#region ThreadSafeFunctions
@@ -184,34 +180,6 @@ namespace SSC
 		}
 		#endregion
 
-		#region OBS_EventHandlers
-		private void OBS_Connected(object sender, EventArgs e)
-		{
-			this.ThreadSafeAddPreviewText("OBS socket connected!", LineType.WebSocket);
-			Logger.AddLine("OBS socket connected!");
-		}
-
-		private void OBS_Disconnected(object sender, ObsDisconnectionInfo e)
-		{
-			this.ThreadSafeAddPreviewText("OBS socket disconnected!", LineType.WebSocket);
-			Logger.AddLine("OBS socket disconnected!");
-		}
-
-		private void OBS_ExitStarted(object sender, EventArgs e)
-		{
-			this.ThreadSafeAddPreviewText("OBS closed?!", LineType.WebSocket);
-			Logger.AddLine("OBS closed?!");
-		}
-
-		private void OBS_MediaInputPlaybackEnded(object sender, OBSWebsocketDotNet.Types.Events.MediaInputPlaybackEndedEventArgs e)
-		{
-			if (e.InputName == VideoDB.StorableData.OBS_MultimediaSource)
-			{
-			}
-			this.ThreadSafeAddPreviewText("Media stopped playing", LineType.WebSocket);
-		}
-
-		#endregion
 		#region EventHandlers
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -424,6 +392,7 @@ namespace SSC
 				VideoDB.StorableData.OBS_MultimediaSource = form.SelectedMedia;
 				VideoDB.StorableData.VideoRewards = form.RewardsCopy;
 				VideoDB.SaveDB();
+				VideoDB.RebuildDictionary();
 			}
 		}
 	}
