@@ -74,6 +74,8 @@
 			videosTreeView.Name = "videosTreeView";
 			videosTreeView.Size = new System.Drawing.Size(794, 360);
 			videosTreeView.TabIndex = 0;
+			videosTreeView.DoubleClick += VideosTreeView_DoubleClick;
+			videosTreeView.KeyDown += VideosTreeView_KeyDown;
 			// 
 			// tableLayoutPanel2
 			// 

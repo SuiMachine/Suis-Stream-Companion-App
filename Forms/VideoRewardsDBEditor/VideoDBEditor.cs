@@ -271,6 +271,42 @@ namespace SSC.Forms.VideoRewardsDBEditor
 				videosTreeView.Nodes.Add(videoReward.ToTreeNode());
 			}
 		}
+
+		private void VideosTreeView_DoubleClick(object sender, EventArgs e)
+		{
+			EditEntry();
+		}
+
+		private void VideosTreeView_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete)
+			{
+				if (videosTreeView.SelectedNode != null)
+				{
+					RemoveEntry();
+				}
+			}
+			else if (e.KeyCode == Keys.Enter)
+			{
+				if (videosTreeView.SelectedNode != null)
+				{
+					EditEntry();
+				}
+			}
+		}
+
+		private void EditEntry()
+		{
+			var id = videosTreeView.SelectedNode.Index;
+			var rewardToEdit = RewardsCopy[id];
+			var form = new Add_Edit_Video(rewardToEdit);
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				RewardsCopy[id] = form.ReturnReward;
+				videosTreeView.Nodes[id].Remove();
+				videosTreeView.Nodes.Insert(id, form.ReturnReward.ToTreeNode());
+			}
+		}
 	}
 
 	static class EditorExtensions

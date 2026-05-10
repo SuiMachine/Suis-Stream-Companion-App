@@ -23,6 +23,11 @@ namespace SSC.Forms.VideoRewardsDBEditor
 			InitializeComponent();
 			this.Text = "Entry editing";
 			ReturnReward = rewardToEdit.CreateCopy();
+			TB_Name.Text = ReturnReward.RewardName;
+			RB_Description.Text = ReturnReward.Description;
+			RB_Tags.Lines = ReturnReward.Tags;
+			ListBox_Files.Items.AddRange(ReturnReward.Files);
+
 		}
 
 		private void Verify()
