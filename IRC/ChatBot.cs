@@ -1,4 +1,5 @@
-﻿using SSC.Structs;
+﻿using SSC.DataStorage;
+using SSC.Structs;
 using SuiBot_TwitchSocket;
 using SuiBot_TwitchSocket.API;
 using SuiBot_TwitchSocket.API.EventSub;
@@ -34,7 +35,7 @@ namespace SSC.Chat
 
 		public SoundDB SndDB { get; private set; }
 
-		public ChatBot(SoundDB soundDb, char PrefixChar)
+		public ChatBot(char PrefixChar)
 		{
 			var privateSettings = PrivateSettings.GetInstance();
 
@@ -62,8 +63,10 @@ namespace SSC.Chat
 			this.StatusUpdateTimer = new System.Timers.Timer(5 * 1000 * 60) { AutoReset = true };
 			this.StatusUpdateTimer.Elapsed += StatusUpdateTimer_Elapsed;
 			this.m_PrefixChar = PrefixChar;
-			SndDB = soundDb;
+
+			SndDB = MainForm.Instance.SoundDB;
 			SndDB.Register();
+			MainForm.Instance.VideoDB.Register();
 
 			this?.HelixAPI_Bot.GetStatus(ChannelInstance);
 		}
@@ -84,6 +87,7 @@ namespace SSC.Chat
 		public void StopBot()
 		{
 			SndDB.Close();
+			MainForm.Instance.VideoDB?.Close();
 			PrivateSettings.GetInstance().SaveSettings();
 			ChannelInstance.SaveIgnoredList();
 

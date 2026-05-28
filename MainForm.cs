@@ -7,6 +7,9 @@ using SSC.AI_Integration;
 using System.IO;
 using SSC.OtherForms;
 using Whisper.net;
+using OBSWebsocketDotNet.Communication;
+using SSC.DataStorage;
+using SSC.Forms.VideoRewardsDBEditor;
 
 namespace SSC
 {
@@ -31,15 +34,20 @@ namespace SSC
 		public delegate void SetVolumeSlider(int value);       //used to safely change the slider position
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public ChatBot TwitchBot { get; private set; }
-		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridge TwitchEvents { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridgeTwitch TwitchEvents { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public EventBridgeOBS OBSEvents { get; private set; }
 		private char PrefixCharacter = '-';
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundDB SoundDB { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public DataStorage.Videos.OBS_VideoRewardDB VideoDB { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public OBSWebsocketDotNet.OBSWebsocket OBS { get; private set; }
+
 		WebSocketsListener webSockets;
 
 		public MainForm()
 		{
 			Instance = this;
-			TwitchEvents = new EventBridge();
+			TwitchEvents = new EventBridgeTwitch();
+			OBSEvents = new EventBridgeOBS();
 			InitializeComponent();
 		}
 
@@ -53,6 +61,7 @@ namespace SSC
 			trackBar_Volume.Value = valrr;
 			L_Volume.Text = trackBar_Volume.Value.ToString() + "%";
 			SoundDB = new SoundDB();
+			VideoDB = new DataStorage.Videos.OBS_VideoRewardDB();
 
 			if (settings.Autostart)
 			{
@@ -67,8 +76,32 @@ namespace SSC
 
 		private void StartBot()
 		{
-			TwitchBot = new ChatBot(SoundDB, PrefixCharacter);
+			TwitchBot = new ChatBot(PrefixCharacter);
 			TwitchBot.Connect();
+			ConnectOBS();
+		}
+
+		public void ConnectOBS(bool displayErrors = false)
+		{
+			var settings = PrivateSettings.GetInstance();
+			if (string.IsNullOrEmpty(settings.OBS_Address) || string.IsNullOrEmpty(settings.OBS_Password))
+				return;
+
+			if (OBS == null)
+				OBS = new OBSWebsocketDotNet.OBSWebsocket();
+
+			OBSEvents.RegisterEvents(OBS);
+			try
+			{
+				OBS.ConnectAsync(settings.OBS_Address, settings.OBS_Password);
+			}
+			catch (Exception ex)
+			{
+				if (displayErrors)
+					MessageBox.Show("Failed to connect to OBS: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Logger.AddLine("Failed to connect: " + ex.Message);
+				return;
+			}
 		}
 
 		#region ThreadSafeFunctions
@@ -219,6 +252,8 @@ namespace SSC
 				settings.Debug_mode = form.DebugMode;
 				settings.WebSocketsServerPort = form.WebsocketPort;
 				settings.RunWebSocketsServer = form.RunWebsocket;
+				settings.OBS_Address = form.OBS_Address;
+				settings.OBS_Password = form.OBS_Password;
 				settings.SaveSettings();
 				ReloadBot();
 			}
@@ -345,6 +380,20 @@ namespace SSC
 
 		internal void ProcessSpeechInput(SegmentData segment)
 		{
+		}
+
+		private void videoPlayerOBSToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var form = new VideoDBEditor(VideoDB);
+			var result = form.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				VideoDB.StorableData.OBS_Scene = form.SelectedScene;
+				VideoDB.StorableData.OBS_MultimediaSource = form.SelectedMedia;
+				VideoDB.StorableData.VideoRewards = form.RewardsCopy;
+				VideoDB.SaveDB();
+				VideoDB.RebuildDictionary();
+			}
 		}
 	}
 }

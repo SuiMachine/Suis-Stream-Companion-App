@@ -1,9 +1,7 @@
 ﻿using NAudio.Wave;
 using Raffinert.FuzzySharp;
 using SSC.Chat;
-using SSC.Extensions;
 using SSC.SoundStorage;
-using SuiBot_TwitchSocket.API.EventSub;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +10,7 @@ using System.Linq;
 using System.Text;
 using static SuiBot_TwitchSocket.API.EventSub.ES_ChannelPoints;
 
-namespace SSC
+namespace SSC.DataStorage
 {
 	public class SoundDB
 	{
@@ -31,8 +29,8 @@ namespace SSC
 			UserDB = new Dictionary<string, DateTime>();
 			m_SoundPlayerStack = new List<NSoundPlayer>();
 			m_RNG = new Random();
-			this.m_Delay = PrivateSettings.GetInstance().Delay;
-			this.m_SoundBaseFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "Sounds.xml");
+			m_Delay = PrivateSettings.GetInstance().Delay;
+			m_SoundBaseFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "Sounds.xml");
 			SoundList = SoundStorageXML.LoadSoundBase(m_SoundBaseFile);
 			RebuildDictionary();
 		}
@@ -99,11 +97,11 @@ namespace SSC
 
 		public void SetDelay(int delay)
 		{
-			this.m_Delay = delay;
+			m_Delay = delay;
 			PrivateSettings.GetInstance().Delay = delay;
 		}
 
-		public void PlaySoundIfExists(ES_ChannelPoints.ES_ChannelPointRedeemRequest redeem)
+		public void PlaySoundIfExists(ES_ChannelPointRedeemRequest redeem)
 		{
 			if (redeem.state != RedemptionStates.UNFULFILLED)
 				return;
@@ -134,7 +132,7 @@ namespace SSC
 				UserDB.Add(redeem.user_id, DateTime.MinValue);
 			}
 
-			if (!string.IsNullOrEmpty(PrivateSettings.GetInstance().UniversalRewardID) && redeem.reward.id == PrivateSettings.GetInstance().UniversalRewardID)
+			if (!string.IsNullOrEmpty(PrivateSettings.GetInstance().UniversalSoundRewardID) && redeem.reward.id == PrivateSettings.GetInstance().UniversalSoundRewardID)
 			{
 				if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
 				{

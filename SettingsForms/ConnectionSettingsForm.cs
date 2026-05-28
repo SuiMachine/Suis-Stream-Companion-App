@@ -54,6 +54,8 @@ namespace SSC.SettingsForms
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool DebugMode { get; set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public int WebsocketPort { get; set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public bool RunWebsocket { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string OBS_Address { get; set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public string OBS_Password { get; set; }
 
 
 		public ConnectionSettingsForm(MainForm _parent)
@@ -69,6 +71,8 @@ namespace SSC.SettingsForms
 			this.CB_DebugMode.DataBindings.Add("Checked", this, nameof(DebugMode), false, DataSourceUpdateMode.OnPropertyChanged);
 			this.Num_PortUsed.DataBindings.Add("Value", this, nameof(WebsocketPort), false, DataSourceUpdateMode.OnPropertyChanged);
 			this.CB_Websocket.DataBindings.Add("Checked", this, nameof(RunWebsocket), false, DataSourceUpdateMode.OnPropertyChanged);
+			this.TB_OBS_Address.DataBindings.Add("Text", this, nameof(OBS_Address), false, DataSourceUpdateMode.OnPropertyChanged);
+			this.TB_OBS_Password.DataBindings.Add("Text", this, nameof(OBS_Password), false, DataSourceUpdateMode.OnPropertyChanged);
 
 			this.UserAuth = settings.UserAuth;
 			this.BotAuth = settings.BotAuth;
@@ -76,6 +80,9 @@ namespace SSC.SettingsForms
 			this.DebugMode = settings.Debug_mode;
 			this.WebsocketPort = settings.WebSocketsServerPort;
 			this.RunWebsocket = settings.RunWebSocketsServer;
+
+			this.OBS_Address = settings.OBS_Address;
+			this.OBS_Password = settings.OBS_Password;
 		}
 
 		private void B_Save_Click(object sender, EventArgs e)

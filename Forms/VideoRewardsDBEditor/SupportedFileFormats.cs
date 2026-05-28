@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace SSC.SoundDatabaseEditor
+namespace SSC.Forms.SoundDatabaseEditor
 {
-	public static class SupportedFileFormats
+	public static class SupportedAudioFileFormats
 	{
 		private static string[] arrayOfAcceptableExtensions = new string[] {".mp3",
 			".ogg",

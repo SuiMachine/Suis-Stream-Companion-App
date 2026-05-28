@@ -41,6 +41,7 @@
 			exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			soundsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			soundSettings = new System.Windows.Forms.ToolStripMenuItem();
+			videoPlayerOBSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			voiceModSettings = new System.Windows.Forms.ToolStripMenuItem();
 			otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			notesToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -155,7 +156,7 @@
 			// 
 			// soundsToolStripMenuItem
 			// 
-			soundsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { soundSettings, voiceModSettings });
+			soundsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { soundSettings, videoPlayerOBSToolStripMenuItem, voiceModSettings });
 			soundsToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			soundsToolStripMenuItem.Name = "soundsToolStripMenuItem";
 			soundsToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
@@ -166,17 +167,26 @@
 			soundSettings.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			soundSettings.ForeColor = System.Drawing.Color.WhiteSmoke;
 			soundSettings.Name = "soundSettings";
-			soundSettings.Size = new System.Drawing.Size(127, 22);
-			soundSettings.Text = "Sounds";
+			soundSettings.Size = new System.Drawing.Size(184, 22);
+			soundSettings.Text = "&Sounds";
 			soundSettings.Click += DatabaseEditorToolStripMenuItem_Click;
+			// 
+			// videoPlayerOBSToolStripMenuItem
+			// 
+			videoPlayerOBSToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+			videoPlayerOBSToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
+			videoPlayerOBSToolStripMenuItem.Name = "videoPlayerOBSToolStripMenuItem";
+			videoPlayerOBSToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			videoPlayerOBSToolStripMenuItem.Text = "&Video Rewards (OBS)";
+			videoPlayerOBSToolStripMenuItem.Click += videoPlayerOBSToolStripMenuItem_Click;
 			// 
 			// voiceModSettings
 			// 
 			voiceModSettings.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			voiceModSettings.ForeColor = System.Drawing.Color.WhiteSmoke;
 			voiceModSettings.Name = "voiceModSettings";
-			voiceModSettings.Size = new System.Drawing.Size(127, 22);
-			voiceModSettings.Text = "VoiceMod";
+			voiceModSettings.Size = new System.Drawing.Size(184, 22);
+			voiceModSettings.Text = "Voice&Mod";
 			voiceModSettings.Click += VoiceModSettings_Click;
 			// 
 			// otherToolStripMenuItem
@@ -321,6 +331,7 @@
 		private System.Windows.Forms.ToolStripMenuItem notificationToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem remindersToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem notesToolStripItem;
+		private System.Windows.Forms.ToolStripMenuItem videoPlayerOBSToolStripMenuItem;
 	}
 }
 

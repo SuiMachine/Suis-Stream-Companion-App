@@ -1,6 +1,6 @@
 ﻿using SSC.Chat;
+using SSC.DataStorage;
 using SSC.Extensions;
-using SSC.SoundStorage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +27,6 @@ namespace SSC.SoundDatabaseEditor
 			foreach (SoundEntry SoundEntry in Sounds)
 				this.SoundsCopy.Add(SoundEntry.CreateCopy());
 
-			this.SoundsCopy = Sounds;
 			InitializeComponent();
 			Instance = this;
 		}
@@ -193,7 +192,7 @@ namespace SSC.SoundDatabaseEditor
 					return;
 				}
 
-				var foundReward = api.RewardsCache.FirstOrDefault(x => x.id == settings.UniversalRewardID);
+				var foundReward = api.RewardsCache.FirstOrDefault(x => x.id == settings.UniversalSoundRewardID);
 				if (foundReward != null)
 				{
 					MessageBox.Show("A reward already exists and wasn't updated", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -203,11 +202,11 @@ namespace SSC.SoundDatabaseEditor
 					var result = await api.CreateOrUpdateReward(null, "Universal sound reward", "Redeem a sound using tag / phrase", 160, 0, true, true);
 					if (result == null)
 					{
-						if (string.IsNullOrEmpty(settings.UniversalRewardID))
+						if (string.IsNullOrEmpty(settings.UniversalSoundRewardID))
 							MessageBox.Show("A reward was missing and was created - make sure this is OK", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						else
 							MessageBox.Show("Created a reward!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-						settings.UniversalRewardID = result.id;
+						settings.UniversalSoundRewardID = result.id;
 					}
 				}
 

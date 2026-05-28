@@ -5,22 +5,28 @@
     <_LastSelectedProfileId>E:\Projekty\Suis-Stream-Companion-App\Properties\PublishProfiles\Win64.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="OtherForms\NotesForm.cs">
+    <Compile Update="Forms\NotesForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="DialogBoxes\ProgressDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\VideoRewardsDBEditor\Add_Edit_Video.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\VideoRewardsDBEditor\VideoDBEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="OtherForms\Notes\AddEditNotes.cs">
+    <Compile Update="Forms\Notes\AddEditNotes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="OtherForms\ReminderEditForms\ReminderUserControl.cs">
+    <Compile Update="Forms\ReminderEditForms\ReminderUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="OtherForms\ReminderForm.cs">
+    <Compile Update="Forms\ReminderForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="SettingsForms\ConnectionSettingsForm.cs">
@@ -35,17 +41,22 @@
     <Compile Update="SettingsForms\VoiceModIntegrationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SoundDatabaseEditor\DB_Editor.cs">
+    <Compile Update="Forms\SoundDatabaseEditor\DB_Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SoundDatabaseEditor\EditDialogues\AddEditNewEntryDialog.cs">
+    <Compile Update="Forms\SoundDatabaseEditor\EditDialogues\AddEditNewEntryDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.cs">
+    <Compile Update="Forms\SoundDatabaseEditor\EditDialogues\SoundPlaybackSettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="UniversalMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Forms\SoundDatabaseEditor\DB_Editor.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
