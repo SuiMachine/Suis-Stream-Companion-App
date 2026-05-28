@@ -1,6 +1,6 @@
 Sui's Stream Companion App
 =====================
-Sui's Stream Companion App is a C# written, lightweight application to automate many tasks related to streams and improve viewer interactions. It implements such features as a sound playback, voice mod redeems and various AI implementations (for example AI notifications on who raided, what they were doing who they are), ads start and end notifications. More features to be added in the feature as Sui finds time and something that can be improved.
+Sui's Stream Companion App is a C# written, lightweight application to automate many tasks related to streams and improve viewer interactions. It implements such features as a sound playback, voice mod redeems ~~and various AI implementations (for example AI notifications on who raided, what they were doing who they are), ads start and end notifications~~. More features to be added in the feature as Sui finds time and something that can be improved.
 
 Credits
 -------
