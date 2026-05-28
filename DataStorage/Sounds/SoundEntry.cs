@@ -10,6 +10,8 @@ namespace SSC.DataStorage
 	public class SoundEntry : ICloneable
 	{
 		[XmlAttribute]
+		public Guid Id;
+		[XmlAttribute]
 		public string RewardName;
 		[XmlAttribute]
 		public string RewardID;
@@ -28,6 +30,7 @@ namespace SSC.DataStorage
 
 		public SoundEntry()
 		{
+			Id = Guid.NewGuid();
 			RewardName = "";
 			Description = "";
 			Files = new string[0];
@@ -41,6 +44,7 @@ namespace SSC.DataStorage
 		public SoundEntry(string Command, string Description, string RewardID, string[] Files, string[] Tags, float Volume, int AmountOfPoints, int Cooldown)
 		{
 			RewardName = Command;
+			this.Id = Guid.NewGuid();
 			this.Description = Description;
 			this.RewardID = RewardID;
 			this.Files = Files;
@@ -82,9 +86,12 @@ namespace SSC.DataStorage
 
 		public bool GetIsProperEntry() { return RewardName != null && RewardName != "" && Files != null && Files.Length > 0; }
 
-		public SoundEntry CreateCopy()
+		public SoundEntry CreateCopy(bool copyGuid = true)
 		{
 			var obj = new SoundEntry();
+			if (copyGuid)
+				obj.Id = Id;
+
 			obj.RewardID = RewardID;
 			obj.RewardName = RewardName;
 			obj.AmountOfPoints = AmountOfPoints;

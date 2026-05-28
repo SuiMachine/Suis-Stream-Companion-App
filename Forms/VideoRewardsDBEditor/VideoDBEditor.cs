@@ -297,14 +297,14 @@ namespace SSC.Forms.VideoRewardsDBEditor
 
 		private void EditEntry()
 		{
-			var id = videosTreeView.SelectedNode.Index;
-			var rewardToEdit = RewardsCopy[id];
+			var index = videosTreeView.SelectedNode.Index;
+			var rewardToEdit = RewardsCopy[index];
 			var form = new Add_Edit_Video(rewardToEdit);
 			if (form.ShowDialog() == DialogResult.OK)
 			{
-				RewardsCopy[id] = form.ReturnReward;
-				videosTreeView.Nodes[id].Remove();
-				videosTreeView.Nodes.Insert(id, form.ReturnReward.ToTreeNode());
+				RewardsCopy[index] = form.ReturnReward;
+				videosTreeView.Nodes[index].Remove();
+				videosTreeView.Nodes.Insert(index, form.ReturnReward.ToTreeNode());
 			}
 		}
 	}

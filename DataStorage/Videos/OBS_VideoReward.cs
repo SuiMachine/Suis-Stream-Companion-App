@@ -7,6 +7,8 @@ namespace SSC.DataStorage.Videos
 	public class OBS_VideoReward : ICloneable
 	{
 		[XmlAttribute]
+		public Guid Id = Guid.NewGuid();
+		[XmlAttribute]
 		public string RewardName = "";
 		[XmlAttribute]
 		public string Description = "";
@@ -16,7 +18,6 @@ namespace SSC.DataStorage.Videos
 		public string[] Tags = new string[0];
 		[XmlArrayItem]
 		public string[] Files = new string[0];
-
 
 		public string GetFile(Random rng)
 		{
@@ -34,6 +35,7 @@ namespace SSC.DataStorage.Videos
 		public OBS_VideoReward CreateCopy()
 		{
 			var obj = new OBS_VideoReward();
+			obj.Id = Id;
 			obj.Tags = new string[Tags.Length];
 			for (int i = 0; i < Tags.Length; i++)
 			{
