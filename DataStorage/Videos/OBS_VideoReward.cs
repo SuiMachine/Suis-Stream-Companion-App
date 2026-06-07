@@ -10,15 +10,15 @@ namespace SSC.DataStorage.Videos
 		[XmlAttribute]
 		public Guid Id = Guid.NewGuid();
 		[XmlAttribute]
-		public string RewardName = "";
+		public string RewardName { get; set; } = "";
 		[XmlAttribute]
-		public string Description = "";
+		public string Description { get; set; } = "";
 		[XmlAttribute]
-		public int Cooldown = 0;
+		public int Cooldown { get; set; } = 0;
 		[XmlArrayItem]
-		public string[] Tags = new string[0];
+		public string[] Tags { get; set; } = new string[0];
 		[XmlArrayItem]
-		public string[] Files = new string[0];
+		public string[] Files { get; set; } = new string[0];
 
 		public string GetFile(Random rng)
 		{

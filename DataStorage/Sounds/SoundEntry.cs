@@ -13,21 +13,21 @@ namespace SSC.DataStorage
 		[XmlAttribute]
 		public Guid Id;
 		[XmlAttribute]
-		public string RewardName;
+		public string RewardName { get; set; }
 		[XmlAttribute]
-		public string RewardID;
+		public string RewardID { get; set; }
 		[XmlAttribute]
-		public string Description;
+		public string Description { get; set; }
 		[XmlAttribute]
-		public float Volume;
+		public float Volume { get; set; }
 		[XmlAttribute]
-		public int AmountOfPoints;
+		public int AmountOfPoints { get; set; }
 		[XmlAttribute]
-		public int Cooldown;
+		public int Cooldown { get; set; }
 		[XmlArrayItem]
-		public string[] Files;
+		public string[] Files { get; set; }
 		[XmlArrayItem]
-		public string[] Tags;
+		public string[] Tags { get; set; }
 
 		public SoundEntry()
 		{
