@@ -17,6 +17,12 @@
     <Compile Update="Forms\VideoRewardsDBEditor\VideoDBEditor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\VSS\EditForms\AddVSSElementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\VSS\VSS_Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

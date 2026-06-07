@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSC.DataStorage.Interfaces;
+using System;
 using System.Xml.Serialization;
 
 namespace SSC.DataStorage.Videos

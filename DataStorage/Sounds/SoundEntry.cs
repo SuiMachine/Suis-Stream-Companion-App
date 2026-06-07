@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SSC.DataStorage.Interfaces;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Xml.Serialization;

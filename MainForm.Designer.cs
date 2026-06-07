@@ -53,6 +53,7 @@
 			trayMenu = new System.Windows.Forms.ContextMenuStrip(components);
 			showProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			vSSEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)trackBar_Volume).BeginInit();
 			menuStrip1.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
@@ -191,7 +192,7 @@
 			// 
 			// otherToolStripMenuItem
 			// 
-			otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { notesToolStripItem, remindersToolStripMenuItem });
+			otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { notesToolStripItem, remindersToolStripMenuItem, vSSEditorToolStripMenuItem });
 			otherToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			otherToolStripMenuItem.Name = "otherToolStripMenuItem";
 			otherToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
@@ -202,7 +203,7 @@
 			notesToolStripItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			notesToolStripItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			notesToolStripItem.Name = "notesToolStripItem";
-			notesToolStripItem.Size = new System.Drawing.Size(130, 22);
+			notesToolStripItem.Size = new System.Drawing.Size(180, 22);
 			notesToolStripItem.Text = "Notes";
 			notesToolStripItem.Click += notesToolStripItem_Click;
 			// 
@@ -211,7 +212,7 @@
 			remindersToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
 			remindersToolStripMenuItem.ForeColor = System.Drawing.Color.WhiteSmoke;
 			remindersToolStripMenuItem.Name = "remindersToolStripMenuItem";
-			remindersToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+			remindersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			remindersToolStripMenuItem.Text = "Reminders";
 			remindersToolStripMenuItem.Click += remindersToolStripMenuItem_Click;
 			// 
@@ -280,6 +281,13 @@
 			closeToolStripMenuItem.Text = "Close";
 			closeToolStripMenuItem.Click += CloseToolStripMenuItem_Click;
 			// 
+			// vSSEditorToolStripMenuItem
+			// 
+			vSSEditorToolStripMenuItem.Name = "vSSEditorToolStripMenuItem";
+			vSSEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			vSSEditorToolStripMenuItem.Text = "VSS Editor";
+			vSSEditorToolStripMenuItem.Click += vSSEditorToolStripMenuItem_Click;
+			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -332,6 +340,7 @@
 		private System.Windows.Forms.ToolStripMenuItem remindersToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem notesToolStripItem;
 		private System.Windows.Forms.ToolStripMenuItem videoPlayerOBSToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem vSSEditorToolStripMenuItem;
 	}
 }
 

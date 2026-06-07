@@ -10,6 +10,7 @@ using Whisper.net;
 using OBSWebsocketDotNet.Communication;
 using SSC.DataStorage;
 using SSC.Forms.VideoRewardsDBEditor;
+using SSC.Forms.VSS;
 
 namespace SSC
 {
@@ -40,6 +41,8 @@ namespace SSC
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public SoundDB SoundDB { get; private set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public DataStorage.Videos.OBS_VideoRewardDB VideoDB { get; private set; }
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public OBSWebsocketDotNet.OBSWebsocket OBS { get; private set; }
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)] public VSS_Database VSS_Database { get; private set; }
+
 
 		WebSocketsListener webSockets;
 
@@ -62,6 +65,7 @@ namespace SSC
 			L_Volume.Text = trackBar_Volume.Value.ToString() + "%";
 			SoundDB = new SoundDB();
 			VideoDB = new DataStorage.Videos.OBS_VideoRewardDB();
+			VSS_Database = VSS_Database.Instance;
 
 			if (settings.Autostart)
 			{
@@ -393,6 +397,15 @@ namespace SSC
 				VideoDB.StorableData.VideoRewards = form.RewardsCopy;
 				VideoDB.SaveDB();
 				VideoDB.RebuildDictionary();
+			}
+		}
+
+		private void vSSEditorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			VSS_Editor editor = new VSS_Editor();
+			if (editor.ShowDialog() == DialogResult.OK)
+			{
+				VSS_Database.Save();
 			}
 		}
 	}
