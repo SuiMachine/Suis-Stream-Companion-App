@@ -1,5 +1,6 @@
 ﻿using SSC.DataStorage;
 using SSC.DataStorage.Interfaces;
+using SSC.DataStorage.Videos;
 using System;
 using System.Windows.Forms;
 
@@ -18,35 +19,37 @@ namespace SSC.Forms.VSS.EditForms
 			this.listBoxSounds.DataSource = MainForm.Instance.SoundDB.SoundList;
 			this.listBoxSounds.DisplayMember = nameof(SoundEntry.RewardName);
 			this.listBoxSounds.EndUpdate();
+
+			this.listBoxVideos.BeginUpdate();
+			this.listBoxVideos.DataSource = MainForm.Instance.VideoDB.StorableData.VideoRewards;
+			this.listBoxVideos.DisplayMember = nameof(OBS_VideoReward.RewardName);
+			this.listBoxVideos.EndUpdate();
 		}
 
 		internal IVSSRedeem GetResult()
 		{
-			throw new NotImplementedException();
-		}
-
-		bool VerifyResult()
-		{
 			if (tabControlVSSAddType.SelectedTab == tabPageSound)
 			{
-				if(this.listBoxSounds.SelectedItem != null)
-				{
-					return true;
-				}
+				if (this.listBoxSounds.SelectedItem != null)
+					return new VSS_RedeemBridgeSoundAward(this.listBoxSounds.SelectedItem as SoundEntry, Keys.None);
 			}
 			else if (tabControlVSSAddType.SelectedTab == tabPageVideo)
 			{
-				// Verify video redeem
+				if (this.listBoxVideos.SelectedItem != null)
+					return new VSS_RedeemBridgeVideoAward(this.listBoxVideos.SelectedItem as OBS_VideoReward, Keys.None);
 			}
 			else if (tabControlVSSAddType.SelectedTab == tabPageContainer)
 			{
-				// Verify container redeem
+				if(this.TB_ContainerName.Text != null && this.TB_ContainerName.Text.Length > 0)
+					return new VSS_Container(this.TB_ContainerName.Text, Keys.None);
 			}
-			return false;
+			return null;
 		}
 
 		private void B_OK_Click(object sender, EventArgs e)
 		{
+			if (GetResult() == null)
+				return;
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}
@@ -55,11 +58,6 @@ namespace SSC.Forms.VSS.EditForms
 		{
 			this.DialogResult = DialogResult.Cancel;
 			this.Close();
-		}
-
-		private void bindingSourceSound_CurrentChanged(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

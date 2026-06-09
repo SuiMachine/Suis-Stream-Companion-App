@@ -39,6 +39,7 @@
 			addElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			removeElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			contextMenuTreeViewVSS.SuspendLayout();
@@ -62,13 +63,14 @@
 			// tableLayoutPanel2
 			// 
 			tableLayoutPanel2.ColumnCount = 4;
-			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 179F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
 			tableLayoutPanel2.Controls.Add(B_OK, 2, 0);
 			tableLayoutPanel2.Controls.Add(B_Cancel, 3, 0);
-			tableLayoutPanel2.Controls.Add(TB_MasterKeybind, 0, 0);
+			tableLayoutPanel2.Controls.Add(TB_MasterKeybind, 1, 0);
+			tableLayoutPanel2.Controls.Add(label1, 0, 0);
 			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel2.Location = new System.Drawing.Point(3, 418);
 			tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -102,9 +104,9 @@
 			// TB_MasterKeybind
 			// 
 			TB_MasterKeybind.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			TB_MasterKeybind.Location = new System.Drawing.Point(3, 3);
+			TB_MasterKeybind.Location = new System.Drawing.Point(78, 3);
 			TB_MasterKeybind.Name = "TB_MasterKeybind";
-			TB_MasterKeybind.Size = new System.Drawing.Size(173, 23);
+			TB_MasterKeybind.Size = new System.Drawing.Size(541, 23);
 			TB_MasterKeybind.TabIndex = 2;
 			TB_MasterKeybind.KeyDown += TB_MasterKey_KeyDown;
 			// 
@@ -121,27 +123,37 @@
 			// 
 			contextMenuTreeViewVSS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addElementToolStripMenuItem, removeElementToolStripMenuItem, cancelToolStripMenuItem });
 			contextMenuTreeViewVSS.Name = "contextMenuTreeViewVSS";
-			contextMenuTreeViewVSS.Size = new System.Drawing.Size(181, 92);
+			contextMenuTreeViewVSS.Size = new System.Drawing.Size(164, 70);
 			// 
 			// addElementToolStripMenuItem
 			// 
 			addElementToolStripMenuItem.Name = "addElementToolStripMenuItem";
-			addElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			addElementToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			addElementToolStripMenuItem.Text = "Add element";
 			addElementToolStripMenuItem.Click += addElementToolStripMenuItem_Click;
 			// 
 			// removeElementToolStripMenuItem
 			// 
 			removeElementToolStripMenuItem.Name = "removeElementToolStripMenuItem";
-			removeElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			removeElementToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			removeElementToolStripMenuItem.Text = "Remove element";
 			removeElementToolStripMenuItem.Click += removeElementToolStripMenuItem_Click;
 			// 
 			// cancelToolStripMenuItem
 			// 
 			cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-			cancelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			cancelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			cancelToolStripMenuItem.Text = "Cancel";
+			// 
+			// label1
+			// 
+			label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(3, 7);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(69, 15);
+			label1.TabIndex = 3;
+			label1.Text = "Master key:";
 			// 
 			// VSS_Editor
 			// 
@@ -150,7 +162,7 @@
 			ClientSize = new System.Drawing.Size(800, 450);
 			Controls.Add(tableLayoutPanel1);
 			Name = "VSS_Editor";
-			Text = "VSS_Editor";
+			Text = "VSS editor";
 			Load += VSS_Editor_Load;
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel2.ResumeLayout(false);
@@ -171,5 +183,6 @@
 		private System.Windows.Forms.ToolStripMenuItem addElementToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeElementToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
+		private System.Windows.Forms.Label label1;
 	}
 }

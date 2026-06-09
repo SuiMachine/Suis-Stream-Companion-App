@@ -30,17 +30,24 @@
 		{
 			tabControlVSSAddType = new System.Windows.Forms.TabControl();
 			tabPageSound = new System.Windows.Forms.TabPage();
-			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			listBoxSounds = new System.Windows.Forms.ListBox();
 			tabPageVideo = new System.Windows.Forms.TabPage();
 			tabPageContainer = new System.Windows.Forms.TabPage();
+			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			label1 = new System.Windows.Forms.Label();
+			TB_ContainerName = new System.Windows.Forms.TextBox();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			B_Cancel = new System.Windows.Forms.Button();
 			B_OK = new System.Windows.Forms.Button();
+			label2 = new System.Windows.Forms.Label();
+			TB_Key = new System.Windows.Forms.TextBox();
+			listBoxVideos = new System.Windows.Forms.ListBox();
 			tabControlVSSAddType.SuspendLayout();
 			tabPageSound.SuspendLayout();
-			tableLayoutPanel3.SuspendLayout();
+			tabPageVideo.SuspendLayout();
+			tabPageContainer.SuspendLayout();
+			tableLayoutPanel4.SuspendLayout();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			SuspendLayout();
@@ -59,7 +66,7 @@
 			// 
 			// tabPageSound
 			// 
-			tabPageSound.Controls.Add(tableLayoutPanel3);
+			tabPageSound.Controls.Add(listBoxSounds);
 			tabPageSound.Location = new System.Drawing.Point(4, 24);
 			tabPageSound.Name = "tabPageSound";
 			tabPageSound.Padding = new System.Windows.Forms.Padding(3);
@@ -68,20 +75,6 @@
 			tabPageSound.Text = "Sound";
 			tabPageSound.UseVisualStyleBackColor = true;
 			// 
-			// tableLayoutPanel3
-			// 
-			tableLayoutPanel3.ColumnCount = 1;
-			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel3.Controls.Add(listBoxSounds, 0, 0);
-			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
-			tableLayoutPanel3.Name = "tableLayoutPanel3";
-			tableLayoutPanel3.RowCount = 2;
-			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			tableLayoutPanel3.Size = new System.Drawing.Size(780, 373);
-			tableLayoutPanel3.TabIndex = 0;
-			// 
 			// listBoxSounds
 			// 
 			listBoxSounds.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -89,11 +82,12 @@
 			listBoxSounds.ItemHeight = 15;
 			listBoxSounds.Location = new System.Drawing.Point(3, 3);
 			listBoxSounds.Name = "listBoxSounds";
-			listBoxSounds.Size = new System.Drawing.Size(774, 335);
+			listBoxSounds.Size = new System.Drawing.Size(780, 373);
 			listBoxSounds.TabIndex = 0;
 			// 
 			// tabPageVideo
 			// 
+			tabPageVideo.Controls.Add(listBoxVideos);
 			tabPageVideo.Location = new System.Drawing.Point(4, 24);
 			tabPageVideo.Name = "tabPageVideo";
 			tabPageVideo.Padding = new System.Windows.Forms.Padding(3);
@@ -104,12 +98,48 @@
 			// 
 			// tabPageContainer
 			// 
+			tabPageContainer.Controls.Add(tableLayoutPanel4);
 			tabPageContainer.Location = new System.Drawing.Point(4, 24);
 			tabPageContainer.Name = "tabPageContainer";
 			tabPageContainer.Size = new System.Drawing.Size(786, 379);
 			tabPageContainer.TabIndex = 2;
 			tabPageContainer.Text = "Container";
 			tabPageContainer.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel4
+			// 
+			tableLayoutPanel4.ColumnCount = 2;
+			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+			tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel4.Controls.Add(label1, 0, 0);
+			tableLayoutPanel4.Controls.Add(TB_ContainerName, 1, 0);
+			tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanel4.Name = "tableLayoutPanel4";
+			tableLayoutPanel4.RowCount = 2;
+			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel4.Size = new System.Drawing.Size(786, 379);
+			tableLayoutPanel4.TabIndex = 0;
+			// 
+			// label1
+			// 
+			label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(3, 7);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(69, 15);
+			label1.TabIndex = 0;
+			label1.Text = "Tree name:";
+			// 
+			// TB_ContainerName
+			// 
+			TB_ContainerName.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			TB_ContainerName.Location = new System.Drawing.Point(78, 3);
+			TB_ContainerName.Name = "TB_ContainerName";
+			TB_ContainerName.Size = new System.Drawing.Size(705, 23);
+			TB_ContainerName.TabIndex = 1;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -128,13 +158,16 @@
 			// 
 			// tableLayoutPanel2
 			// 
-			tableLayoutPanel2.ColumnCount = 3;
+			tableLayoutPanel2.ColumnCount = 4;
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
 			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			tableLayoutPanel2.Controls.Add(B_Cancel, 2, 0);
-			tableLayoutPanel2.Controls.Add(B_OK, 1, 0);
+			tableLayoutPanel2.Controls.Add(B_Cancel, 3, 0);
+			tableLayoutPanel2.Controls.Add(B_OK, 2, 0);
+			tableLayoutPanel2.Controls.Add(label2, 0, 0);
+			tableLayoutPanel2.Controls.Add(TB_Key, 1, 0);
 			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanel2.Location = new System.Drawing.Point(3, 416);
 			tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -165,6 +198,34 @@
 			B_OK.UseVisualStyleBackColor = true;
 			B_OK.Click += B_OK_Click;
 			// 
+			// label2
+			// 
+			label2.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label2.AutoSize = true;
+			label2.Location = new System.Drawing.Point(3, 8);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(33, 15);
+			label2.TabIndex = 2;
+			label2.Text = "Key:";
+			// 
+			// TB_Key
+			// 
+			TB_Key.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			TB_Key.Location = new System.Drawing.Point(42, 4);
+			TB_Key.Name = "TB_Key";
+			TB_Key.Size = new System.Drawing.Size(589, 23);
+			TB_Key.TabIndex = 3;
+			// 
+			// listBoxVideos
+			// 
+			listBoxVideos.Dock = System.Windows.Forms.DockStyle.Fill;
+			listBoxVideos.FormattingEnabled = true;
+			listBoxVideos.ItemHeight = 15;
+			listBoxVideos.Location = new System.Drawing.Point(3, 3);
+			listBoxVideos.Name = "listBoxVideos";
+			listBoxVideos.Size = new System.Drawing.Size(780, 373);
+			listBoxVideos.TabIndex = 0;
+			// 
 			// AddVSSElementForm
 			// 
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -176,9 +237,13 @@
 			Load += AddVSSElementForm_Load;
 			tabControlVSSAddType.ResumeLayout(false);
 			tabPageSound.ResumeLayout(false);
-			tableLayoutPanel3.ResumeLayout(false);
+			tabPageVideo.ResumeLayout(false);
+			tabPageContainer.ResumeLayout(false);
+			tableLayoutPanel4.ResumeLayout(false);
+			tableLayoutPanel4.PerformLayout();
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
 			ResumeLayout(false);
 		}
 
@@ -192,7 +257,12 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.Button B_Cancel;
 		private System.Windows.Forms.Button B_OK;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 		private System.Windows.Forms.ListBox listBoxSounds;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox TB_ContainerName;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox TB_Key;
+		private System.Windows.Forms.ListBox listBoxVideos;
 	}
 }

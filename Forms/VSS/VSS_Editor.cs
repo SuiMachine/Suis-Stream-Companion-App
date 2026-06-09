@@ -3,14 +3,9 @@ using SSC.DataStorage.Interfaces;
 using SSC.Forms.VSS.EditForms;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace SSC.Forms.VSS
 {
@@ -40,13 +35,13 @@ namespace SSC.Forms.VSS
 			treeView_VSS_Options.BeginUpdate();
 			treeView_VSS_Options.Nodes.Clear();
 			DB_Clone = VSS_Database.Instance.Clone() as VSS_Database;
-			PopulateTreeView(DB_Clone.VSS_TreeNodes.Where(x => x is IVSSRedeem).Select(x => x as IVSSRedeem).ToArray());
+			PopulateTreeView(DB_Clone.VSS_TreeNodes.Where(x => x != null).Select(x => x).ToList());
 			treeView_VSS_Options.EndUpdate();
 		}
 
-		private void PopulateTreeView(IVSSRedeem[] nodes, TreeNode parentNode = null)
+		private void PopulateTreeView(List<IVSSRedeem> nodes, TreeNode parentNode = null)
 		{
-			foreach (var node in nodes)
+			foreach (IVSSRedeem node in nodes)
 			{
 				TreeNode treeNode = new TreeNode(node.VSS_Name)
 				{
@@ -61,7 +56,7 @@ namespace SSC.Forms.VSS
 				if (node.VSS_Children != null)
 				{
 					var childeren = node.VSS_Children;
-					if (childeren.Length == 0)
+					if (childeren.Count == 0)
 						continue;
 
 					PopulateTreeView(childeren, treeNode);
@@ -82,24 +77,38 @@ namespace SSC.Forms.VSS
 				return;
 
 			var resultElement = addForm.GetResult();
-			if (resultElement.VSS_Children?.Length > 0)
-			{
+			if (resultElement == null)
+				return;
 
+			if (resultElement is IVSSRedeem)
+			{
+				DB_Clone.VSS_TreeNodes.Add(resultElement);
 			}
+
+			treeView_VSS_Options.BeginUpdate();
+			treeView_VSS_Options.Nodes.Clear();
+			PopulateTreeView(DB_Clone.VSS_TreeNodes, null);
+			treeView_VSS_Options.EndUpdate();
 		}
 
 		private void removeElementToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (treeView_VSS_Options.SelectedNode != null)
 			{
-				if ((treeView_VSS_Options.SelectedNode.Tag as IVSSRedeem).VSS_Children?.Length > 0)
+				var cast = treeView_VSS_Options.SelectedNode.Tag as IVSSRedeem;
+				if (cast.VSS_Children?.Count > 0)
 				{
 					if (MessageBox.Show("Element you are trying to remove has children attached. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-						treeView_VSS_Options.SelectedNode.Remove();
+						DB_Clone.RemoveElement(cast, null);
 				}
 				else
-					treeView_VSS_Options.SelectedNode.Remove();
+					DB_Clone.RemoveElement(cast, null);
 			}
+
+			treeView_VSS_Options.BeginUpdate();
+			treeView_VSS_Options.Nodes.Clear();
+			PopulateTreeView(DB_Clone.VSS_TreeNodes, null);
+			treeView_VSS_Options.EndUpdate();
 		}
 	}
 }
