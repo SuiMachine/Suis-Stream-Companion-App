@@ -1,4 +1,5 @@
-﻿using SSC.DataStorage.Interfaces;
+﻿using Newtonsoft.Json;
+using SSC.DataStorage.Interfaces;
 using SSC.DataStorage.Videos;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,13 @@ namespace SSC.DataStorage
 
 		public Keys KeyCode;
 
-		public Guid VSS_Guid => SoundReferenceGuid;
+		[JsonIgnore] public Guid VSS_Guid => SoundReferenceGuid;
 
-		public string VSS_Name => $"{KeyCode} - {soundReference?.RewardName ?? "Unknown"}";
+		[JsonIgnore] public string VSS_Name => $"{KeyCode} - {soundReference?.RewardName ?? "Unknown"}";
 
-		public List<IVSSRedeem> VSS_Children => null;
+		[JsonIgnore] public List<IVSSRedeem> VSS_Children => null;
 
-		public Keys VSS_KeyCode => KeyCode;
+		[JsonIgnore] public Keys VSS_KeyCode => KeyCode;
 
 		public VSS_RedeemBridgeSoundAward() { }
 
@@ -72,13 +73,13 @@ namespace SSC.DataStorage
 		public Guid VideoGuid = Guid.NewGuid();
 		public Keys KeyCode;
 
-		public Guid VSS_Guid => VideoGuid;
+		[JsonIgnore] public Guid VSS_Guid => VideoGuid;
 
-		public string VSS_Name => $"{KeyCode} - {obsVideoReward?.RewardName ?? "Unknown"}";
+		[JsonIgnore] public string VSS_Name => $"{KeyCode} - {obsVideoReward?.RewardName ?? "Unknown"}";
 
-		public List<IVSSRedeem> VSS_Children => null;
+		[JsonIgnore] public List<IVSSRedeem> VSS_Children => null;
 
-		public Keys VSS_KeyCode => KeyCode;
+		[JsonIgnore] public Keys VSS_KeyCode => KeyCode;
 
 		public VSS_RedeemBridgeVideoAward() { }
 
@@ -125,15 +126,15 @@ namespace SSC.DataStorage
 		public Keys KeyCode;
 		public string Name;
 		public Guid[] Children = new Guid[0];
-		[NonSerialized] public List<IVSSRedeem> ChildrenObjects;
+		[JsonIgnore] public List<IVSSRedeem> ChildrenObjects;
 
-		public Guid VSS_Guid => Guid;
+		[JsonIgnore] public Guid VSS_Guid => Guid;
 
-		public string VSS_Name => Name;
+		[JsonIgnore] public string VSS_Name => Name;
 
-		public List<IVSSRedeem> VSS_Children => ChildrenObjects;
+		[JsonIgnore] public List<IVSSRedeem> VSS_Children => ChildrenObjects;
 
-		public Keys VSS_KeyCode => KeyCode;
+		[JsonIgnore] public Keys VSS_KeyCode => KeyCode;
 
 		public VSS_Container() { }
 
@@ -227,7 +228,7 @@ namespace SSC.DataStorage
 				{
 					if (VSS_TreeNodes[i] is IVSSRedeem)
 					{
-						copy.VSS_TreeNodes[i] = VSS_TreeNodes[i].Clone() as IVSSRedeem;
+						copy.VSS_TreeNodes.Add(VSS_TreeNodes[i].Clone() as IVSSRedeem);
 					}
 					else
 					{
