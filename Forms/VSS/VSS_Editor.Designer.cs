@@ -34,12 +34,12 @@
 			B_OK = new System.Windows.Forms.Button();
 			B_Cancel = new System.Windows.Forms.Button();
 			TB_MasterKeybind = new System.Windows.Forms.TextBox();
+			label1 = new System.Windows.Forms.Label();
 			treeView_VSS_Options = new System.Windows.Forms.TreeView();
 			contextMenuTreeViewVSS = new System.Windows.Forms.ContextMenuStrip(components);
 			addElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			removeElementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			label1 = new System.Windows.Forms.Label();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
 			contextMenuTreeViewVSS.SuspendLayout();
@@ -110,6 +110,16 @@
 			TB_MasterKeybind.TabIndex = 2;
 			TB_MasterKeybind.KeyDown += TB_MasterKey_KeyDown;
 			// 
+			// label1
+			// 
+			label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(3, 7);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(69, 15);
+			label1.TabIndex = 3;
+			label1.Text = "Master key:";
+			// 
 			// treeView_VSS_Options
 			// 
 			treeView_VSS_Options.ContextMenuStrip = contextMenuTreeViewVSS;
@@ -123,37 +133,28 @@
 			// 
 			contextMenuTreeViewVSS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addElementToolStripMenuItem, removeElementToolStripMenuItem, cancelToolStripMenuItem });
 			contextMenuTreeViewVSS.Name = "contextMenuTreeViewVSS";
-			contextMenuTreeViewVSS.Size = new System.Drawing.Size(164, 70);
+			contextMenuTreeViewVSS.Size = new System.Drawing.Size(181, 92);
+			contextMenuTreeViewVSS.Opening += contextMenuTreeViewVSS_Opening;
 			// 
 			// addElementToolStripMenuItem
 			// 
 			addElementToolStripMenuItem.Name = "addElementToolStripMenuItem";
-			addElementToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			addElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			addElementToolStripMenuItem.Text = "Add element";
 			addElementToolStripMenuItem.Click += addElementToolStripMenuItem_Click;
 			// 
 			// removeElementToolStripMenuItem
 			// 
 			removeElementToolStripMenuItem.Name = "removeElementToolStripMenuItem";
-			removeElementToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			removeElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			removeElementToolStripMenuItem.Text = "Remove element";
 			removeElementToolStripMenuItem.Click += removeElementToolStripMenuItem_Click;
 			// 
 			// cancelToolStripMenuItem
 			// 
 			cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-			cancelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+			cancelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			cancelToolStripMenuItem.Text = "Cancel";
-			// 
-			// label1
-			// 
-			label1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-			label1.AutoSize = true;
-			label1.Location = new System.Drawing.Point(3, 7);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(69, 15);
-			label1.TabIndex = 3;
-			label1.Text = "Master key:";
 			// 
 			// VSS_Editor
 			// 

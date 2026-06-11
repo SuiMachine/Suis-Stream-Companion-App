@@ -405,6 +405,7 @@ namespace SSC
 			VSS_Editor editor = new VSS_Editor();
 			if (editor.ShowDialog() == DialogResult.OK)
 			{
+				VSS_Database = editor.DB_Clone;
 				VSS_Database.Save();
 			}
 		}

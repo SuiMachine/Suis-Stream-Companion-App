@@ -7,10 +7,11 @@ namespace SSC.DataStorage.Interfaces
 {
 	public interface IVSSRedeem : ICloneable
 	{
-		[JsonIgnore] public Guid VSS_Guid { get; }
+		public Guid VSS_Guid { get; set; }
+		public Keys VSS_KeyCode { get; set; }
+
 		[JsonIgnore] public string VSS_Name { get; }
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children { get; }
-		[JsonIgnore] public Keys VSS_KeyCode { get; }
 
 		public void Execute() { }
 

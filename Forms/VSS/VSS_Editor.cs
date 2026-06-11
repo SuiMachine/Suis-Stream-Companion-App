@@ -11,7 +11,7 @@ namespace SSC.Forms.VSS
 {
 	public partial class VSS_Editor : Form
 	{
-		private VSS_Database DB_Clone;
+		public VSS_Database DB_Clone { get; private set; }
 
 		public VSS_Editor()
 		{
@@ -35,7 +35,7 @@ namespace SSC.Forms.VSS
 			treeView_VSS_Options.BeginUpdate();
 			treeView_VSS_Options.Nodes.Clear();
 			DB_Clone = VSS_Database.Instance.Clone() as VSS_Database;
-			PopulateTreeView(DB_Clone.VSS_TreeNodes.Where(x => x != null).Select(x => x).ToList());
+			PopulateTreeView(DB_Clone.VSS_RootNodes.Where(x => x != null).Select(x => x).ToList());
 			treeView_VSS_Options.EndUpdate();
 		}
 
@@ -83,11 +83,26 @@ namespace SSC.Forms.VSS
 			if (resultElement is IVSSRedeem)
 			{
 				DB_Clone.VSS_TreeNodes.Add(resultElement);
+				DB_Clone.VSS_Redeems_Dict.Add(resultElement.VSS_Guid, resultElement);
+
+				if (treeView_VSS_Options.SelectedNode != null)
+				{
+					if (treeView_VSS_Options.SelectedNode.Tag is VSS_Container)
+					{
+						var cast = treeView_VSS_Options.SelectedNode.Tag as VSS_Container;
+						cast.Append(resultElement);
+					}
+				}
+				else
+				{
+					DB_Clone.VSS_RootNodeGuids.Add(resultElement.VSS_Guid);
+					DB_Clone.VSS_RootNodes.Add(resultElement);
+				}
 			}
 
 			treeView_VSS_Options.BeginUpdate();
 			treeView_VSS_Options.Nodes.Clear();
-			PopulateTreeView(DB_Clone.VSS_TreeNodes, null);
+			PopulateTreeView(DB_Clone.VSS_RootNodes, null);
 			treeView_VSS_Options.EndUpdate();
 		}
 
@@ -107,8 +122,16 @@ namespace SSC.Forms.VSS
 
 			treeView_VSS_Options.BeginUpdate();
 			treeView_VSS_Options.Nodes.Clear();
-			PopulateTreeView(DB_Clone.VSS_TreeNodes, null);
+			PopulateTreeView(DB_Clone.VSS_RootNodes, null);
 			treeView_VSS_Options.EndUpdate();
+		}
+
+		private void contextMenuTreeViewVSS_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (treeView_VSS_Options.SelectedNode != null)
+				addElementToolStripMenuItem.Enabled = treeView_VSS_Options.SelectedNode.Tag is VSS_Container;
+			else
+				addElementToolStripMenuItem.Enabled = true;
 		}
 	}
 }

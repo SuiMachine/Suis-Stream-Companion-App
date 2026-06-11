@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -13,19 +14,14 @@ namespace SSC.DataStorage
 {
 	public class VSS_RedeemBridgeSoundAward : IVSSRedeem
 	{
+		public Guid VSS_Guid { get; set; } = Guid.NewGuid();
+		public Keys VSS_KeyCode { get; set; } = Keys.None;
+
 		SoundEntry soundReference;
-		public Guid Guid = Guid.NewGuid();
 		public Guid SoundReferenceGuid = Guid.NewGuid();
-
-		public Keys KeyCode;
-
-		[JsonIgnore] public Guid VSS_Guid => SoundReferenceGuid;
-
-		[JsonIgnore] public string VSS_Name => $"{KeyCode} - {soundReference?.RewardName ?? "Unknown"}";
-
+		[JsonIgnore] public string VSS_Name => $"{VSS_KeyCode} - {soundReference?.RewardName ?? "Unknown"}";
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children => null;
 
-		[JsonIgnore] public Keys VSS_KeyCode => KeyCode;
 
 		public VSS_RedeemBridgeSoundAward() { }
 
@@ -33,7 +29,7 @@ namespace SSC.DataStorage
 		{
 			this.soundReference = entry;
 			this.SoundReferenceGuid = entry.Id;
-			this.KeyCode = key;
+			this.VSS_KeyCode = key;
 		}
 
 		public void Execute()
@@ -44,15 +40,16 @@ namespace SSC.DataStorage
 		{
 			return new VSS_RedeemBridgeSoundAward
 			{
-				Guid = Guid,
-				KeyCode = KeyCode,
+				VSS_Guid = VSS_Guid,
+				VSS_KeyCode = VSS_KeyCode,
+				SoundReferenceGuid = SoundReferenceGuid,
 				soundReference = soundReference
 			};
 		}
 
 		public bool RecreateReferences()
 		{
-			var f = MainForm.Instance.SoundDB.SoundList.FirstOrDefault(x => x.Id == VSS_Guid);
+			var f = MainForm.Instance.SoundDB.SoundList.FirstOrDefault(x => x.Id == SoundReferenceGuid);
 			if (f != null)
 			{
 				soundReference = f;
@@ -60,7 +57,7 @@ namespace SSC.DataStorage
 			}
 			else
 			{
-				Debug.WriteLine($"Could not find sound reference for redeem {VSS_Name} with guid {Guid}");
+				Debug.WriteLine($"Could not find sound reference for redeem {VSS_Name} with guid {VSS_Guid}");
 				return false;
 			}
 		}
@@ -68,18 +65,15 @@ namespace SSC.DataStorage
 
 	public class VSS_RedeemBridgeVideoAward : IVSSRedeem
 	{
+		public Guid VSS_Guid { get; set; } = Guid.NewGuid();
+		public Keys VSS_KeyCode { get; set; } = Keys.None;
 		private OBS_VideoReward obsVideoReward;
-		public Guid Guid = Guid.NewGuid();
 		public Guid VideoGuid = Guid.NewGuid();
-		public Keys KeyCode;
 
-		[JsonIgnore] public Guid VSS_Guid => VideoGuid;
-
-		[JsonIgnore] public string VSS_Name => $"{KeyCode} - {obsVideoReward?.RewardName ?? "Unknown"}";
+		[JsonIgnore] public string VSS_Name => $"{VSS_KeyCode} - {obsVideoReward?.RewardName ?? "Unknown"}";
 
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children => null;
 
-		[JsonIgnore] public Keys VSS_KeyCode => KeyCode;
 
 		public VSS_RedeemBridgeVideoAward() { }
 
@@ -87,7 +81,7 @@ namespace SSC.DataStorage
 		{
 			this.obsVideoReward = reward;
 			this.VideoGuid = reward.Id;
-			this.KeyCode = key;
+			this.VSS_KeyCode = key;
 		}
 
 		public void Execute()
@@ -98,15 +92,16 @@ namespace SSC.DataStorage
 		{
 			return new VSS_RedeemBridgeVideoAward
 			{
-				Guid = Guid,
-				KeyCode = KeyCode,
-				obsVideoReward = obsVideoReward
+				VSS_Guid = VSS_Guid,
+				VSS_KeyCode = VSS_KeyCode,
+				VideoGuid = VideoGuid,
+				obsVideoReward = obsVideoReward,
 			};
 		}
 
 		public bool RecreateReferences()
 		{
-			var f = MainForm.Instance.VideoDB.StorableData.VideoRewards.FirstOrDefault(x => x.Id == VSS_Guid);
+			var f = MainForm.Instance.VideoDB.StorableData.VideoRewards.FirstOrDefault(x => x.Id == VideoGuid);
 			if (f != null)
 			{
 				obsVideoReward = f;
@@ -114,7 +109,7 @@ namespace SSC.DataStorage
 			}
 			else
 			{
-				Debug.WriteLine($"Could not find video reward reference for redeem {VSS_Name} with guid {Guid}");
+				Debug.WriteLine($"Could not find video reward reference for redeem {VSS_Name} with guid {VSS_Guid}");
 				return false;
 			}
 		}
@@ -122,49 +117,57 @@ namespace SSC.DataStorage
 
 	public class VSS_Container : IVSSRedeem
 	{
-		public Guid Guid = Guid.NewGuid();
-		public Keys KeyCode;
-		public string Name;
-		public Guid[] Children = new Guid[0];
-		[JsonIgnore] public List<IVSSRedeem> ChildrenObjects;
+		public Guid VSS_Guid { get; set; } = Guid.NewGuid();
+		public Keys VSS_KeyCode { get; set; }
 
-		[JsonIgnore] public Guid VSS_Guid => Guid;
+		public string Name;
+		public List<Guid> Children = new List<Guid>();
+		[JsonIgnore] public List<IVSSRedeem> ChildrenObjectsReferences = new List<IVSSRedeem>();
 
 		[JsonIgnore] public string VSS_Name => Name;
 
-		[JsonIgnore] public List<IVSSRedeem> VSS_Children => ChildrenObjects;
-
-		[JsonIgnore] public Keys VSS_KeyCode => KeyCode;
+		[JsonIgnore] public List<IVSSRedeem> VSS_Children => ChildrenObjectsReferences;
 
 		public VSS_Container() { }
 
 		public VSS_Container(string name, Keys key)
 		{
 			this.Name = name;
-			this.KeyCode = key;
+			this.VSS_KeyCode = key;
 		}
 
 		public object Clone()
 		{
-			var ch = new IVSSRedeem[ChildrenObjects.Count];
-			for (int i = 0; i < ChildrenObjects.Count; i++)
+			var ch = new IVSSRedeem[ChildrenObjectsReferences.Count];
+			for (int i = 0; i < ChildrenObjectsReferences.Count; i++)
 			{
-				ch[i] = ChildrenObjects[i].Clone() as IVSSRedeem;
+				ch[i] = ChildrenObjectsReferences[i].Clone() as IVSSRedeem;
 			}
 
 			return new VSS_Container
 			{
-				Guid = Guid,
-				KeyCode = KeyCode,
+				VSS_Guid = VSS_Guid,
+				VSS_KeyCode = VSS_KeyCode,
 				Name = Name,
-				Children = Children.Clone() as Guid[],
+				Children = [.. Children],
 			};
+		}
+
+		public void Append(IVSSRedeem redeem)
+		{
+			ChildrenObjectsReferences.Add(redeem);
+			Children.Add(redeem.VSS_Guid);
+		}
+
+		public void Remove(IVSSRedeem redeem)
+		{
+			ChildrenObjectsReferences.Remove(redeem);
+			Children.Remove(redeem.VSS_Guid);
 		}
 
 		public bool RecreateReferences()
 		{
-			return false;
-
+			return true;
 		}
 	}
 
@@ -173,8 +176,11 @@ namespace SSC.DataStorage
 	{
 		internal static string GetPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "VSS.json");
 
-		[NonSerialized][XmlIgnore] public Dictionary<Guid, IVSSRedeem> VSS_Redeems_Dict = new Dictionary<Guid, IVSSRedeem>();
+		[NonSerialized][JsonIgnore] public Dictionary<Guid, IVSSRedeem> VSS_Redeems_Dict = new Dictionary<Guid, IVSSRedeem>();
+		[NonSerialized][JsonIgnore] public List<IVSSRedeem> VSS_RootNodes = new();
 		public List<IVSSRedeem> VSS_TreeNodes = new();
+
+		public List<Guid> VSS_RootNodeGuids = new();
 		public Keys MasterKey;
 
 		private static VSS_Database m_Instance;
@@ -192,29 +198,85 @@ namespace SSC.DataStorage
 		private static void Load()
 		{
 			m_Instance = JsonUtils.Load(GetPath(), new VSS_Database());
-			m_Instance.VSS_Redeems_Dict.Clear();
+			m_Instance.Initialize();
+		}
 
-			List<IVSSRedeem> elementsToRemove = new List<IVSSRedeem>();
+		private void Initialize()
+		{
+			VSS_Redeems_Dict.Clear();
 
-			foreach (var redeem in m_Instance.VSS_TreeNodes)
+			for (int i = VSS_TreeNodes.Count - 1; i >= 0; i--)
 			{
-				if(!redeem.RecreateReferences())
-					elementsToRemove.Add(redeem);
+				//Get rid of rewards that no longer have references
+				if (!VSS_TreeNodes[i].RecreateReferences())
+					VSS_TreeNodes.RemoveAt(i);
 			}
 
-			foreach(IVSSRedeem elementToRemove in elementsToRemove)
+			//Create a copy of elements and then treverse the tree to remove elements that are orphan now
+			HashSet<IVSSRedeem> possibleOrphanNodes = VSS_TreeNodes.ToHashSet();
+			//HashSet<IVSSRedeem> loopDetection = new HashSet<IVSSRedeem>();  //possibly in the future?
+
+			//This will need to be cleared again
+			foreach (var redeem in VSS_TreeNodes)
+				VSS_Redeems_Dict.Add(redeem.VSS_Guid, redeem);
+
+			//Build container references
+			foreach (var redeem in VSS_TreeNodes)
 			{
-				m_Instance.VSS_TreeNodes.Remove(elementToRemove);
+				if (redeem is not VSS_Container)
+					continue;
+
+				var cast = redeem as VSS_Container;
+				cast.ChildrenObjectsReferences.Clear();
+				for (int i = cast.Children.Count - 1; i >= 0; i--)
+				{
+					Guid guid = cast.Children[i];
+					if (VSS_Redeems_Dict.TryGetValue(guid, out var obj))
+						cast.ChildrenObjectsReferences.Add(obj);
+					else
+						cast.Children.RemoveAt(i);
+				}
 			}
 
-			foreach (var redeem in m_Instance.VSS_TreeNodes)
+			foreach (Guid rootNodeGuid in VSS_RootNodeGuids)
 			{
-				m_Instance.VSS_Redeems_Dict.Add(redeem.VSS_Guid, redeem);
+				if (VSS_Redeems_Dict.TryGetValue(rootNodeGuid, out IVSSRedeem rootNode))
+				{
+					VSS_RootNodes.Add(rootNode);
+					VerifyOrphanNodes(possibleOrphanNodes, rootNode);
+				}
+			}
+
+			foreach(var orpanNode in possibleOrphanNodes)
+				VSS_TreeNodes.Remove(orpanNode);
+
+			VSS_Redeems_Dict.Clear();
+			foreach (var redeem in VSS_TreeNodes)
+				VSS_Redeems_Dict.Add(redeem.VSS_Guid, redeem);
+		}
+
+		private void VerifyOrphanNodes(HashSet<IVSSRedeem> possibleOrphanNodes, IVSSRedeem node)
+		{
+			if (node == null)
+				return;
+
+			possibleOrphanNodes.Remove(node);
+			if (node is VSS_Container)
+			{
+				var cast = node as VSS_Container;
+				foreach (Guid childGuid in cast.Children)
+				{
+					if (VSS_Redeems_Dict.TryGetValue(childGuid, out IVSSRedeem redeem))
+					{
+						VerifyOrphanNodes(possibleOrphanNodes, redeem);
+					}
+				}
 			}
 		}
 
 		public void Save()
 		{
+			m_Instance = this;
 			JsonUtils.Save(GetPath(), this);
 		}
 
@@ -236,8 +298,8 @@ namespace SSC.DataStorage
 					}
 
 				}
-				copy.VSS_TreeNodes = VSS_TreeNodes;
-				copy.VSS_Redeems_Dict = VSS_Redeems_Dict;
+				copy.VSS_RootNodeGuids = [.. VSS_RootNodeGuids];
+				copy.Initialize();
 			}
 			return copy;
 		}
