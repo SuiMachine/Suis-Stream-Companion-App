@@ -179,6 +179,13 @@ namespace SSC.DataStorage.Videos
 					return;
 				}
 
+				if (closestMatchRatio < 50)
+				{
+					MainForm.Instance.ThreadSafeAddPreviewText($"Closest video match was {closestMatchRatio}! Cancelling...", LineType.WebSocket);
+					MainForm.Instance.TwitchBot.HelixAPI_User.UpdateRedemptionStatus(redeem, RedemptionStates.CANCELED);
+					return;
+				}
+
 				var file = closestMatch.GetFile(m_RNG);
 				if (!File.Exists(file))
 				{
