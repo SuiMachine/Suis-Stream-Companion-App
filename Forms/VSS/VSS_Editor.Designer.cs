@@ -128,32 +128,34 @@
 			treeView_VSS_Options.Name = "treeView_VSS_Options";
 			treeView_VSS_Options.Size = new System.Drawing.Size(794, 409);
 			treeView_VSS_Options.TabIndex = 1;
+			treeView_VSS_Options.AfterCollapse += treeView_VSS_Options_AfterCollapse;
+			treeView_VSS_Options.AfterExpand += treeView_VSS_Options_AfterExpand;
 			// 
 			// contextMenuTreeViewVSS
 			// 
 			contextMenuTreeViewVSS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { addElementToolStripMenuItem, removeElementToolStripMenuItem, cancelToolStripMenuItem });
 			contextMenuTreeViewVSS.Name = "contextMenuTreeViewVSS";
-			contextMenuTreeViewVSS.Size = new System.Drawing.Size(181, 92);
+			contextMenuTreeViewVSS.Size = new System.Drawing.Size(164, 70);
 			contextMenuTreeViewVSS.Opening += contextMenuTreeViewVSS_Opening;
 			// 
 			// addElementToolStripMenuItem
 			// 
 			addElementToolStripMenuItem.Name = "addElementToolStripMenuItem";
-			addElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			addElementToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			addElementToolStripMenuItem.Text = "Add element";
 			addElementToolStripMenuItem.Click += addElementToolStripMenuItem_Click;
 			// 
 			// removeElementToolStripMenuItem
 			// 
 			removeElementToolStripMenuItem.Name = "removeElementToolStripMenuItem";
-			removeElementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			removeElementToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			removeElementToolStripMenuItem.Text = "Remove element";
 			removeElementToolStripMenuItem.Click += removeElementToolStripMenuItem_Click;
 			// 
 			// cancelToolStripMenuItem
 			// 
 			cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-			cancelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			cancelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
 			cancelToolStripMenuItem.Text = "Cancel";
 			// 
 			// VSS_Editor

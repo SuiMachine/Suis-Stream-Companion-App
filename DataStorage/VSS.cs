@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace SSC.DataStorage
 {
@@ -21,7 +19,7 @@ namespace SSC.DataStorage
 		public Guid SoundReferenceGuid = Guid.NewGuid();
 		[JsonIgnore] public string VSS_Name => $"{VSS_KeyCode} - {soundReference?.RewardName ?? "Unknown"}";
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children => null;
-
+		[JsonIgnore] public IVSSRedeem Parent_Node { get; set; }
 
 		public VSS_RedeemBridgeSoundAward() { }
 
@@ -73,7 +71,7 @@ namespace SSC.DataStorage
 		[JsonIgnore] public string VSS_Name => $"{VSS_KeyCode} - {obsVideoReward?.RewardName ?? "Unknown"}";
 
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children => null;
-
+		[JsonIgnore] public IVSSRedeem Parent_Node { get; set; }
 
 		public VSS_RedeemBridgeVideoAward() { }
 
@@ -122,11 +120,13 @@ namespace SSC.DataStorage
 
 		public string Name;
 		public List<Guid> Children = new List<Guid>();
+		public bool IsExpended = true;
 		[JsonIgnore] public List<IVSSRedeem> ChildrenObjectsReferences = new List<IVSSRedeem>();
 
 		[JsonIgnore] public string VSS_Name => Name;
 
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children => ChildrenObjectsReferences;
+		[JsonIgnore] public IVSSRedeem Parent_Node { get; set; }
 
 		public VSS_Container() { }
 
@@ -150,6 +150,7 @@ namespace SSC.DataStorage
 				VSS_KeyCode = VSS_KeyCode,
 				Name = Name,
 				Children = [.. Children],
+				IsExpended = IsExpended
 			};
 		}
 
@@ -157,12 +158,14 @@ namespace SSC.DataStorage
 		{
 			ChildrenObjectsReferences.Add(redeem);
 			Children.Add(redeem.VSS_Guid);
+			redeem.Parent_Node = this;
 		}
 
 		public void Remove(IVSSRedeem redeem)
 		{
 			ChildrenObjectsReferences.Remove(redeem);
 			Children.Remove(redeem.VSS_Guid);
+			Parent_Node = null;
 		}
 
 		public bool RecreateReferences()
@@ -231,8 +234,11 @@ namespace SSC.DataStorage
 				for (int i = cast.Children.Count - 1; i >= 0; i--)
 				{
 					Guid guid = cast.Children[i];
-					if (VSS_Redeems_Dict.TryGetValue(guid, out var obj))
+					if (VSS_Redeems_Dict.TryGetValue(guid, out IVSSRedeem obj))
+					{
 						cast.ChildrenObjectsReferences.Add(obj);
+						obj.Parent_Node = cast;
+					}
 					else
 						cast.Children.RemoveAt(i);
 				}
@@ -247,7 +253,7 @@ namespace SSC.DataStorage
 				}
 			}
 
-			foreach(var orpanNode in possibleOrphanNodes)
+			foreach (var orpanNode in possibleOrphanNodes)
 				VSS_TreeNodes.Remove(orpanNode);
 
 			VSS_Redeems_Dict.Clear();
@@ -304,39 +310,41 @@ namespace SSC.DataStorage
 			return copy;
 		}
 
-		internal void RemoveElement(IVSSRedeem cast, IVSSRedeem node)
+		internal void RemoveElement(IVSSRedeem elementToDelete)
 		{
-			if (node == null)
+			if (elementToDelete == null)
+				return;
+
+			if (elementToDelete.Parent_Node == null)
 			{
-				var rootNodes = VSS_TreeNodes;
-				for (int i = VSS_TreeNodes.Count - 1; i >= 0; i--)
+				_ = VSS_RootNodes.Remove(elementToDelete);
+				_ = VSS_RootNodeGuids.Remove(elementToDelete.VSS_Guid);
+			}
+			else
+			{
+				//Technically it always has to be?
+				if (elementToDelete.Parent_Node is VSS_Container)
 				{
-					if (VSS_TreeNodes[i] == cast)
+					var parent = (VSS_Container)elementToDelete.Parent_Node;
+					_ = parent.Children.Remove(elementToDelete.VSS_Guid);
+					_ = parent.ChildrenObjectsReferences.Remove(elementToDelete);
+				}
+
+				if (elementToDelete.VSS_Children != null && elementToDelete.VSS_Children.Count > 0)
+				{
+					for (int i = elementToDelete.VSS_Children.Count - 1; i >= 0; i--)
 					{
-						rootNodes.RemoveAt(i);
-						break;
-					}
-					else if (VSS_TreeNodes[i] != null)
-					{
-						RemoveElement(cast, VSS_TreeNodes[i]);
+						var child = elementToDelete.VSS_Children[i];
+						if (child == null)
+							continue;
+
+						RemoveElement(elementToDelete.VSS_Children[i]);
 					}
 				}
 			}
-			else if (node.VSS_Children != null && node.VSS_Children.Count > 0)
-			{
-				for (int i = node.VSS_Children.Count - 1; i >= 0; i--)
-				{
-					if (node.VSS_Children[i] == cast)
-					{
-						node.VSS_Children.RemoveAt(i);
-						break;
-					}
-					else if (node.VSS_Children[i] != null)
-					{
-						RemoveElement(cast, node.VSS_Children[i]);
-					}
-				}
-			}
+
+			VSS_Redeems_Dict.Remove(elementToDelete.VSS_Guid);
+			_ = VSS_TreeNodes.Remove(elementToDelete);
 		}
 	}
 }

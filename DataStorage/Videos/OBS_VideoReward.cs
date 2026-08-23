@@ -1,5 +1,4 @@
-﻿using SSC.DataStorage.Interfaces;
-using System;
+﻿using System;
 using System.Xml.Serialization;
 
 namespace SSC.DataStorage.Videos
@@ -14,7 +13,7 @@ namespace SSC.DataStorage.Videos
 		[XmlAttribute]
 		public string Description { get; set; } = "";
 		[XmlAttribute]
-		public int Cooldown { get; set; } = 0;
+		public int Cooldown { get; set; } = 60;
 		[XmlArrayItem]
 		public string[] Tags { get; set; } = new string[0];
 		[XmlArrayItem]

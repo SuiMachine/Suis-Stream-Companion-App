@@ -11,6 +11,7 @@ namespace SSC.DataStorage.Interfaces
 		public Keys VSS_KeyCode { get; set; }
 
 		[JsonIgnore] public string VSS_Name { get; }
+		[JsonIgnore] public IVSSRedeem Parent_Node { get; set; }
 		[JsonIgnore] public List<IVSSRedeem> VSS_Children { get; }
 
 		public void Execute() { }

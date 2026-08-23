@@ -26,7 +26,6 @@ namespace SSC.DataStorage.Videos
 		private readonly Random m_RNG;
 		public Dictionary<string, OBS_VideoReward> VideoRewardsDictionary = new Dictionary<string, OBS_VideoReward>();
 		private Dictionary<string, DateTime> UserDB;
-		private int m_Delay;
 		private readonly string m_VideoFilesDB_File;
 		public bool VideoIsPlaying { get; private set; } = false;
 
@@ -34,7 +33,6 @@ namespace SSC.DataStorage.Videos
 		{
 			UserDB = new Dictionary<string, DateTime>();
 			m_RNG = new Random();
-			m_Delay = PrivateSettings.GetInstance().Delay;
 			m_VideoFilesDB_File = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SSC", "VideoRewards.xml");
 			StorableData = LoadFromXml();
 			RebuildDictionary();
@@ -78,7 +76,6 @@ namespace SSC.DataStorage.Videos
 		{
 			MainForm.Instance.TwitchEvents.OnChannelPointsRedeem += PlayVideoIfExists;
 			MainForm.Instance.OBSEvents.OnMediaSourceStoppedPlaying += HandleOnMediaSourceStoppedPlaying;
-
 		}
 
 		public void HandleOnMediaSourceStoppedPlaying(string sourceName)
@@ -124,7 +121,7 @@ namespace SSC.DataStorage.Videos
 				UserDB.Add(redeem.user_id, DateTime.MinValue);
 			}
 
-			if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(m_Delay) < DateTime.Now)
+			if (UserDB[redeem.user_id] + TimeSpan.FromSeconds(5) < DateTime.Now)
 			{
 				var mainFormOBS = MainForm.Instance.OBS;
 				if (mainFormOBS == null || !mainFormOBS.IsConnected)
@@ -210,6 +207,8 @@ namespace SSC.DataStorage.Videos
 						{ "restart_on_activate", true }
 					}
 				});
+
+				UserDB[redeem.user_id] = DateTime.Now + TimeSpan.FromSeconds(closestMatch.Cooldown);
 
 				mainFormOBS.SetSceneItemEnabled(StorableData.OBS_Scene, obsInput.ItemId, true);
 				VideoIsPlaying = true;

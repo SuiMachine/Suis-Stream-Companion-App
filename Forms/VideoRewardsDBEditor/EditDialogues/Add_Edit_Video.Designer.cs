@@ -33,6 +33,8 @@
 			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			B_OK = new System.Windows.Forms.Button();
 			B_Cancel = new System.Windows.Forms.Button();
+			label5 = new System.Windows.Forms.Label();
+			numCooldown = new System.Windows.Forms.NumericUpDown();
 			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			label1 = new System.Windows.Forms.Label();
@@ -51,6 +53,7 @@
 			RB_Description = new System.Windows.Forms.RichTextBox();
 			tableLayoutPanel1.SuspendLayout();
 			tableLayoutPanel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)numCooldown).BeginInit();
 			tableLayoutPanel3.SuspendLayout();
 			tableLayoutPanel4.SuspendLayout();
 			tableLayoutPanel5.SuspendLayout();
@@ -76,25 +79,30 @@
 			// 
 			// tableLayoutPanel2
 			// 
-			tableLayoutPanel2.ColumnCount = 2;
-			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			tableLayoutPanel2.Controls.Add(B_OK, 0, 0);
-			tableLayoutPanel2.Controls.Add(B_Cancel, 1, 0);
-			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Right;
-			tableLayoutPanel2.Location = new System.Drawing.Point(597, 416);
+			tableLayoutPanel2.ColumnCount = 5;
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 97F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 88F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+			tableLayoutPanel2.Controls.Add(B_OK, 3, 0);
+			tableLayoutPanel2.Controls.Add(B_Cancel, 4, 0);
+			tableLayoutPanel2.Controls.Add(label5, 0, 0);
+			tableLayoutPanel2.Controls.Add(numCooldown, 1, 0);
+			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel2.Location = new System.Drawing.Point(3, 416);
 			tableLayoutPanel2.Name = "tableLayoutPanel2";
 			tableLayoutPanel2.RowCount = 1;
-			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			tableLayoutPanel2.Size = new System.Drawing.Size(200, 31);
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.Size = new System.Drawing.Size(794, 31);
 			tableLayoutPanel2.TabIndex = 0;
 			// 
 			// B_OK
 			// 
 			B_OK.Anchor = System.Windows.Forms.AnchorStyles.None;
-			B_OK.Location = new System.Drawing.Point(12, 4);
+			B_OK.Location = new System.Drawing.Point(637, 4);
 			B_OK.Name = "B_OK";
-			B_OK.Size = new System.Drawing.Size(75, 23);
+			B_OK.Size = new System.Drawing.Size(74, 23);
 			B_OK.TabIndex = 0;
 			B_OK.Text = "OK";
 			B_OK.UseVisualStyleBackColor = true;
@@ -103,13 +111,32 @@
 			// B_Cancel
 			// 
 			B_Cancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-			B_Cancel.Location = new System.Drawing.Point(112, 4);
+			B_Cancel.Location = new System.Drawing.Point(717, 4);
 			B_Cancel.Name = "B_Cancel";
-			B_Cancel.Size = new System.Drawing.Size(75, 23);
+			B_Cancel.Size = new System.Drawing.Size(74, 23);
 			B_Cancel.TabIndex = 1;
 			B_Cancel.Text = "Cancel";
 			B_Cancel.UseVisualStyleBackColor = true;
 			B_Cancel.Click += B_Cancel_Click;
+			// 
+			// label5
+			// 
+			label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label5.AutoSize = true;
+			label5.Location = new System.Drawing.Point(3, 8);
+			label5.Name = "label5";
+			label5.Size = new System.Drawing.Size(65, 15);
+			label5.TabIndex = 2;
+			label5.Text = "Cooldown:";
+			// 
+			// numCooldown
+			// 
+			numCooldown.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			numCooldown.Location = new System.Drawing.Point(100, 4);
+			numCooldown.Name = "numCooldown";
+			numCooldown.Size = new System.Drawing.Size(82, 23);
+			numCooldown.TabIndex = 3;
+			numCooldown.ValueChanged += numCooldown_ValueChanged;
 			// 
 			// tableLayoutPanel3
 			// 
@@ -302,6 +329,8 @@
 			Text = "Add video";
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)numCooldown).EndInit();
 			tableLayoutPanel3.ResumeLayout(false);
 			tableLayoutPanel4.ResumeLayout(false);
 			tableLayoutPanel4.PerformLayout();
@@ -337,5 +366,7 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenu_Files;
 		private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.NumericUpDown numCooldown;
 	}
 }

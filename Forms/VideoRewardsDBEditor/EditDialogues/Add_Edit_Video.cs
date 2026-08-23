@@ -27,12 +27,12 @@ namespace SSC.Forms.VideoRewardsDBEditor
 			RB_Description.Text = ReturnReward.Description;
 			RB_Tags.Lines = ReturnReward.Tags;
 			ListBox_Files.Items.AddRange(ReturnReward.Files);
-
+			numCooldown.Value = Math.Max(ReturnReward.Cooldown, 0);
 		}
 
 		private void Verify()
 		{
-			if (TB_Name.Text == String.Empty)
+			if (string.IsNullOrEmpty(TB_Name.Text))
 			{
 				B_OK.Enabled = false;
 				return;
@@ -46,7 +46,7 @@ namespace SSC.Forms.VideoRewardsDBEditor
 
 			for (int i = 0; i < ListBox_Files.Items.Count; i++)
 			{
-				if (ListBox_Files.Items[i].ToString() == String.Empty)
+				if ( ListBox_Files.Items[i].ToString() == String.Empty)
 				{
 					B_OK.Enabled = false;
 					return;
@@ -148,6 +148,12 @@ namespace SSC.Forms.VideoRewardsDBEditor
 				this.ListBox_Files.Items.Remove(item);
 			}
 			ReturnReward.Files = ListBox_Files.Items.Cast<string>().ToArray();
+			Verify();
+		}
+
+		private void numCooldown_ValueChanged(object sender, EventArgs e)
+		{
+			this.ReturnReward.Cooldown = (int)Math.Max(numCooldown.Value, 0);
 			Verify();
 		}
 	}

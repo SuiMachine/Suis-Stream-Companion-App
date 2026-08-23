@@ -61,12 +61,24 @@ namespace SSC.Forms.VSS
 
 					PopulateTreeView(childeren, treeNode);
 				}
+
+				if (node is VSS_Container)
+				{
+					var dat = node as VSS_Container;
+					if (dat.IsExpended)
+						treeNode.Expand();
+					else
+						treeNode.Collapse();
+				}
 			}
 		}
 
 		private void TB_MasterKey_KeyDown(object sender, KeyEventArgs e)
 		{
+			if (e.KeyCode == Keys.Delete)
+			{
 
+			}
 		}
 
 		private void addElementToolStripMenuItem_Click(object sender, EventArgs e)
@@ -89,8 +101,9 @@ namespace SSC.Forms.VSS
 				{
 					if (treeView_VSS_Options.SelectedNode.Tag is VSS_Container)
 					{
-						var cast = treeView_VSS_Options.SelectedNode.Tag as VSS_Container;
-						cast.Append(resultElement);
+						var containerCast = treeView_VSS_Options.SelectedNode.Tag as VSS_Container;
+						containerCast.Append(resultElement);
+						containerCast.IsExpended = true;
 					}
 				}
 				else
@@ -114,10 +127,12 @@ namespace SSC.Forms.VSS
 				if (cast.VSS_Children?.Count > 0)
 				{
 					if (MessageBox.Show("Element you are trying to remove has children attached. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-						DB_Clone.RemoveElement(cast, null);
+					{
+						DB_Clone.RemoveElement(cast);
+					}
 				}
 				else
-					DB_Clone.RemoveElement(cast, null);
+					DB_Clone.RemoveElement(cast);
 			}
 
 			treeView_VSS_Options.BeginUpdate();
@@ -132,6 +147,22 @@ namespace SSC.Forms.VSS
 				addElementToolStripMenuItem.Enabled = treeView_VSS_Options.SelectedNode.Tag is VSS_Container;
 			else
 				addElementToolStripMenuItem.Enabled = true;
+		}
+
+		private void treeView_VSS_Options_AfterExpand(object sender, TreeViewEventArgs e)
+		{
+			if (e.Node != null && e.Node.Tag is VSS_Container)
+			{
+				(e.Node.Tag as VSS_Container).IsExpended = true;
+			}
+		}
+
+		private void treeView_VSS_Options_AfterCollapse(object sender, TreeViewEventArgs e)
+		{
+			if (e.Node != null && e.Node.Tag is VSS_Container)
+			{
+				(e.Node.Tag as VSS_Container).IsExpended = false;
+			}
 		}
 	}
 }
